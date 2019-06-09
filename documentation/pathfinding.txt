@@ -1,0 +1,3 @@
+algoritmo de PF exagonal
+  notar que con tiles cuadrados no tengo que chequear la dir por la que vengo (ya se que ese tile es stepable)
+  con tiles exagonales, no tengo que chequear por donde vengo, ni los 2 adyacentes, porque luedo llegar mas cerca por donde vengo

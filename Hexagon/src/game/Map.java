@@ -11,12 +11,20 @@ public class Map {
 
 	public static Tile[][] tiles = new Tile[size][size];
 	public static Unit[][] units = new Unit[size][size];
-	
-	public static LinkedList<Unit> unitsList = new LinkedList<>();
+
+	public static final int executableQueueSize = 100;
+
+	public static LinkedList<Executable>[] executableQueue = new LinkedList[executableQueueSize];
+
+	public static int time = 0;
 	
 	public static Random rnd = new Random(0);
 
 	static {
+	    for(int i = 0;i < executableQueueSize;i++){
+            executableQueue[i] = new LinkedList();
+        }
+
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (rnd.nextInt(5) == 0) {
@@ -31,17 +39,24 @@ public class Map {
 		addUnit(8, 7);
 		
 		tiles[4][4] = Tile.fertileGround;
+        tiles[5][9] = Tile.stone;
 	}
 
 	public static void addUnit(int x, int y) {
-		Unit u = new Unit(x, y);
-		unitsList.add(u);
-		units[x][y] = u;
+		Unit unit = new Unit(x, y);
+		queueExecutable(unit, 1);
+		units[x][y] = unit;
 	}
 	
 	public static void execute() {
-		unitsList.stream().forEach(x -> x.execute());
+		executableQueue[time % executableQueueSize].stream().forEach(x -> x.execute());
+
+		time++;
 	}
+
+	public static void queueExecutable(Executable executable, int delay) {
+        executableQueue[(time + delay) % executableQueueSize].addLast(executable);
+    }
 	
 	public static Tile tile(int x, int y) {
 		if(x >= 0 && x < size && y >= 0 && y < size) {

@@ -1,0 +1,4 @@
+rango - arma
+1   - cuerpo a cuerpo
+2   - arrojables
+3   - arco

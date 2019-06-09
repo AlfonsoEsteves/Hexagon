@@ -3,41 +3,42 @@ package game;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-public class Unit {
+public class Unit extends Executable{
+
+    public static final int itemNone = -1;
+    public static final int itemStone = 0;
 
     public int x;
     public int y;
 
     public Unit next;
 
+    public int carrying;
+
     public Unit(int x, int y) {
         this.x = x;
         this.y = y;
+        carrying = itemNone;
     }
 
     public void execute() {
-        int minDistance = Integer.MAX_VALUE;
-        int destX = -1;
-        int destY = -1;
-        for (int i = -5; i <= 5; i++) {
-            for (int j = 5; j <= 5; j++) {
-                if (Map.tile(i + x, j + y) == Tile.fertileGround) {
-                    int distance = Math.abs(i) + Math.abs(j);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        destX = i + x;
-                        destY = j + y;
-                    }
-                }
-            }
+        if(carrying == itemStone){
+            return;
+        }
+        if(Map.tile(x, y) == Tile.stone) {
+            Map.tiles[x][y] = Tile.stoneDepleted;
+            Map.queueExecutable(new ResourceReplenish(x, y), 10);
+            carrying = itemStone;
+        }
+        else {
+            removeFromTile();
+            int dir = directionTowardsDestination(Tile.stone);
+            x += Map.getX(dir);
+            y += Map.getY(dir);
+            addToTile();
         }
 
-        removeFromTile();
-        int dir = directionTowardsDestination(Tile.fertileGround);
-        x += Map.getX(dir);
-        y += Map.getY(dir);
-        addToTile();
-        System.out.println(x + "   " + y);
+        Map.queueExecutable(this, 1);
     }
 
     private int directionTowardsDestination(Tile destination) {
