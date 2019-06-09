@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import game.Thing;
 import game.Tile;
 
 public class ImageLoader {
@@ -20,6 +21,9 @@ public class ImageLoader {
 			Tile.fertileGround.image = ImageIO.read(new File(path + "fertile_ground.png"));
 			Tile.stone.image = ImageIO.read(new File(path + "stone.png"));
 			Tile.stoneDepleted.image = ImageIO.read(new File(path + "stoneDepleted.png"));
+
+			Thing.wall.image = ImageIO.read(new File(path + "wall.png"));
+
 			unitImage = ImageIO.read(new File(path + "unit.png"));
 		}
 		catch (Exception e) {

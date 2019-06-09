@@ -34,7 +34,12 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	public void paint(Graphics g) {
 		for(int i = 0;i<viewSize; i++) {
 			for(int j = 0;j<viewSize; j++) {
-				graphics.drawImage(Map.tiles[i][j].image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
+			    if(Map.things[i][j] == null) {
+                    graphics.drawImage(Map.tiles[i][j].image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
+                }
+			    else{
+                    graphics.drawImage(Map.things[i][j].image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
+                }
 				if(Map.units[i][j] != null) {
 					graphics.drawImage(ImageLoader.unitImage, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 15, 15, this);
 				}

@@ -10,6 +10,7 @@ public class Map {
 	public static final int size = 30;
 
 	public static Tile[][] tiles = new Tile[size][size];
+    public static Thing[][] things = new Thing[size][size];
 	public static Unit[][] units = new Unit[size][size];
 
 	public static final int executableQueueSize = 100;
@@ -27,7 +28,7 @@ public class Map {
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				if (rnd.nextInt(5) == 0) {
+				if (rnd.nextInt(10) == 0) {
 					tiles[i][j] = Tile.water;
 				}
 				else {
@@ -40,6 +41,8 @@ public class Map {
 		
 		tiles[4][4] = Tile.fertileGround;
         tiles[5][9] = Tile.stone;
+
+        things[12][17] = Thing.wall;
 	}
 
 	public static void addUnit(int x, int y) {
