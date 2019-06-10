@@ -11,6 +11,6 @@ public class ResourceReplenish extends Executable {
 
     @Override
     public void execute() {
-        Map.tiles[x][y] = Tile.stone;
+        Map.underTile[x][y] = Tile.stone;
     }
 }

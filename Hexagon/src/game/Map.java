@@ -1,16 +1,14 @@
 package game;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.stream.Stream;
 
 public class Map {
 
 	public static final int size = 30;
 
-	public static Tile[][] tiles = new Tile[size][size];
-    public static Thing[][] things = new Thing[size][size];
+	public static Tile[][] underTile = new Tile[size][size];
+    public static Tile[][] overTile = new Tile[size][size];
 	public static Unit[][] units = new Unit[size][size];
 
 	public static final int executableQueueSize = 100;
@@ -29,20 +27,20 @@ public class Map {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (rnd.nextInt(10) == 0) {
-					tiles[i][j] = Tile.water;
+					underTile[i][j] = Tile.water;
 				}
 				else {
-					tiles[i][j] = Tile.grass;
+					underTile[i][j] = Tile.grass;
 				}
 			}
 		}
 		
 		addUnit(8, 7);
 		
-		tiles[4][4] = Tile.fertileGround;
-        tiles[5][9] = Tile.stone;
+		underTile[4][4] = Tile.fertileGround;
+        underTile[5][9] = Tile.stone;
 
-        things[12][17] = Thing.wall;
+        overTile[12][17] = Tile.wall;
 	}
 
 	public static void addUnit(int x, int y) {
@@ -61,14 +59,23 @@ public class Map {
         executableQueue[(time + delay) % executableQueueSize].addLast(executable);
     }
 	
-	public static Tile tile(int x, int y) {
+	public static Tile underTile(int x, int y) {
 		if(x >= 0 && x < size && y >= 0 && y < size) {
-			return tiles[x][y];
+			return underTile[x][y];
 		}
 		else {
 			return Tile.water;
 		}
 	}
+
+    public static Tile overTile(int x, int y) {
+        if(x >= 0 && x < size && y >= 0 && y < size) {
+            return overTile[x][y];
+        }
+        else {
+            return null;
+        }
+    }
 	
 	public static int getX(int dir) {
 		if(dir == 0) {
@@ -103,11 +110,10 @@ public class Map {
 	}
 	
 	public static boolean steppable(int x, int y) {
-		if(tile(x, y) == Tile.water) {
-			return false;
-		}
-		else {
+		if (underTile(x, y).steppable && (overTile(x, y) == null || overTile(x, y).steppable)) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 	

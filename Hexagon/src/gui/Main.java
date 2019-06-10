@@ -8,7 +8,6 @@ public class Main {
 	public static final long frameDuration = 500000000;
 
 	public static void main(String[] args) {
-		ImageLoader.loadImages();
 		Game.instantiate();
 		MainFrame.instantiate();
 		
