@@ -17,7 +17,7 @@ public class Map {
 
 	public static int time = 0;
 	
-	public static Random rnd = new Random(0);
+	public static Random rnd = new Random(1);
 
 	static {
 	    for(int i = 0;i < executableQueueSize;i++){
@@ -26,7 +26,7 @@ public class Map {
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				if (rnd.nextInt(10) == 0) {
+				if (rnd.nextInt(25) == 0) {
 					underTile[i][j] = Tile.water;
 				}
 				else {
@@ -116,5 +116,15 @@ public class Map {
 			return false;
 		}
 	}
-	
+
+	public static int distance(int x1, int y1, int x2, int y2) {
+		int diffX = x2 - x1;
+		int diffY = y2 - y1;
+		if (diffX * diffY > 0) {
+			return Math.max(Math.abs(diffX), Math.abs(diffY));
+		}
+		else{
+			return Math.abs(diffX) + Math.abs(diffY);
+		}
+	}
 }

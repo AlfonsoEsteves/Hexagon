@@ -7,7 +7,13 @@ import java.util.LinkedList;
 
 public class Unit extends Executable{
 
+    public static Image image = ImageLoader.load("Unit");
+
     public static final int pathfindingDistanceLimit = 15;
+
+    public static final int checkedTilesSize = pathfindingDistanceLimit * 2 + 1;
+
+    public static boolean[][] checkedTiles = new boolean[checkedTilesSize][checkedTilesSize];
 
     public static final int itemNone = -1;
     public static final int itemStone = 0;
@@ -19,8 +25,6 @@ public class Unit extends Executable{
 
     public int carrying;
 
-    public static Image image = ImageLoader.load("Unit");;
-
     public Unit(int x, int y) {
         this.x = x;
         this.y = y;
@@ -28,42 +32,70 @@ public class Unit extends Executable{
     }
 
     public void execute() {
-
-        /*
-        search for bed
-          go to bed
-        else
-          build one
-         */
-
-        if(!goTo(Tile.bed)) {
-            build();
+        if(!build()) {
+            goTo(Tile.bed);
         }
-
-
-
-
-
         Map.queueExecutable(this, 1);
     }
 
-    private void build() {
-        if(carrying == itemStone){
-            return;
+    private boolean build() {
+        if(checkThereIsClose(Tile.missingWall)) {
+            if (carrying == itemStone) {
+                if (Map.overTile(x, y) == Tile.missingWall) {
+                    Map.overTile[x][y] = Tile.wall;
+                    carrying = itemNone;
+                    return true;
+                } else {
+                    return goTo(Tile.missingWall);
+                }
+            } else {
+                return getItem();
+            }
         }
-        else{
-            getItem();
+        else {
+            return planBuilding();
         }
     }
 
-    private void getItem() {
+    private boolean checkThereIsClose(Tile tile) {
+        for(int i = -pathfindingDistanceLimit;i<=pathfindingDistanceLimit;i++) {
+            for(int j = -pathfindingDistanceLimit;j<=pathfindingDistanceLimit;j++) {
+                if (Map.distance(0, 0, i, j) < pathfindingDistanceLimit) {
+                    if (Map.underTile(x + i, y + j) == tile || Map.overTile(x + i, y + j) == tile) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean planBuilding() {
+        int[] position = pickUpPosition();
+        for (int i=-2;i<=2;i++){
+            for(int j=-2;j<=2;j++){
+                if (Map.distance(position[0], position[1], position[0] + i, position[1] + j) == 2) {
+                    Map.overTile[position[0] + i][position[1] + j] = Tile.missingWall;
+                }
+            }
+        }
+        return true;
+    }
+
+    private int[] pickUpPosition() {
+        int[] position = {9, 5};
+        return position;
+    }
+
+    private boolean getItem() {
         if(Map.underTile(x, y) == Tile.stone) {
             Map.underTile[x][y] = Tile.depletedStone;
             Map.queueExecutable(new ResourceReplenish(x, y), 10);
             carrying = itemStone;
+            return true;
         }
         else {
-            goTo(Tile.stone);
+            return goTo(Tile.stone);
         }
     }
 
@@ -82,28 +114,25 @@ public class Unit extends Executable{
     }
 
     private int directionTowardsDestination(Tile destination) {
-
-
-        agregar a este script una matriz para no chequear 2 veces el mismo tile
-                mmm
-                        capas en ves de hacer una del tamanio del mapa hacer una del tamanio del rango de la unidad
-                para que no sea tan grande
-
-
-
+        for(int i = 0;i<checkedTilesSize;i++) {
+            for(int j = 0;j<checkedTilesSize;j++) {
+                checkedTiles[i][j] = false;
+            }
+        }
         LinkedList<Integer> queueX = new LinkedList<>();
         LinkedList<Integer> queueY = new LinkedList<>();
         LinkedList<Integer> queueInitialDir = new LinkedList<>();
         for (int i = 0; i < 6; i++) {
             int newX = x + Map.getX(i);
             int newY = y + Map.getY(i);
-            if (Map.underTile(newX, newY) == destination) {
+            if (Map.underTile(newX, newY) == destination || Map.overTile(newX, newY) == destination) {
                 return i;
             }
             if (Map.steppable(newX, newY)) {
                 queueX.addLast(newX);
                 queueY.addLast(newY);
                 queueInitialDir.addLast(i);
+                checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2] = true;
             }
         }
         int distance = 1;
@@ -116,19 +145,22 @@ public class Unit extends Executable{
             for (int i = 0; i < 6; i++) {
                 int newX = currentX + Map.getX(i);
                 int newY = currentY + Map.getY(i);
-                if(Map.underTile(newX, newY) == destination){
+                if(Map.underTile(newX, newY) == destination || Map.overTile(newX, newY) == destination){
                     return currentInitialDir;
                 }
-                if(Map.steppable(newX, newY)) {
-                    queueX.add(newX);
-                    queueY.add(newY);
-                    queueInitialDir.add(currentInitialDir);
+                if(!checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2]) {
+                    if (Map.steppable(newX, newY)) {
+                        queueX.add(newX);
+                        queueY.add(newY);
+                        queueInitialDir.add(currentInitialDir);
+                        checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2] = true;
+                    }
                 }
             }
             currentIteration++;
             if(currentIteration == nextDistanceIteration){
                 distance++;
-                if(distance > pathfindingDistanceLimit) {
+                if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
                 else{

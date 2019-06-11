@@ -15,6 +15,7 @@ public class Tile {
 
 	// OVERTILES:
 	public static Tile wall = new Tile("Wall", false);
+	public static Tile missingWall = new Tile("Missing wall", true);
 	public static Tile bed = new Tile("Bed", true);
 
 	public String name;
