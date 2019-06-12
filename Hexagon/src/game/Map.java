@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Map {
 
-	public static final int size = 30;
+	public static final int size = 40;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static Tile[][] overTile = new Tile[size][size];
@@ -16,8 +16,6 @@ public class Map {
 	public static LinkedList<Executable>[] executableQueue = new LinkedList[executableQueueSize];
 
 	public static int time = 0;
-	
-	public static Random rnd = new Random(1);
 
 	static {
 	    for(int i = 0;i < executableQueueSize;i++){
@@ -26,7 +24,7 @@ public class Map {
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				if (rnd.nextInt(25) == 0) {
+				if (Rnd.nextInt(30) == 0) {
 					underTile[i][j] = Tile.water;
 				}
 				else {
@@ -35,12 +33,10 @@ public class Map {
 			}
 		}
 		
-		addUnit(8, 7);
+		addUnit(18, 17);
 		
-		underTile[4][4] = Tile.fertileGround;
-        underTile[5][9] = Tile.stone;
-
-        overTile[12][17] = Tile.wall;
+		underTile[14][14] = Tile.fertileGround;
+        underTile[16][18] = Tile.stone;
 	}
 
 	public static void addUnit(int x, int y) {
@@ -50,8 +46,11 @@ public class Map {
 	}
 	
 	public static void execute() {
-		executableQueue[time % executableQueueSize].stream().forEach(x -> x.execute());
-
+		LinkedList<Executable> currentQueue = executableQueue[time % executableQueueSize];
+		while(!currentQueue.isEmpty()) {
+			Executable executable = currentQueue.removeFirst();
+			executable.execute();
+		}
 		time++;
 	}
 

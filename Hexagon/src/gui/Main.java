@@ -5,7 +5,7 @@ import game.Map;
 
 public class Main {
 	
-	public static final long frameDuration = 300000000;
+	public static final long frameDuration = 60000000;
 
 	public static void main(String[] args) {
 		Game.instantiate();

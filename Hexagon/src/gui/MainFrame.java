@@ -23,7 +23,7 @@ public class MainFrame extends JFrame {
 		setLayout(null);
 		setLocationRelativeTo(null);
 		setMinimumSize(new Dimension(width, height));
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
 		MainPanel mainPanel = new MainPanel(0, 0, width, height);
 		add(mainPanel);

@@ -9,7 +9,7 @@ public class Unit extends Executable{
 
     public static Image image = ImageLoader.load("Unit");
 
-    public static final int pathfindingDistanceLimit = 15;
+    public static final int pathfindingDistanceLimit = 20;
 
     public static final int checkedTilesSize = pathfindingDistanceLimit * 2 + 1;
 
@@ -21,6 +21,9 @@ public class Unit extends Executable{
     public int x;
     public int y;
 
+    public int usualX;
+    public int usualY;
+
     public Unit next;
 
     public int carrying;
@@ -29,12 +32,16 @@ public class Unit extends Executable{
         this.x = x;
         this.y = y;
         carrying = itemNone;
+        usualX = x;
+        usualY = y;
     }
 
     public void execute() {
         if(!build()) {
             goTo(Tile.bed);
         }
+        usualX += (x - usualX) / 10;
+        usualY += (y - usualY) / 10;
         Map.queueExecutable(this, 1);
     }
 
@@ -58,6 +65,7 @@ public class Unit extends Executable{
     }
 
     private boolean checkThereIsClose(Tile tile) {
+        Log.log("checkThereIsClose " + tile.name);
         for(int i = -pathfindingDistanceLimit;i<=pathfindingDistanceLimit;i++) {
             for(int j = -pathfindingDistanceLimit;j<=pathfindingDistanceLimit;j++) {
                 if (Map.distance(0, 0, i, j) < pathfindingDistanceLimit) {
@@ -71,11 +79,14 @@ public class Unit extends Executable{
     }
 
     private boolean planBuilding() {
+        Log.log("planBuilding");
         int[] position = pickUpPosition();
-        for (int i=-2;i<=2;i++){
-            for(int j=-2;j<=2;j++){
-                if (Map.distance(position[0], position[1], position[0] + i, position[1] + j) == 2) {
-                    Map.overTile[position[0] + i][position[1] + j] = Tile.missingWall;
+        if(position != null) {
+            for (int i = -2; i <= 2; i++) {
+                for (int j = -2; j <= 2; j++) {
+                    if (Map.distance(position[0], position[1], position[0] + i, position[1] + j) == 2) {
+                        Map.overTile[position[0] + i][position[1] + j] = Tile.missingWall;
+                    }
                 }
             }
         }
@@ -83,12 +94,35 @@ public class Unit extends Executable{
     }
 
     private int[] pickUpPosition() {
-        int[] position = {9, 5};
-        return position;
+        for(int i = 0;i<3;i++){
+            int var = 6 + i * 2;
+            int rndX = usualX + Rnd.nextInt(var * 2 + 1) - var;
+            int rndY = usualY + Rnd.nextInt(var * 2 + 1) - var;
+            if(checkPickedPosition(rndX, rndY)){
+                int[] position = {rndX, rndY};
+                return position;
+            }
+        }
+        return null;
+    }
+
+    private boolean checkPickedPosition(int pickedX, int pickedY) {
+        for (int i = -3; i <= 3; i++) {
+            for (int j = -3; j <= 3; j++) {
+                if (Map.distance(0, 0, i, j) <= 3) {
+                    if(Map.underTile(pickedX + i, pickedY + j) != Tile.grass ||
+                            Map.overTile(pickedX + i, pickedY + j) != null) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private boolean getItem() {
         if(Map.underTile(x, y) == Tile.stone) {
+            Log.log("picking up");
             Map.underTile[x][y] = Tile.depletedStone;
             Map.queueExecutable(new ResourceReplenish(x, y), 10);
             carrying = itemStone;
@@ -100,6 +134,7 @@ public class Unit extends Executable{
     }
 
     private boolean goTo(Tile destination) {
+        Log.log("going to " + destination.name);
         int dir = directionTowardsDestination(destination);
         if(dir != -1) {
             removeFromTile();

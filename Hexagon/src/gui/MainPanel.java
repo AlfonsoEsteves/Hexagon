@@ -14,10 +14,7 @@ import game.Unit;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 	
-	public static int viewSize = 30;
-
-	private BufferedImage bufferedImage;
-	private Graphics2D graphics;
+	public static int viewSize = 40;
 
 	public MainPanel(int x, int y, int width, int height) {
 		setBounds(x, y, width, height);
@@ -25,14 +22,12 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 
 		MainFrame.instance.addMouseListener(this);
 		MainFrame.instance.addKeyListener(this);
-
-		bufferedImage = (BufferedImage) new BufferedImage(MainFrame.width, MainFrame.width, BufferedImage.TYPE_INT_RGB);
-		graphics = bufferedImage.createGraphics();
-		setDoubleBuffered(false);
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public void paint(Graphics graphics) {
+		graphics.setColor(Color.blue);
+		graphics.fillRect(0, 0, MainFrame.width, MainFrame.height);
 		for(int i = 0;i<viewSize; i++) {
 			for(int j = 0;j<viewSize; j++) {
 			    if(Map.overTile(i, j) == null) {
@@ -46,7 +41,8 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				}
 			}
 		}
-		g.drawImage(bufferedImage, 0, 0, this);
+		graphics.setColor(Color.white);
+		graphics.drawString("" + Map.time, 10,10);
 	}
 
 	@Override
