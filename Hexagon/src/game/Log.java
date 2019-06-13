@@ -1,7 +1,12 @@
 package game;
 
 public class Log {
-    public static void log(String message) {
-        System.out.println(message);
+
+    public static String currentType = "TIME";
+
+    public static void log(String type, String message) {
+        if(type == currentType) {
+            System.out.println(message);
+        }
     }
 }

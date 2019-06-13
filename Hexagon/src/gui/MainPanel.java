@@ -15,6 +15,8 @@ import game.Unit;
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 	
 	public static int viewSize = 40;
+	public static int viewX = 0;
+	public static int viewY = 0;
 
 	public MainPanel(int x, int y, int width, int height) {
 		setBounds(x, y, width, height);
@@ -30,13 +32,15 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 		graphics.fillRect(0, 0, MainFrame.width, MainFrame.height);
 		for(int i = 0;i<viewSize; i++) {
 			for(int j = 0;j<viewSize; j++) {
-			    if(Map.overTile(i, j) == null) {
-                    graphics.drawImage(Map.underTile(i, j).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
+				int x = viewX + i;
+				int y = viewY + j;
+			    if(Map.overTile(x, y) == null) {
+                    graphics.drawImage(Map.underTile(x, y).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
                 }
 			    else{
-                    graphics.drawImage(Map.overTile(i, j).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
+                    graphics.drawImage(Map.overTile(x, y).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
                 }
-				if(Map.units[i][j] != null) {
+				if(Map.unit(x, y) != null) {
 					graphics.drawImage(Unit.image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 15, 15, this);
 				}
 			}
@@ -64,45 +68,24 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseDragged(MouseEvent e) {}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseMoved(MouseEvent e) {}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyPressed(KeyEvent e) {}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyReleased(KeyEvent e) {}
 
 }

@@ -3,20 +3,19 @@ package game;
 import gui.ImageLoader;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Unit extends Executable{
 
     public static Image image = ImageLoader.load("Unit");
 
-    public static final int pathfindingDistanceLimit = 20;
+    public static final int pathfindingDistanceLimit = 25;
 
     public static final int checkedTilesSize = pathfindingDistanceLimit * 2 + 1;
 
     public static boolean[][] checkedTiles = new boolean[checkedTilesSize][checkedTilesSize];
-
-    public static final int itemNone = -1;
-    public static final int itemStone = 0;
 
     public int x;
     public int y;
@@ -26,12 +25,12 @@ public class Unit extends Executable{
 
     public Unit next;
 
-    public int carrying;
+    public List<Item> carrying;
 
     public Unit(int x, int y) {
         this.x = x;
         this.y = y;
-        carrying = itemNone;
+        carrying = new ArrayList<>();
         usualX = x;
         usualY = y;
     }
@@ -47,16 +46,29 @@ public class Unit extends Executable{
 
     private boolean build() {
         if(checkThereIsClose(Tile.missingWall)) {
-            if (carrying == itemStone) {
+            if (carrying.contains(Item.stone)) {
                 if (Map.overTile(x, y) == Tile.missingWall) {
                     Map.overTile[x][y] = Tile.wall;
-                    carrying = itemNone;
+                    carrying.remove(Item.stone);
                     return true;
                 } else {
                     return goTo(Tile.missingWall);
                 }
             } else {
-                return getItem();
+                return extract(Tile.stone);
+            }
+        }
+        else if(checkThereIsClose(Tile.missingDoor)) {
+            if (carrying.contains(Item.wood)) {
+                if (Map.overTile(x, y) == Tile.missingDoor) {
+                    Map.overTile[x][y] = Tile.door;
+                    carrying.remove(Item.stone);
+                    return true;
+                } else {
+                    return goTo(Tile.missingDoor);
+                }
+            } else {
+                return extract(Tile.tree);
             }
         }
         else {
@@ -65,7 +77,6 @@ public class Unit extends Executable{
     }
 
     private boolean checkThereIsClose(Tile tile) {
-        Log.log("checkThereIsClose " + tile.name);
         for(int i = -pathfindingDistanceLimit;i<=pathfindingDistanceLimit;i++) {
             for(int j = -pathfindingDistanceLimit;j<=pathfindingDistanceLimit;j++) {
                 if (Map.distance(0, 0, i, j) < pathfindingDistanceLimit) {
@@ -79,13 +90,19 @@ public class Unit extends Executable{
     }
 
     private boolean planBuilding() {
-        Log.log("planBuilding");
         int[] position = pickUpPosition();
         if(position != null) {
+            int doorCount = Rnd.nextInt(12);
             for (int i = -2; i <= 2; i++) {
                 for (int j = -2; j <= 2; j++) {
                     if (Map.distance(position[0], position[1], position[0] + i, position[1] + j) == 2) {
-                        Map.overTile[position[0] + i][position[1] + j] = Tile.missingWall;
+                        if(doorCount == 0) {
+                            Map.overTile[position[0] + i][position[1] + j] = Tile.missingDoor;
+                        }
+                        else {
+                            Map.overTile[position[0] + i][position[1] + j] = Tile.missingWall;
+                        }
+                        doorCount--;
                     }
                 }
             }
@@ -120,21 +137,19 @@ public class Unit extends Executable{
         return true;
     }
 
-    private boolean getItem() {
-        if(Map.underTile(x, y) == Tile.stone) {
-            Log.log("picking up");
-            Map.underTile[x][y] = Tile.depletedStone;
+    private boolean extract(Tile tileToGetItem) {
+        if(Map.underTile(x, y) == tileToGetItem) {
+            Map.underTile[x][y] = tileToGetItem.depletedVersion;
             Map.queueExecutable(new ResourceReplenish(x, y), 10);
-            carrying = itemStone;
+            carrying.add(tileToGetItem.providesItem);
             return true;
         }
         else {
-            return goTo(Tile.stone);
+            return goTo(tileToGetItem);
         }
     }
 
     private boolean goTo(Tile destination) {
-        Log.log("going to " + destination.name);
         int dir = directionTowardsDestination(destination);
         if(dir != -1) {
             removeFromTile();
@@ -208,15 +223,15 @@ public class Unit extends Executable{
     }
 
     private void addToTile() {
-        next = Map.units[x][y];
-        Map.units[x][y] = this;
+        next = Map.unit[x][y];
+        Map.unit[x][y] = this;
     }
 
     private void removeFromTile() {
-        if (Map.units[x][y] == this) {
-            Map.units[x][y] = next;
+        if (Map.unit[x][y] == this) {
+            Map.unit[x][y] = next;
         } else {
-            Unit unit = Map.units[x][y];
+            Unit unit = Map.unit[x][y];
             while (unit.next != this) {
                 unit = unit.next;
             }
