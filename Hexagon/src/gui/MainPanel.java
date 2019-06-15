@@ -41,7 +41,7 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
                     graphics.drawImage(Map.overTile(x, y).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
                 }
 				if(Map.unit(x, y) != null) {
-					graphics.drawImage(Unit.image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 15, 15, this);
+					graphics.drawImage(Map.unit(x, y).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 15, 15, this);
 				}
 			}
 		}

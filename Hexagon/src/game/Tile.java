@@ -14,6 +14,7 @@ public class Tile {
 	public static Tile stone = new Tile("Stone", true, depletedStone, Item.stone);
 	public static Tile cutTree = new Tile("Cut tree", true);
 	public static Tile tree = new Tile("Tree", true, cutTree, Item.wood);
+	public static Tile gate = new Tile("Gate", true);
 
 	// OVERTILES:
 	public static Tile wall = new Tile("Wall", false);

@@ -32,20 +32,33 @@ public class Map {
 				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.tree;
 				}
+				else if (Rnd.nextInt(700) == 0) {
+					underTile[i][j] = Tile.gate;
+					CreateDemon createDemon = new CreateDemon(i, j);
+					queueExecutable(createDemon, 1);
+				}
 				else {
 					underTile[i][j] = Tile.grass;
 					if (Rnd.nextInt(300) == 0) {
-						addUnit(i, j);
+						addUnit(new Person(i, j));
 					}
 				}
 			}
 		}
 	}
 
-	public static void addUnit(int x, int y) {
-		Unit unit = new Unit(x, y);
+	public static void addUnit(Unit unit) {
+		if(Map.unit[unit.x][unit.y] == null) {
+			Map.unit[unit.x][unit.y] = unit;
+		}
+		else{
+			Unit last = Map.unit[unit.x][unit.y];
+			while(last.next != null) {
+				last = last.next;
+			}
+			last.next = unit;
+		}
 		queueExecutable(unit, 1);
-		Map.unit[x][y] = unit;
 	}
 	
 	public static void execute() {
