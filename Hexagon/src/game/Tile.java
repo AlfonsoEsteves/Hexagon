@@ -4,7 +4,7 @@ import gui.ImageLoader;
 
 import java.awt.Image;
 
-public class Tile {
+public class Tile implements Searchable {
 
 	// UNDERTILES:
 	public static Tile grass = new Tile("Grass", true);
@@ -43,4 +43,8 @@ public class Tile {
 		image = ImageLoader.load(name);
 	}
 
+	@Override
+	public boolean is(Object identity) {
+		return identity == this;
+	}
 }

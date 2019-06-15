@@ -32,7 +32,7 @@ public class Map {
 				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.tree;
 				}
-				else if (Rnd.nextInt(700) == 0) {
+				else if (Rnd.nextInt(2000) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);
 					queueExecutable(createDemon, 1);
@@ -65,7 +65,9 @@ public class Map {
 		LinkedList<Executable> currentQueue = executableQueue[time % executableQueueSize];
 		while(!currentQueue.isEmpty()) {
 			Executable executable = currentQueue.removeFirst();
-			executable.execute();
+			if(executable.alive()) {
+				executable.execute();
+			}
 		}
 		time++;
 	}
@@ -99,6 +101,23 @@ public class Map {
 		else {
 			return null;
 		}
+	}
+
+	public static Searchable has(int x, int y, Object identity) {
+		if(underTile(x, y).is(identity)) {
+			return underTile(x, y);
+		}
+		if(overTile(x, y) != null && overTile(x, y).is(identity)) {
+			return overTile(x, y);
+		}
+		Unit unit = unit(x, y);
+		while(unit != null) {
+			if(unit.is(identity)) {
+				return unit;
+			}
+			unit = unit.next;
+		}
+		return null;
 	}
 	
 	public static int getX(int dir) {

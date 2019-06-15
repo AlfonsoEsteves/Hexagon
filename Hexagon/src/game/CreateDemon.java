@@ -1,6 +1,6 @@
 package game;
 
-public class CreateDemon extends Executable {
+public class CreateDemon implements Executable {
 
     public int x, y;
 

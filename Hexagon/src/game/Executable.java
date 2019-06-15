@@ -1,5 +1,11 @@
 package game;
 
-public abstract class Executable {
-    public abstract void execute();
+public interface Executable {
+
+    void execute();
+
+    default boolean alive() {
+        return true;
+    }
+
 }

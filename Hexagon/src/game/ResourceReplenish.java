@@ -1,6 +1,6 @@
 package game;
 
-public class ResourceReplenish extends Executable {
+public class ResourceReplenish implements Executable {
 
     public int x, y;
 

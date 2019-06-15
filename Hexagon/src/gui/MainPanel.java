@@ -34,14 +34,23 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			for(int j = 0;j<viewSize; j++) {
 				int x = viewX + i;
 				int y = viewY + j;
+				int screenX = 20 + i * 10 + j * 10;
+				int screenY = MainFrame.height / 2 + i * 20 - j * 20;
 			    if(Map.overTile(x, y) == null) {
-                    graphics.drawImage(Map.underTile(x, y).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
+                    graphics.drawImage(Map.underTile(x, y).image, screenX, screenY, 20, 20, this);
                 }
 			    else{
-                    graphics.drawImage(Map.overTile(x, y).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 20, 20, this);
+                    graphics.drawImage(Map.overTile(x, y).image, screenX, screenY, 20, 20, this);
                 }
-				if(Map.unit(x, y) != null) {
-					graphics.drawImage(Map.unit(x, y).image, 20 + i * 10 + j * 10, MainFrame.height / 2 + i * 20 - j * 20, 15, 15, this);
+			    Unit unit = Map.unit(x, y);
+				if(unit != null) {
+					graphics.drawImage(unit.image, screenX, screenY, 15, 15, this);
+					int count = 0;
+					while (unit != null) {
+						unit = unit.next;
+						count++;
+					}
+					graphics.drawString("" +count, screenX, screenY);
 				}
 			}
 		}
