@@ -15,6 +15,7 @@ public class Demon extends Unit {
     public Demon(int x, int y) {
         super(x, y);
         image = imageDemon;
+        life = 8;
     }
 
     public boolean is(Object identity) {
@@ -30,10 +31,16 @@ public class Demon extends Unit {
         // The demon could have reached a person
         person = (Person)Map.has(x, y, Person.personIdentity);
         if(person != null) {
-            removeFromTile();
-            person.removeFromTileAndDestroy();
+            life -= 1 + Rnd.nextInt(3);
+            if(life <= 0) {
+                removeFromTile();
+            }
+            person.life -= 1 + Rnd.nextInt(3);
+            if(person.life <= 0) {
+                person.removeFromTileAndDestroy();
+            }
         }
-        else{
+        if(life > 0) {
             Map.queueExecutable(this, 1);
         }
     }

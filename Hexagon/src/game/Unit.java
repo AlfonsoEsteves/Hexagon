@@ -22,7 +22,12 @@ public abstract class Unit implements Executable, Searchable{
 
     public Image image;
 
+    // Indicates whether the unit should be executed or not
+    // Remember that when a unit gets destroyed, it is removed
+    // from the map, but not from the execution queue.
     public boolean alive;
+
+    public int life;
 
     public Unit(int x, int y) {
         this.x = x;

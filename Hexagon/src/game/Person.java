@@ -23,6 +23,7 @@ public class Person extends Unit {
         usualX = x;
         usualY = y;
         image = imagePerson;
+        life = 10;
     }
 
     public boolean is(Object identity) {
@@ -30,9 +31,20 @@ public class Person extends Unit {
     }
 
     public void execute() {
-        if(!build()) {
-            goTo(Tile.bed);
+        if(life < 10) {
+            if(Map.has(x, y, Tile.bed) != null) {
+                life++;
+            }
+            else{
+                if(!goTo(Tile.bed)){
+                    build();
+                }
+            }
         }
+        else {
+            build();
+        }
+
         usualX += (x - usualX) / 10;
         usualY += (y - usualY) / 10;
         Map.queueExecutable(this, 1);
@@ -56,10 +68,23 @@ public class Person extends Unit {
             if (carrying.contains(Item.wood)) {
                 if (Map.overTile(x, y) == Tile.missingDoor) {
                     Map.overTile[x][y] = Tile.door;
-                    carrying.remove(Item.stone);
+                    carrying.remove(Item.wood);
                     return true;
                 } else {
                     return goTo(Tile.missingDoor);
+                }
+            } else {
+                return extract(Tile.tree);
+            }
+        }
+        else if(checkThereIsClose(Tile.missingBed)) {
+            if (carrying.contains(Item.wood)) {
+                if (Map.overTile(x, y) == Tile.missingBed) {
+                    Map.overTile[x][y] = Tile.bed;
+                    carrying.remove(Item.wood);
+                    return true;
+                } else {
+                    return goTo(Tile.missingBed);
                 }
             } else {
                 return extract(Tile.tree);
@@ -100,8 +125,10 @@ public class Person extends Unit {
                     }
                 }
             }
+            Map.overTile[position[0]][position[1]] = Tile.missingBed;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private int[] pickUpPosition() {

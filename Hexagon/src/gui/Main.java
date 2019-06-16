@@ -3,6 +3,7 @@ package gui;
 import game.Game;
 import game.Log;
 import game.Map;
+import game.MapIter;
 
 import java.awt.*;
 

@@ -22,6 +22,7 @@ public class Tile implements Searchable {
 	public static Tile door = new Tile("Door", true);
 	public static Tile missingDoor = new Tile("Missing door", true);
 	public static Tile bed = new Tile("Bed", true);
+	public static Tile missingBed = new Tile("Missing bed", true);
 
 	public String name;
 	public boolean steppable;

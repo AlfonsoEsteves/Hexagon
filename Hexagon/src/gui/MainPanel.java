@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
 import game.Map;
+import game.MapIter;
 import game.Unit;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
@@ -45,11 +46,14 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			    Unit unit = Map.unit(x, y);
 				if(unit != null) {
 					graphics.drawImage(unit.image, screenX, screenY, 15, 15, this);
+					graphics.setColor(Color.blue);
+					graphics.drawString("" +unit.life, screenX, screenY + 20);
 					int count = 0;
 					while (unit != null) {
 						unit = unit.next;
 						count++;
 					}
+					graphics.setColor(Color.white);
 					graphics.drawString("" +count, screenX, screenY);
 				}
 			}
@@ -66,8 +70,11 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
+		for(int[] p : MapIter.of(viewSize)){
+			seleccionar la unidad mas cercana al click
+		}
+
 	}
 
 	@Override
