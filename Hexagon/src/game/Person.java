@@ -90,6 +90,19 @@ public class Person extends Unit {
                 return extract(Tile.tree);
             }
         }
+        else if(checkThereIsClose(Tile.missingAnvil)) {
+            if (carrying.contains(Item.iron)) {
+                if (Map.overTile(x, y) == Tile.missingAnvil) {
+                    Map.overTile[x][y] = Tile.anvil;
+                    carrying.remove(Item.iron);
+                    return true;
+                } else {
+                    return goTo(Tile.missingAnvil);
+                }
+            } else {
+                return extract(Tile.iron);
+            }
+        }
         else {
             return planBuilding();
         }
@@ -125,7 +138,12 @@ public class Person extends Unit {
                     }
                 }
             }
-            Map.overTile[position[0]][position[1]] = Tile.missingBed;
+            if(life < 10) {
+                Map.overTile[position[0]][position[1]] = Tile.missingBed;
+            }
+            else{
+                Map.overTile[position[0]][position[1]] = Tile.missingAnvil;
+            }
             return true;
         }
         return false;
@@ -161,7 +179,7 @@ public class Person extends Unit {
     private boolean extract(Tile tileToGetItem) {
         if(Map.underTile(x, y) == tileToGetItem) {
             Map.underTile[x][y] = tileToGetItem.depletedVersion;
-            Map.queueExecutable(new ResourceReplenish(x, y), 10);
+            Map.queueExecutable(new ResourceReplenish(x, y, tileToGetItem), 30);
             carrying.add(tileToGetItem.providesItem);
             return true;
         }

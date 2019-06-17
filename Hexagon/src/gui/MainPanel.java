@@ -72,7 +72,7 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	public void mousePressed(MouseEvent e) {
 
 		for(int[] p : MapIter.of(viewSize)){
-			seleccionar la unidad mas cercana al click
+			//seleccionar la unidad mas cercana al click
 		}
 
 	}

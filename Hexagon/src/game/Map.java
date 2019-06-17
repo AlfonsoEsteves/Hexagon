@@ -32,6 +32,9 @@ public class Map {
 				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.tree;
 				}
+				else if (Rnd.nextInt(180) == 0) {
+					underTile[i][j] = Tile.iron;
+				}
 				else if (Rnd.nextInt(2000) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);

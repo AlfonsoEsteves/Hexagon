@@ -12,6 +12,8 @@ public class Tile implements Searchable {
 	public static Tile fertileGround = new Tile("Fertile ground", true);
 	public static Tile depletedStone = new Tile("Depleted stone", true);
 	public static Tile stone = new Tile("Stone", true, depletedStone, Item.stone);
+	public static Tile depletedIron = new Tile("Depleted iron", true);
+	public static Tile iron = new Tile("Iron", true, depletedIron, Item.iron);
 	public static Tile cutTree = new Tile("Cut tree", true);
 	public static Tile tree = new Tile("Tree", true, cutTree, Item.wood);
 	public static Tile gate = new Tile("Gate", true);
@@ -23,6 +25,8 @@ public class Tile implements Searchable {
 	public static Tile missingDoor = new Tile("Missing door", true);
 	public static Tile bed = new Tile("Bed", true);
 	public static Tile missingBed = new Tile("Missing bed", true);
+	public static Tile anvil = new Tile("Anvil", true);
+	public static Tile missingAnvil = new Tile("Missing anvil", true);
 
 	public String name;
 	public boolean steppable;
