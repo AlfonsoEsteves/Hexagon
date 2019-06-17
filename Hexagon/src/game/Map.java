@@ -4,13 +4,13 @@ import java.util.LinkedList;
 
 public class Map {
 
-	public static final int size = 650;
+	public static final int size = 500;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static Tile[][] overTile = new Tile[size][size];
 	public static Unit[][] unit = new Unit[size][size];
 
-	public static final int executableQueueSize = 100;
+	public static final int executableQueueSize = 200;
 
 	public static LinkedList<Executable>[] executableQueue = new LinkedList[executableQueueSize];
 

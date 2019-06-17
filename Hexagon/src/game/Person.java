@@ -109,7 +109,12 @@ public class Person extends Unit {
     }
 
     private boolean checkThereIsClose(Tile tile) {
-        for(int i = -pathfindingDistanceLimit;i<=pathfindingDistanceLimit;i++) {
+        for(int[] p : MapIter.of(pathfindingDistanceLimit)){
+            if (Map.underTile(x + p[0], y + p[1]) == tile || Map.overTile(x + p[0], y + p[1]) == tile) {
+                return true;
+            }
+        }
+        /*for(int i = -pathfindingDistanceLimit;i<=pathfindingDistanceLimit;i++) {
             for(int j = -pathfindingDistanceLimit;j<=pathfindingDistanceLimit;j++) {
                 if (Map.distance(0, 0, i, j) < pathfindingDistanceLimit) {
                     if (Map.underTile(x + i, y + j) == tile || Map.overTile(x + i, y + j) == tile) {
@@ -117,7 +122,7 @@ public class Person extends Unit {
                     }
                 }
             }
-        }
+        }*/
         return false;
     }
 
@@ -163,7 +168,13 @@ public class Person extends Unit {
     }
 
     private boolean checkPickedPosition(int pickedX, int pickedY) {
-        for (int i = -3; i <= 3; i++) {
+        for(int[] p : MapIter.of(3)) {
+            if(Map.underTile(pickedX + p[0], pickedY + p[1]) != Tile.grass ||
+                    Map.overTile(pickedX + p[0], pickedY + p[1]) != null) {
+                return false;
+            }
+        }
+        /*for (int i = -3; i <= 3; i++) {
             for (int j = -3; j <= 3; j++) {
                 if (Map.distance(0, 0, i, j) <= 3) {
                     if(Map.underTile(pickedX + i, pickedY + j) != Tile.grass ||
@@ -172,14 +183,14 @@ public class Person extends Unit {
                     }
                 }
             }
-        }
+        }*/
         return true;
     }
 
     private boolean extract(Tile tileToGetItem) {
         if(Map.underTile(x, y) == tileToGetItem) {
             Map.underTile[x][y] = tileToGetItem.depletedVersion;
-            Map.queueExecutable(new ResourceReplenish(x, y, tileToGetItem), 30);
+            Map.queueExecutable(new ResourceReplenish(x, y, tileToGetItem), 100);
             carrying.add(tileToGetItem.providesItem);
             return true;
         }
