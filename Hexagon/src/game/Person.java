@@ -11,19 +11,24 @@ public class Person extends Unit {
 
     public static Object personIdentity;
     public static Image imagePerson = ImageLoader.load("Person");
+    public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
 
     public int usualX;
     public int usualY;
 
-    public List<Item> carrying;
+    public List<Item.Identity> carrying;
 
     public Person(int x, int y) {
         super(x, y);
         carrying = new ArrayList<>();
         usualX = x;
         usualY = y;
-        image = imagePerson;
         life = 10;
+    }
+
+    @Override
+    public Image image() {
+        return carrying.contains(Item.Identity.sword) ? imagePersonWithSword : imagePerson;
     }
 
     public boolean is(Object identity) {
@@ -34,6 +39,18 @@ public class Person extends Unit {
         if(life < 10) {
             if(Map.has(x, y, Tile.bed) != null) {
                 life++;
+            }
+            else{
+                if(!goTo(Tile.bed)){
+                    build();
+                }
+            }
+        }
+        else if(!carrying.contains(Item.Identity.sword)) {
+            if(Map.has(x, y, Item.Identity.sword) != null) {
+
+
+
             }
             else{
                 if(!goTo(Tile.bed)){
@@ -52,10 +69,10 @@ public class Person extends Unit {
 
     private boolean build() {
         if(checkThereIsClose(Tile.missingWall)) {
-            if (carrying.contains(Item.stone)) {
+            if (carrying.contains(Item.Identity.stone)) {
                 if (Map.overTile(x, y) == Tile.missingWall) {
                     Map.overTile[x][y] = Tile.wall;
-                    carrying.remove(Item.stone);
+                    carrying.remove(Item.Identity.stone);
                     return true;
                 } else {
                     return goTo(Tile.missingWall);
@@ -65,10 +82,10 @@ public class Person extends Unit {
             }
         }
         else if(checkThereIsClose(Tile.missingDoor)) {
-            if (carrying.contains(Item.wood)) {
+            if (carrying.contains(Item.Identity.wood)) {
                 if (Map.overTile(x, y) == Tile.missingDoor) {
                     Map.overTile[x][y] = Tile.door;
-                    carrying.remove(Item.wood);
+                    carrying.remove(Item.Identity.wood);
                     return true;
                 } else {
                     return goTo(Tile.missingDoor);
@@ -78,10 +95,10 @@ public class Person extends Unit {
             }
         }
         else if(checkThereIsClose(Tile.missingBed)) {
-            if (carrying.contains(Item.wood)) {
+            if (carrying.contains(Item.Identity.wood)) {
                 if (Map.overTile(x, y) == Tile.missingBed) {
                     Map.overTile[x][y] = Tile.bed;
-                    carrying.remove(Item.wood);
+                    carrying.remove(Item.Identity.wood);
                     return true;
                 } else {
                     return goTo(Tile.missingBed);
@@ -91,10 +108,10 @@ public class Person extends Unit {
             }
         }
         else if(checkThereIsClose(Tile.missingAnvil)) {
-            if (carrying.contains(Item.iron)) {
+            if (carrying.contains(Item.Identity.iron)) {
                 if (Map.overTile(x, y) == Tile.missingAnvil) {
                     Map.overTile[x][y] = Tile.anvil;
-                    carrying.remove(Item.iron);
+                    carrying.remove(Item.Identity.iron);
                     return true;
                 } else {
                     return goTo(Tile.missingAnvil);

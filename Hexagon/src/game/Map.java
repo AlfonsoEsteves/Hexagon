@@ -8,7 +8,7 @@ public class Map {
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static Tile[][] overTile = new Tile[size][size];
-	public static Unit[][] unit = new Unit[size][size];
+	public static Occupant[][] unit = new Unit[size][size];
 
 	public static final int executableQueueSize = 200;
 
@@ -55,7 +55,7 @@ public class Map {
 			Map.unit[unit.x][unit.y] = unit;
 		}
 		else{
-			Unit last = Map.unit[unit.x][unit.y];
+			Occupant last = Map.unit[unit.x][unit.y];
 			while(last.next != null) {
 				last = last.next;
 			}
@@ -97,15 +97,6 @@ public class Map {
         }
     }
 
-    public static Unit unit(int x, int y) {
-		if(x >= 0 && x < size && y >= 0 && y < size) {
-			return unit[x][y];
-		}
-		else {
-			return null;
-		}
-	}
-
 	public static Searchable has(int x, int y, Object identity) {
 		if(underTile(x, y).is(identity)) {
 			return underTile(x, y);
@@ -113,12 +104,15 @@ public class Map {
 		if(overTile(x, y) != null && overTile(x, y).is(identity)) {
 			return overTile(x, y);
 		}
-		Unit unit = unit(x, y);
-		while(unit != null) {
-			if(unit.is(identity)) {
-				return unit;
+		Occupant currentUnit = null;
+		if(x >= 0 && x < size && y >= 0 && y < size) {
+			currentUnit = unit[x][y];
+		}
+		while(currentUnit != null) {
+			if(currentUnit.is(identity)) {
+				return currentUnit;
 			}
-			unit = unit.next;
+			currentUnit = currentUnit.next;
 		}
 		return null;
 	}

@@ -11,11 +11,11 @@ public class Tile implements Searchable {
 	public static Tile water = new Tile("Water", false);
 	public static Tile fertileGround = new Tile("Fertile ground", true);
 	public static Tile depletedStone = new Tile("Depleted stone", true);
-	public static Tile stone = new Tile("Stone", true, depletedStone, Item.stone);
+	public static Tile stone = new Tile("Stone", true, depletedStone, Item.Identity.stone);
 	public static Tile depletedIron = new Tile("Depleted iron", true);
-	public static Tile iron = new Tile("Iron", true, depletedIron, Item.iron);
+	public static Tile iron = new Tile("Iron", true, depletedIron, Item.Identity.iron);
 	public static Tile cutTree = new Tile("Cut tree", true);
-	public static Tile tree = new Tile("Tree", true, cutTree, Item.wood);
+	public static Tile tree = new Tile("Tree", true, cutTree, Item.Identity.wood);
 	public static Tile gate = new Tile("Gate", true);
 
 	// OVERTILES:
@@ -31,7 +31,7 @@ public class Tile implements Searchable {
 	public String name;
 	public boolean steppable;
 	public Tile depletedVersion;
-	public Item providesItem;
+	public Item.Identity providesItem;
 	public Image image;
 
 	public Tile(String name, boolean steppable) {
@@ -40,7 +40,7 @@ public class Tile implements Searchable {
 		image = ImageLoader.load(name);
 	}
 
-	public Tile(String name, boolean steppable, Tile depletedVersion, Item providesItem) {
+	public Tile(String name, boolean steppable, Tile depletedVersion, Item.Identity providesItem) {
 		this.name = name;
 		this.steppable = steppable;
 		this.depletedVersion = depletedVersion;

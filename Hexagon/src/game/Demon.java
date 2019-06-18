@@ -14,8 +14,12 @@ public class Demon extends Unit {
 
     public Demon(int x, int y) {
         super(x, y);
-        image = imageDemon;
         life = 8;
+    }
+
+    @Override
+    public Image image() {
+        return imageDemon;
     }
 
     public boolean is(Object identity) {
