@@ -1,18 +1,15 @@
 package game;
 
-public class Item extends Occupant {
+public class Item {
 
-    public enum Identity {stone, wood, iron, sword}
+    public static Item stone = new Item("Stone");
+    public static Item wood = new Item("Wood");
+    public static Item iron = new Item("Iron");
+    public static Item sword = new Item("Sword");
 
-    public Identity identity;
+    public String name;
 
-    public Item(Identity identity) {
-        this.identity = identity;
+    public Item(String name) {
+        this.name = name;
     }
-
-    @Override
-    public boolean is(Object identity) {
-        return this.identity == identity;
-    }
-
 }

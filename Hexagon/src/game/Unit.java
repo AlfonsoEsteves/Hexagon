@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Unit extends Occupant implements Executable {
+public abstract class Unit implements Executable, Searchable {
 
     public static final int pathfindingDistanceLimit = 25;
 
@@ -17,6 +17,8 @@ public abstract class Unit extends Occupant implements Executable {
 
     public int x;
     public int y;
+
+    public Unit next;
 
     // Indicates whether the unit should be executed or not
     // Remember that when a unit gets destroyed, it is removed
@@ -120,7 +122,7 @@ public abstract class Unit extends Occupant implements Executable {
         if (Map.unit[x][y] == this) {
             Map.unit[x][y] = next;
         } else {
-            Occupant unit = Map.unit[x][y];
+            Unit unit = Map.unit[x][y];
             while (unit.next != this) {
                 unit = unit.next;
             }

@@ -16,7 +16,7 @@ public class Person extends Unit {
     public int usualX;
     public int usualY;
 
-    public List<Item.Identity> carrying;
+    public List<Item> carrying;
 
     public Person(int x, int y) {
         super(x, y);
@@ -28,7 +28,7 @@ public class Person extends Unit {
 
     @Override
     public Image image() {
-        return carrying.contains(Item.Identity.sword) ? imagePersonWithSword : imagePerson;
+        return carrying.contains(Item.sword) ? imagePersonWithSword : imagePerson;
     }
 
     public boolean is(Object identity) {
@@ -46,8 +46,8 @@ public class Person extends Unit {
                 }
             }
         }
-        else if(!carrying.contains(Item.Identity.sword)) {
-            if(Map.has(x, y, Item.Identity.sword) != null) {
+        else if(!carrying.contains(Item.sword)) {
+            if(Map.has(x, y, Item.sword) != null) {
 
 
 
@@ -69,10 +69,10 @@ public class Person extends Unit {
 
     private boolean build() {
         if(checkThereIsClose(Tile.missingWall)) {
-            if (carrying.contains(Item.Identity.stone)) {
+            if (carrying.contains(Item.stone)) {
                 if (Map.overTile(x, y) == Tile.missingWall) {
                     Map.overTile[x][y] = Tile.wall;
-                    carrying.remove(Item.Identity.stone);
+                    carrying.remove(Item.stone);
                     return true;
                 } else {
                     return goTo(Tile.missingWall);
@@ -82,10 +82,10 @@ public class Person extends Unit {
             }
         }
         else if(checkThereIsClose(Tile.missingDoor)) {
-            if (carrying.contains(Item.Identity.wood)) {
+            if (carrying.contains(Item.wood)) {
                 if (Map.overTile(x, y) == Tile.missingDoor) {
                     Map.overTile[x][y] = Tile.door;
-                    carrying.remove(Item.Identity.wood);
+                    carrying.remove(Item.wood);
                     return true;
                 } else {
                     return goTo(Tile.missingDoor);
@@ -95,10 +95,10 @@ public class Person extends Unit {
             }
         }
         else if(checkThereIsClose(Tile.missingBed)) {
-            if (carrying.contains(Item.Identity.wood)) {
+            if (carrying.contains(Item.wood)) {
                 if (Map.overTile(x, y) == Tile.missingBed) {
                     Map.overTile[x][y] = Tile.bed;
-                    carrying.remove(Item.Identity.wood);
+                    carrying.remove(Item.wood);
                     return true;
                 } else {
                     return goTo(Tile.missingBed);
@@ -108,10 +108,10 @@ public class Person extends Unit {
             }
         }
         else if(checkThereIsClose(Tile.missingAnvil)) {
-            if (carrying.contains(Item.Identity.iron)) {
+            if (carrying.contains(Item.iron)) {
                 if (Map.overTile(x, y) == Tile.missingAnvil) {
                     Map.overTile[x][y] = Tile.anvil;
-                    carrying.remove(Item.Identity.iron);
+                    carrying.remove(Item.iron);
                     return true;
                 } else {
                     return goTo(Tile.missingAnvil);
