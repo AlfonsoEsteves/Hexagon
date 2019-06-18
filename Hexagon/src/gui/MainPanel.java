@@ -15,7 +15,7 @@ import game.Unit;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 	
-	public static int viewSize = 40;
+	public static int viewSize = 20;
 	public static int viewX = 0;
 	public static int viewY = 0;
 
@@ -34,7 +34,7 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 		for(int[] p : MapIter.of(viewSize)){
 			int x = viewX + p[0];
 			int y = viewY + p[1];
-			int screenX = 20 + p[0] * 10 + p[1] * 10;
+			int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
 			int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
 			if(Map.overTile(x, y) == null) {
 				graphics.drawImage(Map.underTile(x, y).image, screenX, screenY, 20, 20, this);

@@ -27,7 +27,7 @@ public class Demon extends Unit {
     }
 
     public void execute() {
-        Unit person = (Person)Map.has(x, y, Person.personIdentity);
+        Person person = (Person)Map.has(x, y, Person.personIdentity);
         if(person == null) {
             goTo(Person.personIdentity);
         }
@@ -35,7 +35,7 @@ public class Demon extends Unit {
         // The demon could have reached a person
         person = (Person)Map.has(x, y, Person.personIdentity);
         if(person != null) {
-            life -= 1 + Rnd.nextInt(3);
+            life -= (1 + Rnd.nextInt(3)) * (person.carrying.contains(Item.sword) ? 2 : 1);
             if(life <= 0) {
                 removeFromTile();
             }

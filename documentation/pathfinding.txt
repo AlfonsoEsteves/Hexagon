@@ -1,3 +1,15 @@
 algoritmo de PF exagonal
   notar que con tiles cuadrados no tengo que chequear la dir por la que vengo (ya se que ese tile es stepable)
   con tiles exagonales, no tengo que chequear por donde vengo, ni los 2 adyacentes, porque luedo llegar mas cerca por donde vengo
+
+
+
+
+
+podria hacer que siertos tiles tengan un costo mas alto de movimiento
+  por ejemplo si entraste a un tile con arbol, el proximo turno lo tenes en 2 turnos
+   si entraste a un tile con agua, el proximo turno lo tenes en 4 turnos
+
+
+podria implementar el algoritmo con varias colas, en ves de solo una
+   una por cada nivel

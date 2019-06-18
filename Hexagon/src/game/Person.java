@@ -47,13 +47,19 @@ public class Person extends Unit {
             }
         }
         else if(!carrying.contains(Item.sword)) {
-            if(Map.has(x, y, Item.sword) != null) {
-
-
-
+            if(carrying.contains(Item.iron)) {
+                if(Map.has(x,y, Tile.anvil) != null){
+                    carrying.remove(Item.iron);
+                    carrying.add(Item.sword);
+                }
+                else{
+                    if(!goTo(Tile.anvil)) {
+                        build();
+                    }
+                }
             }
             else{
-                if(!goTo(Tile.bed)){
+                if(!extract(Tile.iron)){
                     build();
                 }
             }
