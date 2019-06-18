@@ -36,6 +36,24 @@ public class Person extends Unit {
     }
 
     public void execute() {
+        determina la lista de prioridades con sus respectivos coeficientes de distancia
+                por ejemplo, si la unidad tiene poca vida curarse tendria
+                mucha prioridad y un coeficiente bajo
+                  de tal manera que moverse 20 tiles para curarse sea mejor que moverse
+                  10 tiles para hacer otro objetive con un coeficiente mas alto
+                  20*0.1 < 10*0.5, por lo tanto curarse es como si fuece "lo mas cercano/importante"
+
+
+       cuando el algoritmo se topa con stone lo registra, luego si mas adelante se topa con un missing wall
+                entonces (si es la mejor opcion) la unidad va a ir a recoger el stone
+                   en el calculo de prioridad usa la distancia del stone
+                y deja rejistrada la ubicacion de el missing wall
+                  para que sea mas eficiente buscarlo
+                  y por si buscando la stone se aleja mas alla de la dist max
+
+
+
+
         if(life < 100) {
             if(Map.has(x, y, Tile.bed) != null) {
                 life += 10;
