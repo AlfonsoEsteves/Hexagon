@@ -23,7 +23,7 @@ public class Person extends Unit {
         carrying = new ArrayList<>();
         usualX = x;
         usualY = y;
-        life = 10;
+        life = 100;
     }
 
     @Override
@@ -36,9 +36,9 @@ public class Person extends Unit {
     }
 
     public void execute() {
-        if(life < 10) {
+        if(life < 100) {
             if(Map.has(x, y, Tile.bed) != null) {
-                life++;
+                life += 10;
             }
             else{
                 if(!goTo(Tile.bed)){
@@ -166,7 +166,7 @@ public class Person extends Unit {
                     }
                 }
             }
-            if(life < 10) {
+            if(life < 100) {
                 Map.overTile[position[0]][position[1]] = Tile.missingBed;
             }
             else{

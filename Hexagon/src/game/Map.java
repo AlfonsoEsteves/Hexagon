@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Map {
 
-	public static final int size = 500;
+	public static final int size = 400;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static Tile[][] overTile = new Tile[size][size];
@@ -73,6 +73,16 @@ public class Map {
 			}
 		}
 		time++;
+		for(int i=0;i<size;i++){
+			for(int j=0;j<size;j++){
+				Unit u = unit(i,j);
+				if(u != null){
+					if(u.life<=0){
+						throw new RuntimeException();
+					}
+				}
+			}
+		}
 	}
 
 	public static void queueExecutable(Executable executable, int delay) {

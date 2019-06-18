@@ -14,7 +14,7 @@ public class Demon extends Unit {
 
     public Demon(int x, int y) {
         super(x, y);
-        life = 8;
+        life = 160;
     }
 
     @Override
@@ -35,16 +35,17 @@ public class Demon extends Unit {
         // The demon could have reached a person
         person = (Person)Map.has(x, y, Person.personIdentity);
         if(person != null) {
-            life -= (1 + Rnd.nextInt(3)) * (person.carrying.contains(Item.sword) ? 2 : 1);
-            if(life <= 0) {
-                removeFromTile();
-            }
-            person.life -= 1 + Rnd.nextInt(3);
+            life -= (10 + Rnd.nextInt(30)) * (person.carrying.contains(Item.sword) ? 2 : 1);
+            person.life -= 10 + Rnd.nextInt(30);
             if(person.life <= 0) {
                 person.removeFromTileAndDestroy();
             }
         }
-        if(life > 0) {
+        life--;
+        if(life <= 0) {
+            removeFromTile();
+        }
+        else {
             Map.queueExecutable(this, 1);
         }
     }
