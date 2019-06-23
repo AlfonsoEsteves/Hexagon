@@ -1,13 +1,13 @@
-package game;
+package game.game.unit;
 
+import game.*;
 import gui.ImageLoader;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class Person extends Unit {
+public class PersonOld extends Unit {
 
     public static Object personIdentity;
     public static Image imagePerson = ImageLoader.load("Person");
@@ -18,7 +18,7 @@ public class Person extends Unit {
 
     public List<Item> carrying;
 
-    public Person(int x, int y) {
+    public PersonOld(int x, int y) {
         super(x, y);
         carrying = new ArrayList<>();
         usualX = x;

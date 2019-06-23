@@ -1,5 +1,8 @@
 package game;
 
+import game.game.unit.Person;
+import game.game.unit.Unit;
+
 import java.util.LinkedList;
 
 public class Map {
@@ -163,6 +166,32 @@ public class Map {
 			return -1;
 		}
 		return 0;
+	}
+
+	public static int closestDirection(int x, int y) {
+		double z = (double)(y) / (double)(x);
+		if (x + y >= 0) {
+			if(y * 2 < x) {
+				return 0;
+			}
+			else if(y < x * 2) {
+				return 1;
+			}
+			else{
+				return 2;
+			}
+		}
+		else{
+			if(y * 2 > x) {
+				return 3;
+			}
+			else if(y > x * 2) {
+				return 4;
+			}
+			else{
+				return 5;
+			}
+		}
 	}
 	
 	public static boolean steppable(int x, int y) {

@@ -4,14 +4,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
 import game.Map;
 import game.MapIter;
-import game.Unit;
+import game.game.unit.Unit;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 	

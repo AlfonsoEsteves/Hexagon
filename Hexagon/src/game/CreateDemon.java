@@ -1,5 +1,7 @@
 package game;
 
+import game.game.unit.Demon;
+
 public class CreateDemon implements Executable {
 
     public int x, y;

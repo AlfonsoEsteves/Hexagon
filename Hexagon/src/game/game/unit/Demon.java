@@ -1,11 +1,11 @@
-package game;
+package game.game.unit;
 
+import game.Item;
+import game.Map;
+import game.Rnd;
 import gui.ImageLoader;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Demon extends Unit {
 
@@ -27,7 +27,7 @@ public class Demon extends Unit {
     }
 
     public void execute() {
-        Person person = (Person)Map.has(x, y, Person.personIdentity);
+        Person person = (Person) Map.has(x, y, Person.personIdentity);
         if(person == null) {
             goTo(Person.personIdentity);
         }
