@@ -36,7 +36,7 @@ public class Person extends Unit {
     }
 
     public void execute() {
-        determina la lista de prioridades con sus respectivos coeficientes de distancia
+        /*determina la lista de prioridades con sus respectivos coeficientes de distancia
                 por ejemplo, si la unidad tiene poca vida curarse tendria
                 mucha prioridad y un coeficiente bajo
                   de tal manera que moverse 20 tiles para curarse sea mejor que moverse
@@ -49,7 +49,7 @@ public class Person extends Unit {
                    en el calculo de prioridad usa la distancia del stone
                 y deja rejistrada la ubicacion de el missing wall
                   para que sea mas eficiente buscarlo
-                  y por si buscando la stone se aleja mas alla de la dist max
+                  y por si buscando la stone se aleja mas alla de la dist max*/
 
 
 

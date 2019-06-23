@@ -1,0 +1,7 @@
+Cada unidad es un mago
+
+aparecen ecencias aleatorias en el mapa que los magos pueden usar para luchar
+
+
+van a haber muchas unidades de cuerpo a cuerpo que igual pueden tener armas encantadas
+  que hagan danio de color
