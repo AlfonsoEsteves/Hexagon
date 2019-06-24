@@ -11,6 +11,8 @@ import java.util.List;
 
 public abstract class Unit implements Executable, Searchable {
 
+    public static final double maxKeepingSelectedTaskPriorityBonus = 1.5;
+
     public static final double aproxDistanceIncrement = 0.2;
 
     public static final int pathfindingDistanceLimit = 25;
@@ -36,6 +38,7 @@ public abstract class Unit implements Executable, Searchable {
     public Task priorityTask;
     public int destinationX;
     public int destinationY;
+    public double keepingSelectedTaskPriorityBonus;
 
     public class Record {
         Object identity;
@@ -62,18 +65,43 @@ public abstract class Unit implements Executable, Searchable {
 
     public abstract Image image();
 
+
+    cosas para considerar destinos que se mueven, como enemigos
+
+    esta quedando medio complicado el algoritmo
+
+    si la unidad tiene un goal de poca prioridad (ej, construir muro)
+          entonces se la va a pasar escaneando en busqueda de enemigos
+
+
+
+
+
+    me parece que la posta es que:
+    la unidad ejecute el pathfinding solo al comienso con alcance 20
+    y luego no lo ejecute mas
+    pero chequea con alcance 10 si un enemigo aparece cerca.
+
+    O...
+    implementar "The awareness V line"
+    La idea es que todas las unidades son concientes de las cosas que tienen up to 20 tiles
+    entonces, cuando Pepe se mueve:
+        pepe notifica es notificado de que aparecio en su zona de awareness los objetos ques estan en la V line
+        y a su ves los objetos que estan en la V line, son notificadoes de que pepe aparecio en su zona de awareness
+
+    una vez que una objeto es registrado dentro de los awareOf:
+       si no es relevante se olvida
+       si se alejo mas de X distancia se olvida
+
+    Las entonces, cuando una unidad se mueve en una direcion puntual, la V line seria los tiles que entraron en su vision
+
+
+
     @Override
     public void execute() {
         records.stream().forEach(r -> r.aproxDistance += aproxDistanceIncrement);
-
-
-
-        estaba pensando de si tengo que setear la current task a null y l aprioridad a 0 en cada step
-                y dejar que se resetee
-        o si debeo concervar mas las tasks
-
-
-
+        priority = priorityTask.priority(this, destinationX, destinationY, distance);
+        keepingSelectedTaskPriorityBonus = maxKeepingSelectedTaskPriorityBonus;
         scan();
         if(x != destinationX || y != destinationY) {
             goTo(destinationX, destinationY);
@@ -126,6 +154,9 @@ public abstract class Unit implements Executable, Searchable {
                 if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
+                else if(tasks.get(0).maxPriorityPossible / distance <= selectedTaskPriority()) {
+                    break;
+                }
                 else{
                     currentIteration = 0;
                     nextDistanceIteration = queueX.size();
@@ -136,20 +167,25 @@ public abstract class Unit implements Executable, Searchable {
 
     private void processTile(int tileX, int tileY, int distance) {
         for(Task task : tasks) {
-            if (priority >= task.maxPriorityPossible / distance) {
+            if (task.maxPriorityPossible / distance <= selectedTaskPriority()) {
                 // This means that all the subsequent tasks don't need to be
                 // chacked because they have lower masPriorityPossible
                 break;
             }
             double currentPriority = task.priority(this, tileX, tileY, distance);
-            if(currentPriority > priority) {
+            if(currentPriority > selectedTaskPriority()) {
                 priorityTask = task;
                 destinationX = tileX;
                 destinationY = tileY;
                 priority = currentPriority;
+                keepingSelectedTaskPriorityBonus = 1;
                 break;
             }
         }
+    }
+
+    private double selectedTaskPriority() {
+        return priority * keepingSelectedTaskPriorityBonus;
     }
 
     public void goTo(int destinationX, int destinationY) {
