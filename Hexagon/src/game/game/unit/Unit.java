@@ -76,24 +76,26 @@ public abstract class Unit implements Executable, Searchable {
 
 
 
+    ME PARECE QUE LA POSTA ES NO ESCANEAR NUNCA!
 
-    me parece que la posta es que:
-    la unidad ejecute el pathfinding solo al comienso con alcance 20
-    y luego no lo ejecute mas
-    pero chequea con alcance 10 si un enemigo aparece cerca.
-
-    O...
     implementar "The awareness V line"
     La idea es que todas las unidades son concientes de las cosas que tienen up to 20 tiles
     entonces, cuando Pepe se mueve:
         pepe notifica es notificado de que aparecio en su zona de awareness los objetos ques estan en la V line
         y a su ves los objetos que estan en la V line, son notificadoes de que pepe aparecio en su zona de awareness
 
+    cuando un objeto es creado, tiene que ser agregado a todas las awareness lists de los unidades alrededor
+
     una vez que una objeto es registrado dentro de los awareOf:
        si no es relevante se olvida
        si se alejo mas de X distancia se olvida
 
-    Las entonces, cuando una unidad se mueve en una direcion puntual, la V line seria los tiles que entraron en su vision
+    entonces, cuando una unidad se mueve en una direcion puntual, la V line seria los tiles que entraron en su vision
+
+
+    entonces, en cada frame, se ejecuta el algoritmo de liniasYBifurcaciones
+    en caso de que el algoritmo alcance el objetivo de manera Dummy, se registra
+    para que la unidad continue moviendose de manera Dummy
 
 
 
