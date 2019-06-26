@@ -1,13 +1,13 @@
 package game.game.unit;
 
 import game.Executable;
+import game.Log;
 import game.Map;
 import game.Searchable;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public abstract class Unit implements Executable, Searchable {
 
@@ -38,91 +38,45 @@ public abstract class Unit implements Executable, Searchable {
     public Task priorityTask;
     public int destinationX;
     public int destinationY;
-    public double keepingSelectedTaskPriorityBonus;
-
-    public class Record {
-        Object identity;
-        int x;
-        int y;
-        double aproxDistance;
-
-        public Record(Object identity, int x, int y, double aproxDistance){
-            this.identity = identity;
-            this.x = x;
-            this.y = y;
-            this.aproxDistance = aproxDistance;
-        }
-    }
-
-    public List<Record> records;
 
     public Unit(int x, int y) {
         this.x = x;
         this.y = y;
         alive = true;
-        records = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
     public abstract Image image();
-
-
-    cosas para considerar destinos que se mueven, como enemigos
-
-    esta quedando medio complicado el algoritmo
-
-    si la unidad tiene un goal de poca prioridad (ej, construir muro)
-          entonces se la va a pasar escaneando en busqueda de enemigos
-
-
-
-
-    ME PARECE QUE LA POSTA ES NO ESCANEAR NUNCA!
-
-    implementar "The awareness V line"
-    La idea es que todas las unidades son concientes de las cosas que tienen up to 20 tiles
-    entonces, cuando Pepe se mueve:
-        pepe notifica es notificado de que aparecio en su zona de awareness los objetos ques estan en la V line
-        y a su ves los objetos que estan en la V line, son notificadoes de que pepe aparecio en su zona de awareness
-
-    cuando un objeto es creado, tiene que ser agregado a todas las awareness lists de los unidades alrededor
-
-    una vez que una objeto es registrado dentro de los awareOf:
-       si no es relevante se olvida
-       si se alejo mas de X distancia se olvida
-
-    entonces, cuando una unidad se mueve en una direcion puntual, la V line seria los tiles que entraron en su vision
-
-
-    entonces, en cada frame, se ejecuta el algoritmo de liniasYBifurcaciones
-    en caso de que el algoritmo alcance el objetivo de manera Dummy, se registra
-    para que la unidad continue moviendose de manera Dummy
-
-
-
-    @Override
-    public void execute() {
-        records.stream().forEach(r -> r.aproxDistance += aproxDistanceIncrement);
-        priority = priorityTask.priority(this, destinationX, destinationY, distance);
-        keepingSelectedTaskPriorityBonus = maxKeepingSelectedTaskPriorityBonus;
-        scan();
-        if(x != destinationX || y != destinationY) {
-            goTo(destinationX, destinationY);
-        }
-        else {
-            priorityTask.execute(this);
-        }
-
-
-
-        Map.queueExecutable(this, 1);
-    }
 
     @Override
     public boolean alive(){
         return alive;
     }
 
-    private void scan() {
+    @Override
+    public void execute() {
+        Log.log("UNIT", toString());
+        priority = 0;
+        initExecute();
+        if(alive) {
+            scanForTasks();
+            if (x != destinationX || y != destinationY) {
+                goTo(destinationX, destinationY);
+            } else {
+                if (priorityTask != null) {
+                    priorityTask.execute(this);
+                }
+            }
+        }
+        if(alive) {
+            Map.queueExecutable(this, 1);
+        }
+    }
+
+    public void initExecute() {
+    }
+
+    private void scanForTasks() {
         for(int i = 0;i<checkedTilesSize;i++) {
             for(int j = 0;j<checkedTilesSize;j++) {
                 checkedTiles[i][j] = false;
@@ -156,7 +110,7 @@ public abstract class Unit implements Executable, Searchable {
                 if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
-                else if(tasks.get(0).maxPriorityPossible / distance <= selectedTaskPriority()) {
+                else if(tasks.get(0).priority / distance <= priority) {
                     break;
                 }
                 else{
@@ -169,25 +123,19 @@ public abstract class Unit implements Executable, Searchable {
 
     private void processTile(int tileX, int tileY, int distance) {
         for(Task task : tasks) {
-            if (task.maxPriorityPossible / distance <= selectedTaskPriority()) {
+            if (task.priority / distance <= priority) {
                 // This means that all the subsequent tasks don't need to be
                 // chacked because they have lower masPriorityPossible
                 break;
             }
-            double currentPriority = task.priority(this, tileX, tileY, distance);
-            if(currentPriority > selectedTaskPriority()) {
+            if(task.applies(this, tileX, tileY)) {
                 priorityTask = task;
                 destinationX = tileX;
                 destinationY = tileY;
-                priority = currentPriority;
-                keepingSelectedTaskPriorityBonus = 1;
+                priority = task.priority / distance;
                 break;
             }
         }
-    }
-
-    private double selectedTaskPriority() {
-        return priority * keepingSelectedTaskPriorityBonus;
     }
 
     public void goTo(int destinationX, int destinationY) {

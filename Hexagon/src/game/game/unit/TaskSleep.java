@@ -1,19 +1,24 @@
 package game.game.unit;
 
+import game.Map;
+import game.Tile;
+
 public class TaskSleep extends Task{
 
-    public TaskSleep() {
-        super(5);
+    public static TaskSleep instance = new TaskSleep();
+
+    private TaskSleep() {
+        super(6);
     }
 
     @Override
-    public double priority(Unit unit, int tileX, int tileY, int distance) {
+    public boolean applies(Unit unit, int tileX, int tileY) {
         if(unit.life < Person.maxLife) {
-            return maxPriorityPossible * ((double)(Person.maxLife - unit.life) / (double)(Person.maxLife)) / distance;
+            if (Map.has(tileX, tileY, Tile.bed) != null) {
+                return true;
+            }
         }
-        else{
-            return 0;
-        }
+        return false;
     }
 
     @Override

@@ -7,8 +7,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonOld extends Unit {
-
+public class PersonOld {
+/*
     public static Object personIdentity;
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
@@ -36,20 +36,6 @@ public class PersonOld extends Unit {
     }
 
     public void execute() {
-        /*determina la lista de prioridades con sus respectivos coeficientes de distancia
-                por ejemplo, si la unidad tiene poca vida curarse tendria
-                mucha prioridad y un coeficiente bajo
-                  de tal manera que moverse 20 tiles para curarse sea mejor que moverse
-                  10 tiles para hacer otro objetive con un coeficiente mas alto
-                  20*0.1 < 10*0.5, por lo tanto curarse es como si fuece "lo mas cercano/importante"
-
-
-       cuando el algoritmo se topa con stone lo registra, luego si mas adelante se topa con un missing wall
-                entonces (si es la mejor opcion) la unidad va a ir a recoger el stone
-                   en el calculo de prioridad usa la distancia del stone
-                y deja rejistrada la ubicacion de el missing wall
-                  para que sea mas eficiente buscarlo
-                  y por si buscando la stone se aleja mas alla de la dist max*/
 
 
 
@@ -155,15 +141,6 @@ public class PersonOld extends Unit {
                 return true;
             }
         }
-        /*for(int i = -pathfindingDistanceLimit;i<=pathfindingDistanceLimit;i++) {
-            for(int j = -pathfindingDistanceLimit;j<=pathfindingDistanceLimit;j++) {
-                if (Map.distance(0, 0, i, j) < pathfindingDistanceLimit) {
-                    if (Map.underTile(x + i, y + j) == tile || Map.overTile(x + i, y + j) == tile) {
-                        return true;
-                    }
-                }
-            }
-        }*/
         return false;
     }
 
@@ -215,16 +192,6 @@ public class PersonOld extends Unit {
                 return false;
             }
         }
-        /*for (int i = -3; i <= 3; i++) {
-            for (int j = -3; j <= 3; j++) {
-                if (Map.distance(0, 0, i, j) <= 3) {
-                    if(Map.underTile(pickedX + i, pickedY + j) != Tile.grass ||
-                            Map.overTile(pickedX + i, pickedY + j) != null) {
-                        return false;
-                    }
-                }
-            }
-        }*/
         return true;
     }
 
@@ -239,5 +206,5 @@ public class PersonOld extends Unit {
             return goTo(tileToGetItem);
         }
     }
-
+*/
 }

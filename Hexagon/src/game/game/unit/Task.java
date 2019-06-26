@@ -2,13 +2,13 @@ package game.game.unit;
 
 public abstract class Task {
 
-    public double maxPriorityPossible;
+    public double priority;
 
-    public Task(double maxPriorityPossible) {
-        this.maxPriorityPossible = maxPriorityPossible;
+    public Task(double priority) {
+        this.priority = priority;
     }
 
-    public abstract double priority(Unit unit, int tileX, int tileY, int distance);
+    public abstract boolean applies(Unit unit, int tileX, int tileY);
 
     public abstract void execute(Unit unit);
 }

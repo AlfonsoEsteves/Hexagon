@@ -15,6 +15,7 @@ public class Demon extends Unit {
     public Demon(int x, int y) {
         super(x, y);
         life = 160;
+        tasks.add(TaskHuntPerson.instance);
     }
 
     @Override
@@ -26,27 +27,11 @@ public class Demon extends Unit {
         return identity == demonIdentity;
     }
 
-    public void execute() {
-        Person person = (Person) Map.has(x, y, Person.personIdentity);
-        if(person == null) {
-            goTo(Person.personIdentity);
-        }
-
-        // The demon could have reached a person
-        person = (Person)Map.has(x, y, Person.personIdentity);
-        if(person != null) {
-            life -= (10 + Rnd.nextInt(30)) * (person.carrying.contains(Item.sword) ? 2 : 1);
-            person.life -= 10 + Rnd.nextInt(30);
-            if(person.life <= 0) {
-                person.removeFromTileAndDestroy();
-            }
-        }
-        life--;
-        if(life <= 0) {
-            removeFromTile();
-        }
-        else {
-            Map.queueExecutable(this, 1);
+    @Override
+    public void initExecute(){
+        life --;
+        if(life <= 0){
+            removeFromTileAndDestroy();
         }
     }
 

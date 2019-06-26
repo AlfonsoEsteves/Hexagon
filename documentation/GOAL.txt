@@ -1,0 +1,8 @@
+A simulation that attempts to simulate amazing battles abong armies and heros.
+
+
+Combat:
+  area buffs
+  area damage
+  ranged, mele
+  healing

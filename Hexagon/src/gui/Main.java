@@ -23,10 +23,15 @@ public class Main {
 				if (currentTime > nextStepTime) {
 					Log.log( "TIME", "Delay: " + (currentTime - nextStepTime) / 1000000);
 				}
-				Map.execute();
-				MainFrame.instance.repaint();
-
-
+				try {
+					Map.execute();
+					MainFrame.instance.repaint();
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					System.out.println("Event count: " + Log.eventCount);
+					return;
+				}
 
 				Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
 				if(mouseLocation.getX() > MainFrame.width - 50){
