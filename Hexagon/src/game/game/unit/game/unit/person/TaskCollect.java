@@ -1,11 +1,13 @@
-package game.game.unit;
+package game.game.unit.game.unit.person;
 
 import game.Item;
 import game.Map;
 import game.ResourceReplenish;
 import game.Tile;
+import game.game.unit.Task;
+import game.game.unit.Unit;
 
-public class TaskCollect extends Task{
+public class TaskCollect extends Task {
 
     public static TaskCollect instance = new TaskCollect();
 

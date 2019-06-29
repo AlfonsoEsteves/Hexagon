@@ -3,7 +3,7 @@ package game.game.unit;
 import game.Item;
 import game.Map;
 import game.Rnd;
-import game.Tile;
+import game.game.unit.game.unit.person.Person;
 
 public class TaskHuntPerson extends Task{
 
@@ -25,15 +25,8 @@ public class TaskHuntPerson extends Task{
     public void execute(Unit unit) {
         Person person = (Person)Map.has(unit.x, unit.y, Person.personIdentity);
         if(person != null) {
-            unit.life -= (10 + Rnd.nextInt(30)) * (person.carrying.contains(Item.sword) ? 2 : 1);
-            person.life -= 10 + Rnd.nextInt(30);
-            if(person.life <= 0) {
-                person.removeFromTileAndDestroy();
-            }
+            person.damage(10);
         }
-        unit.life--;
-        if(unit.life <= 0) {
-            unit.removeFromTileAndDestroy();
-        }
+       unit.damage(1);
     }
 }

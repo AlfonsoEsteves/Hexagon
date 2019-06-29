@@ -2,6 +2,7 @@ package game.game.unit;
 
 import game.Map;
 import game.Tile;
+import game.game.unit.game.unit.person.Person;
 
 public class TaskSleep extends Task{
 

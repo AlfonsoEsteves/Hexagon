@@ -1,10 +1,12 @@
-package game.game.unit;
+package game.game.unit.game.unit.person;
 
 import game.Item;
 import game.Map;
 import game.Tile;
+import game.game.unit.Task;
+import game.game.unit.Unit;
 
-public class TaskCreateWeapon extends Task{
+public class TaskCreateWeapon extends Task {
 
     public static TaskCreateWeapon instance = new TaskCreateWeapon();
 

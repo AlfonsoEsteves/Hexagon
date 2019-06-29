@@ -1,6 +1,6 @@
 package game;
 
-import game.game.unit.Person;
+import game.game.unit.game.unit.person.Person;
 import game.game.unit.Unit;
 
 import java.util.LinkedList;

@@ -125,7 +125,7 @@ public abstract class Unit implements Executable, Searchable {
         for(Task task : tasks) {
             if (task.priority / distance <= priority) {
                 // This means that all the subsequent tasks don't need to be
-                // chacked because they have lower masPriorityPossible
+                // chacked because they have lower maxPriorityPossible
                 break;
             }
             if(task.applies(this, tileX, tileY)) {
@@ -237,5 +237,12 @@ public abstract class Unit implements Executable, Searchable {
     public void removeFromTileAndDestroy() {
         removeFromTile();
         alive = false;
+    }
+
+    public void damage(int amount){
+        life -= amount;
+        if(life <= 0){
+            removeFromTileAndDestroy();
+        }
     }
 }

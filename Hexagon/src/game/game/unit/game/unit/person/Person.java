@@ -1,6 +1,8 @@
-package game.game.unit;
+package game.game.unit.game.unit.person;
 
 import game.*;
+import game.game.unit.TaskSleep;
+import game.game.unit.Unit;
 import gui.ImageLoader;
 
 import java.awt.*;
