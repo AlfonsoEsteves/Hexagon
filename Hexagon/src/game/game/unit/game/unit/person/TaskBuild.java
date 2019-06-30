@@ -36,33 +36,35 @@ public class TaskBuild extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        Tile missing;
-        Tile built;
-        if(person.carrying.contains(Item.stone)) {
-            missing = Tile.missingWall;
-            built = Tile.wall;
-        }
-        else if(person.carrying.contains(Item.iron)) {
-            missing = Tile.missingAnvil;
-            built = Tile.anvil;
-        }
-        else if(person.carrying.contains(Item.wood)) {
-            missing = Tile.missingDoor;
-            built = Tile.door;
-        }asd
+        Tile built = null;
+        Item resource = null;
+        int[] position = null;
         for(int[] p : MapIter.of(range)) {
+            position = p;
             if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingWall) != null) {
-                person.carrying.remove(Item.stone);
-                Map.overTile[person.x + p[0]][person.y + p[1]] = Tile.wall;
+                resource = Item.stone;
+                built = Tile.wall;
+                break;
             }
             else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingAnvil) != null) {
-                person.carrying.remove(Item.iron);
-                Map.overTile[person.x + p[0]][person.y + p[1]] = Tile.anvil;
+                resource = Item.iron;
+                built = Tile.anvil;
+                break;
             }
             else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingBed) != null) {
-                person.carrying.remove(Item.wood);
-                Map.overTile[person.x + p[0]][person.y + p[1]] = Tile.bed;
+                resource = Item.wood;
+                built = Tile.bed;
+                break;
             }
+            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingDoor) != null) {
+                resource = Item.wood;
+                built = Tile.door;
+                break;
+            }
+        }
+        if(built != null) {
+            person.carrying.remove(resource);
+            Map.overTile[person.x + position[0]][person.y + position[1]] = built;
         }
     }
 }
