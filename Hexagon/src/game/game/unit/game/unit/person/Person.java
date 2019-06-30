@@ -28,6 +28,7 @@ public class Person extends Unit {
         usualY = y;
         life = maxLife;
 
+        tasks.add(TaskFight.instance);
         tasks.add(TaskSleep.instance);
         tasks.add(TaskBuild.instance);
         tasks.add(TaskCollect.instance);

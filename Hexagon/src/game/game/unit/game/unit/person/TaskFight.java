@@ -15,8 +15,7 @@ public class TaskFight extends Task {
 
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
-        Person person = (Person)unit;
-        if(person.carrying.contains(Demon.demonIdentity)){
+        if(Map.has(tileX, tileY, Demon.demonIdentity) != null){
             return true;
         }
         return false;
