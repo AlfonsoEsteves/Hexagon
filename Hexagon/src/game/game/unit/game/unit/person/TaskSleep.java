@@ -1,10 +1,11 @@
-package game.game.unit;
+package game.game.unit.game.unit.person;
 
 import game.Map;
 import game.Tile;
-import game.game.unit.game.unit.person.Person;
+import game.game.unit.Task;
+import game.game.unit.Unit;
 
-public class TaskSleep extends Task{
+public class TaskSleep extends Task {
 
     public static TaskSleep instance = new TaskSleep();
 
