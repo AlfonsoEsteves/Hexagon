@@ -61,7 +61,7 @@ public abstract class Unit implements Executable, Searchable {
         if(alive) {
             scanForTasks();
             if (priorityTask != null) {
-                if (Map.distance(x, y, destinationX, destinationX) > 0) {
+                if (Map.distance(x, y, destinationX, destinationY) > priorityTask.range) {
                     goTo(destinationX, destinationY);
                 } else {
                     priorityTask.execute(this);

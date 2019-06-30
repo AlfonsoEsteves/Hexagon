@@ -11,7 +11,7 @@ public class TaskCreateWeapon extends Task {
     public static TaskCreateWeapon instance = new TaskCreateWeapon();
 
     private TaskCreateWeapon() {
-        super(4);
+        super(4, 0);
     }
 
     @Override

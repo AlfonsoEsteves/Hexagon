@@ -10,7 +10,7 @@ public class TaskHuntPerson extends Task{
     public static TaskHuntPerson instance = new TaskHuntPerson();
 
     private TaskHuntPerson() {
-        super(10);
+        super(10, 0);
     }
 
     @Override

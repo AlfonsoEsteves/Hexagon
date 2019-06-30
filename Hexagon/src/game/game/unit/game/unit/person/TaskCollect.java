@@ -12,7 +12,7 @@ public class TaskCollect extends Task {
     public static TaskCollect instance = new TaskCollect();
 
     private TaskCollect() {
-        super(4);
+        super(4, 0);
     }
 
     @Override

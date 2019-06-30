@@ -10,7 +10,7 @@ public class TaskSleep extends Task {
     public static TaskSleep instance = new TaskSleep();
 
     private TaskSleep() {
-        super(6);
+        super(6, 0);
     }
 
     @Override
