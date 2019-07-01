@@ -1,0 +1,11 @@
+at the beginning each unit is his own leader
+  and units can be converted
+
+units usually get converted by offerings or by threats
+
+each unit remembers a friendly rate towards the groups it encounters
+  if the rate is low, they fight
+  if it is high, they ignore or trade
+  if it is low, they can warn each other not to get closer
+
+rates can be increased by giving offerings

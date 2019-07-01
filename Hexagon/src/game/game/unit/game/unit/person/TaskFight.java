@@ -28,7 +28,7 @@ public class TaskFight extends Task {
             Searchable searchable = Map.has(unit.x + p[0], unit.y + p[1], Demon.demonIdentity);
             if (searchable != null) {
                 Demon demon = (Demon) searchable;
-                demon.damage(person.carrying.contains(Item.sword) ? 20 : 10);
+                demon.damage(person.carrying.contains(Item.sword) ? 10 : 5);
                 return;
             }
         }

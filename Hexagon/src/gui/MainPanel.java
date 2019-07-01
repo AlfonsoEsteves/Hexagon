@@ -11,9 +11,11 @@ import javax.swing.event.MouseInputListener;
 import game.Map;
 import game.MapIter;
 import game.game.unit.Unit;
+import game.game.unit.game.unit.person.Person;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
-	
+
+	public static Unit selectedUnit;
 	public static int viewSize = 20;
 	public static int viewX = 0;
 	public static int viewY = 0;
@@ -28,6 +30,11 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 
 	@Override
 	public void paint(Graphics graphics) {
+		if(selectedUnit != null) {
+			viewX = selectedUnit.x;
+			viewY = selectedUnit.y;
+		}
+
 		graphics.setColor(Color.blue);
 		graphics.fillRect(0, 0, MainFrame.width, MainFrame.height);
 		for(int[] p : MapIter.of(viewSize)){
@@ -55,34 +62,6 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				graphics.drawString("" +count, screenX, screenY);
 			}
 		}
-
-		/*for(int i = 0;i<viewSize; i++) {
-			for(int j = 0;j<viewSize; j++) {
-				int x = viewX + i;
-				int y = viewY + j;
-				int screenX = 20 + i * 10 + j * 10;
-				int screenY = MainFrame.height / 2 + i * 20 - j * 20;
-			    if(Map.overTile(x, y) == null) {
-                    graphics.drawImage(Map.underTile(x, y).image, screenX, screenY, 20, 20, this);
-                }
-			    else{
-                    graphics.drawImage(Map.overTile(x, y).image, screenX, screenY, 20, 20, this);
-                }
-			    Unit unit = Map.unit(x, y);
-				if(unit != null) {
-					graphics.drawImage(unit.image, screenX, screenY, 15, 15, this);
-					graphics.setColor(Color.blue);
-					graphics.drawString("" +unit.life, screenX, screenY + 20);
-					int count = 0;
-					while (unit != null) {
-						unit = unit.next;
-						count++;
-					}
-					graphics.setColor(Color.white);
-					graphics.drawString("" +count, screenX, screenY);
-				}
-			}
-		}*/
 		graphics.setColor(Color.white);
 		graphics.drawString("" + Map.time, 10,10);
 	}
@@ -95,9 +74,22 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		selectedUnit = null;
+		double minDistance = 250;
 		for(int[] p : MapIter.of(viewSize)){
-			//seleccionar la unidad mas cercana al click
+			int x = viewX + p[0];
+			int y = viewY + p[1];
+			Unit unit = (Unit)Map.has(x, y, Person.personIdentity);
+			if(unit != null) {
+				int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
+				int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
+				int diffX = screenX - e.getX();
+				int diffY = screenX - e.getY();
+				if (Math.sqrt(diffX * diffX + diffY * diffY) < minDistance) {
+					selectedUnit = unit;
+					minDistance = Math.sqrt(diffX * diffX + diffY * diffY);
+				}
+			}
 		}
 
 	}

@@ -27,6 +27,6 @@ public class TaskHuntPerson extends Task{
         if(person != null) {
             person.damage(10);
         }
-       unit.damage(1);
+        unit.damage(1);
     }
 }

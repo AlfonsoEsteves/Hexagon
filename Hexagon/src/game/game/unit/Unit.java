@@ -93,11 +93,11 @@ public abstract class Unit implements Executable, Searchable {
             int currentX = queueX.removeFirst();
             int currentY = queueY.removeFirst();
             processTile(currentX, currentY, distance);
-            for (int i = 0; i < 6; i++) {
-                int newX = currentX + Map.getX(i);
-                int newY = currentY + Map.getY(i);
-                if(!checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2]) {
-                    if (Map.steppable(newX, newY)) {
+            if (Map.steppable(currentX, currentY)) {
+                for (int i = 0; i < 6; i++) {
+                    int newX = currentX + Map.getX(i);
+                    int newY = currentY + Map.getY(i);
+                    if(!checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2]) {
                         queueX.add(newX);
                         queueY.add(newY);
                         checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2] = true;
