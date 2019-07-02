@@ -16,16 +16,11 @@ public class Person extends Unit {
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
 
-    public int usualX;
-    public int usualY;
-
     public List<Item> carrying;
 
     public Person(int x, int y) {
         super(x, y);
         carrying = new ArrayList<>();
-        usualX = x;
-        usualY = y;
         life = maxLife;
 
         tasks.add(TaskFight.instance);
@@ -73,8 +68,8 @@ public class Person extends Unit {
 
     private int[] pickUpPosition() {
         int var = 6;
-        int rndX = usualX + Rnd.nextInt(var * 2 + 1) - var;
-        int rndY = usualY + Rnd.nextInt(var * 2 + 1) - var;
+        int rndX = x + Rnd.nextInt(var * 2 + 1) - var;
+        int rndY = y + Rnd.nextInt(var * 2 + 1) - var;
         if(checkPickedPosition(rndX, rndY)){
             int[] position = {rndX, rndY};
             return position;

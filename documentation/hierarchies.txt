@@ -9,3 +9,58 @@ each unit remembers a friendly rate towards the groups it encounters
   if it is low, they can warn each other not to get closer
 
 rates can be increased by giving offerings
+
+
+
+
+
+
+
+
+more specifically:
+  this rate indicates:
+     'how much should group X trust in me'
+
+ that is because if a unit A gives a tres to other B
+   then not only B should respect A, but also the nearby units of that group
+
+
+
+
+after a unit gain or loses this rate
+  where it goes back to its base ans interacts with its allies, it shares partially its rates with them (the rates get averaged)
+
+
+communications:
+  ask offering / threat
+  offer something so someone joins
+  
+others:
+  ask to trade 
+
+
+
+
+bajado a tierra
+
+si 2 unidades sin bando se cruzon
+  si una tiene un bien, se lo ofrece a la otra para que se le una
+  si A tiene bando y B no
+    si B no deberia ser confiado por A, entonces o B ofrece una ofrenda o se una, o pelean
+    si si, no pasa nada
+  si ambos tienen bandos distintos
+    o alguno da una ofrenda o se pelean
+
+
+
+
+
+
+
+
+
+
+
+
+
+
