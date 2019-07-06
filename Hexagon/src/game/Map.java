@@ -39,7 +39,7 @@ public class Map {
 				else if (Rnd.nextInt(180) == 0) {
 					underTile[i][j] = Tile.iron;
 				}
-				else if (Rnd.nextInt(2000) == 0) {
+				else if (Rnd.nextInt(2200) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);
 					queueExecutable(createDemon, 1);

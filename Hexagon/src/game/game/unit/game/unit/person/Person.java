@@ -19,6 +19,8 @@ public class Person extends Unit {
 
     public static Predicate is = x -> (x instanceof Person);
 
+    public String name;
+
     public List<Item> carrying;
 
     public Person leader;
@@ -29,6 +31,9 @@ public class Person extends Unit {
 
     public Person(int x, int y) {
         super(x, y);
+
+        name = "N" + Rnd.nextInt(1000);
+
         carrying = new ArrayList<>();
         life = maxLife;
 
@@ -41,6 +46,7 @@ public class Person extends Unit {
         tasks.add(TaskBuild.instance);
         tasks.add(TaskCollect.instance);
         tasks.add(TaskCreateWeapon.instance);
+        tasks.add(TaskReactToPerson.instance);
     }
 
     @Override
@@ -102,12 +108,12 @@ public class Person extends Unit {
         return true;
     }
 
-    public Person getAlliance() {
+    public Person getSuperLeader() {
         if(leader == null) {
             return this;
         }
         else{
-            return leader.getAlliance();
+            return leader.getSuperLeader();
         }
     }
 

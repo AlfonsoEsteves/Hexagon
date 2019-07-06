@@ -15,7 +15,7 @@ import game.game.unit.game.unit.person.Person;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 
-	public static Unit selectedUnit;
+	public static Person selectedUnit;
 	public static int viewSize = 20;
 	public static int viewX = 0;
 	public static int viewY = 0;
@@ -53,24 +53,36 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				graphics.drawImage(unit.image(), screenX, screenY, 15, 15, this);
 				graphics.setColor(Color.blue);
 				graphics.drawString("" +unit.life, screenX, screenY + 20);
-				int count = 0;
-				while (unit != null) {
-					unit = unit.next;
-					count++;
+				if(unit instanceof Person) {
+					graphics.setColor(Color.white);
+					graphics.drawString(((Person) unit).name, screenX - 20, screenY - 5);
 				}
-				graphics.setColor(Color.white);
-				graphics.drawString("" +count, screenX, screenY);
 			}
 		}
 		graphics.setColor(Color.white);
+		for(int[] p : MapIter.of(viewSize)) {
+			int x = viewX + p[0];
+			int y = viewY + p[1];
+			Person person = Map.has(x, y, Person.is);
+			if(person != null && person.leader != null) {
+				if (Map.distance(viewX, viewY, person.leader.x, person.leader.y) < viewSize) {
+					int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
+					int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
+					int screenX2 = MainFrame.width / 2 + (person.leader.x - viewX) * 10 + (person.leader.y - viewY) * 10;
+					int screenY2 = MainFrame.height / 2 + (person.leader.x - viewX) * 20 - (person.leader.y - viewY) * 20;
+					graphics.drawLine(screenX, screenY, screenX2, screenY2);
+				}
+			}
+		}
 		graphics.drawString("" + Map.time, 10,10);
+		if(selectedUnit != null) {
+			graphics.drawString("Name: " + selectedUnit.name, 10, 30);
+			graphics.drawString("Name: " + selectedUnit.getSuperLeader().name, 10, 50);
+		}
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -79,14 +91,14 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 		for(int[] p : MapIter.of(viewSize)){
 			int x = viewX + p[0];
 			int y = viewY + p[1];
-			Unit unit = (Unit)Map.has(x, y, Person.is);
-			if(unit != null) {
+			Person person = Map.has(x, y, Person.is);
+			if(person != null) {
 				int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
 				int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
 				int diffX = screenX - e.getX();
 				int diffY = screenX - e.getY();
 				if (Math.sqrt(diffX * diffX + diffY * diffY) < minDistance) {
-					selectedUnit = unit;
+					selectedUnit = person;
 					minDistance = Math.sqrt(diffX * diffX + diffY * diffY);
 				}
 			}
@@ -95,10 +107,7 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {}
