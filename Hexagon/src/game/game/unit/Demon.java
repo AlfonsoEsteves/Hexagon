@@ -3,14 +3,18 @@ package game.game.unit;
 import game.Item;
 import game.Map;
 import game.Rnd;
+import game.game.unit.game.unit.person.Person;
 import gui.ImageLoader;
 
 import java.awt.*;
+import java.util.function.Predicate;
 
 public class Demon extends Unit {
 
     public static Object demonIdentity = new Object();
     public static Image imageDemon = ImageLoader.load("Demon");
+
+    public static Predicate predicate = x -> (x instanceof Demon);
 
     public Demon(int x, int y) {
         super(x, y);

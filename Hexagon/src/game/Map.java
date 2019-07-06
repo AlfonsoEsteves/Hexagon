@@ -120,17 +120,17 @@ public class Map {
 		}
 	}
 
-	public static Searchable has(int x, int y, Predicate filter) {
+	public static <T> T has(int x, int y, Predicate filter) {
 		if(filter.test(underTile(x, y))) {
-			return underTile(x, y);
+			return (T)underTile(x, y);
 		}
 		if(filter.test(overTile(x, y))) {
-			return overTile(x, y);
+			return (T)overTile(x, y);
 		}
 		Unit unit = unit(x, y);
 		while(unit != null) {
 			if(filter.test(unit)) {
-				return unit;
+				return (T)unit;
 			}
 			unit = unit.next;
 		}

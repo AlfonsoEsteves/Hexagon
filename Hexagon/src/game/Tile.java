@@ -5,7 +5,7 @@ import gui.ImageLoader;
 import java.awt.Image;
 import java.util.function.Predicate;
 
-public class Tile implements Searchable {
+public class Tile {
 
 	// UNDERTILES:
 	public static Tile grass = new Tile("Grass", true);
@@ -47,11 +47,6 @@ public class Tile implements Searchable {
 		this.depletedVersion = depletedVersion;
 		this.providesItem = providesItem;
 		image = ImageLoader.load(name);
-	}
-
-	@Override
-	public boolean is(Object identity) {
-		return identity == this;
 	}
 
 	public Predicate predicate(){

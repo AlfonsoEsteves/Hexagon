@@ -25,9 +25,8 @@ public class TaskFight extends Task {
     public void execute(Unit unit) {
         Person person = (Person)unit;
         for(int[] p : MapIter.of(range)) {
-            Searchable searchable = Map.has(unit.x + p[0], unit.y + p[1], Demon.predicate);
-            if (searchable != null) {
-                Demon demon = (Demon) searchable;
+            Demon demon = Map.has(unit.x + p[0], unit.y + p[1], Demon.predicate);
+            if (demon != null) {
                 demon.damage(person.getDamage());
                 return;
             }
