@@ -16,17 +16,17 @@ public class TaskBuild extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(person.carrying.contains(Item.stone)){
-            if (Map.has(tileX, tileY, Tile.missingWall) != null) {
+            if (Map.has(tileX, tileY, Tile.missingWall.is()) != null) {
                 return true;
             }
         }
         if(person.carrying.contains(Item.wood)){
-            if (Map.has(tileX, tileY, Tile.missingBed) != null) {
+            if (Map.has(tileX, tileY, Tile.missingBed.is()) != null) {
                 return true;
             }
         }
         if(person.carrying.contains(Item.iron)){
-            if (Map.has(tileX, tileY, Tile.missingAnvil) != null) {
+            if (Map.has(tileX, tileY, Tile.missingAnvil.is()) != null) {
                 return true;
             }
         }
@@ -41,22 +41,22 @@ public class TaskBuild extends Task {
         int[] position = null;
         for(int[] p : MapIter.of(range)) {
             position = p;
-            if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingWall) != null) {
+            if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingWall.is()) != null) {
                 resource = Item.stone;
                 built = Tile.wall;
                 break;
             }
-            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingAnvil) != null) {
+            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingAnvil.is()) != null) {
                 resource = Item.iron;
                 built = Tile.anvil;
                 break;
             }
-            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingBed) != null) {
+            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingBed.is()) != null) {
                 resource = Item.wood;
                 built = Tile.bed;
                 break;
             }
-            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingDoor) != null) {
+            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingDoor.is()) != null) {
                 resource = Item.wood;
                 built = Tile.door;
                 break;

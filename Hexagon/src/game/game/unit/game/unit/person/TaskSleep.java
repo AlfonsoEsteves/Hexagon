@@ -16,7 +16,7 @@ public class TaskSleep extends Task {
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
         if(unit.life < Person.maxLife) {
-            if (Map.has(tileX, tileY, Tile.bed.predicate()) != null) {
+            if (Map.has(tileX, tileY, Tile.bed.is()) != null) {
                 return true;
             }
         }

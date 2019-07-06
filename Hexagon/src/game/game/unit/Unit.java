@@ -3,13 +3,12 @@ package game.game.unit;
 import game.Executable;
 import game.Log;
 import game.Map;
-import game.Searchable;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public abstract class Unit implements Executable, Searchable {
+public abstract class Unit implements Executable {
 
     public static final double maxKeepingSelectedTaskPriorityBonus = 1.5;
 

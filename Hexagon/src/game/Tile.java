@@ -49,7 +49,7 @@ public class Tile {
 		image = ImageLoader.load(name);
 	}
 
-	public Predicate predicate(){
+	public Predicate is(){
 		return x -> x == this;
 	}
 }

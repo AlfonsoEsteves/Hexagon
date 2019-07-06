@@ -17,7 +17,7 @@ public class Person extends Unit {
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
 
-    public static Predicate predicate = x -> (x instanceof Person);
+    public static Predicate is = x -> (x instanceof Person);
 
     public List<Item> carrying;
 

@@ -14,7 +14,7 @@ public class Demon extends Unit {
     public static Object demonIdentity = new Object();
     public static Image imageDemon = ImageLoader.load("Demon");
 
-    public static Predicate predicate = x -> (x instanceof Demon);
+    public static Predicate is = x -> (x instanceof Demon);
 
     public Demon(int x, int y) {
         super(x, y);

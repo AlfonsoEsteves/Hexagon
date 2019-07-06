@@ -79,7 +79,7 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 		for(int[] p : MapIter.of(viewSize)){
 			int x = viewX + p[0];
 			int y = viewY + p[1];
-			Unit unit = (Unit)Map.has(x, y, Person.personIdentity);
+			Unit unit = (Unit)Map.has(x, y, Person.is);
 			if(unit != null) {
 				int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
 				int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;

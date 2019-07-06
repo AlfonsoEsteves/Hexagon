@@ -15,7 +15,7 @@ public class TaskFight extends Task {
 
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
-        if(Map.has(tileX, tileY, Demon.predicate) != null){
+        if(Map.has(tileX, tileY, Demon.is) != null){
             return true;
         }
         return false;
@@ -25,7 +25,7 @@ public class TaskFight extends Task {
     public void execute(Unit unit) {
         Person person = (Person)unit;
         for(int[] p : MapIter.of(range)) {
-            Demon demon = Map.has(unit.x + p[0], unit.y + p[1], Demon.predicate);
+            Demon demon = Map.has(unit.x + p[0], unit.y + p[1], Demon.is);
             if (demon != null) {
                 demon.damage(person.getDamage());
                 return;
