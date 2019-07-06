@@ -7,6 +7,7 @@ import gui.ImageLoader;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Person extends Unit {
 
@@ -16,12 +17,24 @@ public class Person extends Unit {
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
 
+    public static Predicate predicate = x -> (x instanceof Person);
+
     public List<Item> carrying;
+
+    public Person leader;
+
+    public List<Person> alliance;
+    public List<Double> shouldTrust;
+    public List<Double> shouldBeTrusted;
 
     public Person(int x, int y) {
         super(x, y);
         carrying = new ArrayList<>();
         life = maxLife;
+
+        alliance = new ArrayList<>();
+        shouldTrust = new ArrayList<>();
+        shouldBeTrusted = new ArrayList<>();
 
         tasks.add(TaskFight.instance);
         tasks.add(TaskSleep.instance);
@@ -89,4 +102,16 @@ public class Person extends Unit {
         return true;
     }
 
+    public Person getAlliance() {
+        if(leader == null) {
+            return this;
+        }
+        else{
+            return leader.getAlliance();
+        }
+    }
+
+    public int getDamage() {
+        return carrying.contains(Item.sword) ? 10 : 5;
+    }
 }

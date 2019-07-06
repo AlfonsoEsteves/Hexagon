@@ -4,6 +4,7 @@ import game.game.unit.game.unit.person.Person;
 import game.game.unit.Unit;
 
 import java.util.LinkedList;
+import java.util.function.Predicate;
 
 public class Map {
 
@@ -119,16 +120,16 @@ public class Map {
 		}
 	}
 
-	public static Searchable has(int x, int y, Object identity) {
-		if(underTile(x, y).is(identity)) {
+	public static Searchable has(int x, int y, Predicate filter) {
+		if(filter.test(underTile(x, y))) {
 			return underTile(x, y);
 		}
-		if(overTile(x, y) != null && overTile(x, y).is(identity)) {
+		if(filter.test(overTile(x, y))) {
 			return overTile(x, y);
 		}
 		Unit unit = unit(x, y);
 		while(unit != null) {
-			if(unit.is(identity)) {
+			if(filter.test(unit)) {
 				return unit;
 			}
 			unit = unit.next;

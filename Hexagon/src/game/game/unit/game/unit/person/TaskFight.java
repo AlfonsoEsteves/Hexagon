@@ -15,7 +15,7 @@ public class TaskFight extends Task {
 
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
-        if(Map.has(tileX, tileY, Demon.demonIdentity) != null){
+        if(Map.has(tileX, tileY, Demon.predicate) != null){
             return true;
         }
         return false;
@@ -25,10 +25,10 @@ public class TaskFight extends Task {
     public void execute(Unit unit) {
         Person person = (Person)unit;
         for(int[] p : MapIter.of(range)) {
-            Searchable searchable = Map.has(unit.x + p[0], unit.y + p[1], Demon.demonIdentity);
+            Searchable searchable = Map.has(unit.x + p[0], unit.y + p[1], Demon.predicate);
             if (searchable != null) {
                 Demon demon = (Demon) searchable;
-                demon.damage(person.carrying.contains(Item.sword) ? 10 : 5);
+                demon.damage(person.getDamage());
                 return;
             }
         }

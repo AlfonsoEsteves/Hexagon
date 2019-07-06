@@ -3,6 +3,7 @@ package game;
 import gui.ImageLoader;
 
 import java.awt.Image;
+import java.util.function.Predicate;
 
 public class Tile implements Searchable {
 
@@ -51,5 +52,9 @@ public class Tile implements Searchable {
 	@Override
 	public boolean is(Object identity) {
 		return identity == this;
+	}
+
+	public Predicate predicate(){
+		return x -> x == this;
 	}
 }
