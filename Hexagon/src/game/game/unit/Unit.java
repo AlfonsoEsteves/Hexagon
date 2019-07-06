@@ -3,6 +3,7 @@ package game.game.unit;
 import game.Executable;
 import game.Log;
 import game.Map;
+import game.Rnd;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ public abstract class Unit implements Executable {
     public int destinationX;
     public int destinationY;
 
+    private int randomDirection;
+
     public Unit(int x, int y) {
         this.x = x;
         this.y = y;
@@ -66,9 +69,30 @@ public abstract class Unit implements Executable {
                     priorityTask.execute(this);
                 }
             }
+            else{
+                moveRandomly();
+            }
         }
         if(alive) {
             Map.queueExecutable(this, 1);
+        }
+    }
+
+    private void moveRandomly(){
+        if(Rnd.nextInt(10) == 0) {
+            randomDirection = (randomDirection + 1) % 6;
+        }
+        if(Rnd.nextInt(10) == 0) {
+            randomDirection = (randomDirection + 5) % 6;
+        }
+        if(Map.steppable(x + Map.getX(randomDirection), y + Map.getY(randomDirection))){
+            removeFromTile();
+            x += Map.getX(randomDirection);
+            y += Map.getY(randomDirection);
+            addToTile();
+        }
+        else{
+            randomDirection = Rnd.nextInt(6);
         }
     }
 

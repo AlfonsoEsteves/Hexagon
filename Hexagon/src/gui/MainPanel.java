@@ -17,8 +17,8 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 
 	public static Person selectedUnit;
 	public static int viewSize = 20;
-	public static int viewX = 0;
-	public static int viewY = 0;
+	public static int viewX = Map.size / 2;
+	public static int viewY = Map.size / 2;
 
 	public MainPanel(int x, int y, int width, int height) {
 		setBounds(x, y, width, height);
