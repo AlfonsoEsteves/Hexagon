@@ -19,8 +19,6 @@ public class Person extends Unit {
 
     public static Predicate is = x -> (x instanceof Person);
 
-    public String name;
-
     public List<Item> carrying;
 
     public Person leader;
@@ -31,8 +29,6 @@ public class Person extends Unit {
 
     public Person(int x, int y) {
         super(x, y);
-
-        name = "N" + Rnd.nextInt(1000);
 
         carrying = new ArrayList<>();
         life = maxLife;
@@ -60,7 +56,10 @@ public class Person extends Unit {
 
     @Override
     public void initExecute(){
-        if(Rnd.nextInt(10) == 0) {
+        if(leader != null && !leader.alive){
+            leader = null;
+        }
+        if(Rnd.nextInt(20) == 0) {
             int[] position = pickUpPosition();
             if (position != null) {
                 int doorCount = Rnd.nextInt(12);

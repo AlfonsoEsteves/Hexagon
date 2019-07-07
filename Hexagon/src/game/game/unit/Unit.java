@@ -4,6 +4,8 @@ import game.Executable;
 import game.Log;
 import game.Map;
 import game.Rnd;
+import game.game.unit.game.unit.person.Person;
+import gui.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,15 +13,15 @@ import java.util.LinkedList;
 
 public abstract class Unit implements Executable {
 
-    public static final double maxKeepingSelectedTaskPriorityBonus = 1.5;
-
-    public static final double aproxDistanceIncrement = 0.2;
-
-    public static final int pathfindingDistanceLimit = 25;
+    public static final int pathfindingDistanceLimit = 15;
 
     public static final int checkedTilesSize = pathfindingDistanceLimit * 2 + 1;
 
     public static boolean[][] checkedTiles = new boolean[checkedTilesSize][checkedTilesSize];
+
+    public static int maxId = 0;
+
+    public int id;
 
     public int x;
     public int y;
@@ -46,6 +48,8 @@ public abstract class Unit implements Executable {
         this.y = y;
         alive = true;
         tasks = new ArrayList<>();
+        id = maxId;
+        maxId++;
     }
 
     public abstract Image image();
@@ -57,8 +61,22 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
+
+
+
+        /*if(id == 139) {
+            MainPanel.viewX = x;
+            MainPanel.viewY = y;
+            if (Map.time > 70) {
+                System.out.println();
+            }
+        }*/
+
+
+
         Log.log("UNIT", toString());
         priority = 0;
+        priorityTask = null;
         initExecute();
         if(alive) {
             scanForTasks();

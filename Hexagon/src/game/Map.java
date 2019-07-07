@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 400;
+	public static final int size = 300;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static Tile[][] overTile = new Tile[size][size];
@@ -27,19 +27,19 @@ public class Map {
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				if (Rnd.nextInt(40) == 0) {
+				if (Rnd.nextInt(45) == 0) {
 					underTile[i][j] = Tile.water;
 				}
-				else if (Rnd.nextInt(100) == 0) {
+				else if (Rnd.nextInt(90) == 0) {
 					underTile[i][j] = Tile.stone;
 				}
-				else if (Rnd.nextInt(150) == 0) {
+				else if (Rnd.nextInt(120) == 0) {
 					underTile[i][j] = Tile.tree;
 				}
-				else if (Rnd.nextInt(180) == 0) {
+				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.iron;
 				}
-				else if (Rnd.nextInt(2200) == 0) {
+				else if (Rnd.nextInt(2500) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);
 					queueExecutable(createDemon, 1);

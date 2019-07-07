@@ -14,6 +14,6 @@ public class CreateDemon implements Executable {
     @Override
     public void execute() {
         Map.addUnit(new Demon(x, y));
-        Map.queueExecutable(this, Rnd.nextInt(50) + 50);
+        Map.queueExecutable(this, Rnd.nextInt(60) + 60);
     }
 }

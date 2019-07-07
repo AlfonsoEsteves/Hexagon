@@ -51,11 +51,21 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			Unit unit = Map.unit(x, y);
 			if(unit != null) {
 				graphics.drawImage(unit.image(), screenX, screenY, 15, 15, this);
-				graphics.setColor(Color.blue);
-				graphics.drawString("" +unit.life, screenX, screenY + 20);
-				if(unit instanceof Person) {
-					graphics.setColor(Color.white);
-					graphics.drawString(((Person) unit).name, screenX - 20, screenY - 5);
+				graphics.setColor(Color.white);
+				graphics.drawString("N" + unit.id, screenX - 20, screenY - 5);
+
+				if(unit.next == null) {
+					graphics.setColor(Color.blue);
+					graphics.drawString("" + unit.life, screenX, screenY + 20);
+				}
+				else{
+					int count = 1;
+					while(unit.next != null){
+						count++;
+						unit = unit.next;
+					}
+					graphics.setColor(Color.red);
+					graphics.drawString("*" + count, screenX, screenY + 20);
 				}
 			}
 		}
@@ -76,8 +86,8 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 		}
 		graphics.drawString("" + Map.time, 10,10);
 		if(selectedUnit != null) {
-			graphics.drawString("Name: " + selectedUnit.name, 10, 30);
-			graphics.drawString("Name: " + selectedUnit.getSuperLeader().name, 10, 50);
+			graphics.drawString("Unit:   N" + selectedUnit.id, 10, 30);
+			graphics.drawString("Leader: N" + selectedUnit.getSuperLeader().id, 10, 50);
 		}
 	}
 
