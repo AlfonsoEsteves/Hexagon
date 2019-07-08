@@ -39,11 +39,11 @@ public class Map {
 				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.iron;
 				}
-				else if (Rnd.nextInt(2500) == 0) {
+				/*else if (Rnd.nextInt(2500) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);
 					queueExecutable(createDemon, 1);
-				}
+				}*/
 				else {
 					underTile[i][j] = Tile.grass;
 					if (Rnd.nextInt(300) == 0) {

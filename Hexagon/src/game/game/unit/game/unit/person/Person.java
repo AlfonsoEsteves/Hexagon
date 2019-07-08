@@ -39,10 +39,10 @@ public class Person extends Unit {
 
         tasks.add(TaskFight.instance);
         tasks.add(TaskSleep.instance);
+        tasks.add(TaskReactToPerson.instance);
         tasks.add(TaskBuild.instance);
         tasks.add(TaskCollect.instance);
         tasks.add(TaskCreateWeapon.instance);
-        tasks.add(TaskReactToPerson.instance);
     }
 
     @Override

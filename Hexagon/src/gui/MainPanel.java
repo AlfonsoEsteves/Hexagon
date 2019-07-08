@@ -48,6 +48,12 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			else{
 				graphics.drawImage(Map.overTile(x, y).image, screenX, screenY, 20, 20, this);
 			}
+		}
+		for(int[] p : MapIter.of(viewSize)) {
+			int x = viewX + p[0];
+			int y = viewY + p[1];
+			int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
+			int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
 			Unit unit = Map.unit(x, y);
 			if(unit != null) {
 				graphics.drawImage(unit.image(), screenX, screenY, 15, 15, this);
@@ -68,22 +74,23 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 					graphics.drawString("*" + count, screenX, screenY + 20);
 				}
 			}
-		}
-		graphics.setColor(Color.white);
-		for(int[] p : MapIter.of(viewSize)) {
-			int x = viewX + p[0];
-			int y = viewY + p[1];
 			Person person = Map.has(x, y, Person.is);
-			if(person != null && person.leader != null) {
-				if (Map.distance(viewX, viewY, person.leader.x, person.leader.y) < viewSize) {
-					int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
-					int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
-					int screenX2 = MainFrame.width / 2 + (person.leader.x - viewX) * 10 + (person.leader.y - viewY) * 10;
-					int screenY2 = MainFrame.height / 2 + (person.leader.x - viewX) * 20 - (person.leader.y - viewY) * 20;
-					graphics.drawLine(screenX, screenY, screenX2, screenY2);
+			if(person != null) {
+				float[] hsb = new float[3];
+				Color.RGBtoHSB(255, 0, 255, hsb);
+				graphics.setColor(Color.getHSBColor((person.getSuperLeader().id % 100) / 100.0f, 1.0f, 1.0f));
+				graphics.drawOval(screenX - 5, screenY - 5, 30, 30);
+				graphics.drawOval(screenX - 4, screenY - 4, 28, 28);
+				if (person.leader != null && person.leader.alive) {
+					if (Map.distance(viewX, viewY, person.leader.x, person.leader.y) < viewSize) {
+						int screenX2 = MainFrame.width / 2 + (person.leader.x - viewX) * 10 + (person.leader.y - viewY) * 10;
+						int screenY2 = MainFrame.height / 2 + (person.leader.x - viewX) * 20 - (person.leader.y - viewY) * 20;
+						graphics.drawLine(screenX, screenY, screenX2, screenY2);
+					}
 				}
 			}
 		}
+		graphics.setColor(Color.white);
 		graphics.drawString("" + Map.time, 10,10);
 		if(selectedUnit != null) {
 			graphics.drawString("Unit:   N" + selectedUnit.id, 10, 30);
@@ -106,14 +113,13 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
 				int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
 				int diffX = screenX - e.getX();
-				int diffY = screenX - e.getY();
+				int diffY = screenY - e.getY();
 				if (Math.sqrt(diffX * diffX + diffY * diffY) < minDistance) {
 					selectedUnit = person;
 					minDistance = Math.sqrt(diffX * diffX + diffY * diffY);
 				}
 			}
 		}
-
 	}
 
 	@Override

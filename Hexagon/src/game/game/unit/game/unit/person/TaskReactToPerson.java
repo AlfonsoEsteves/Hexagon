@@ -9,7 +9,7 @@ public class TaskReactToPerson extends Task {
     public static TaskReactToPerson instance = new TaskReactToPerson();
 
     private TaskReactToPerson() {
-        super(4, 3);
+        super(5.5, 3);
     }
 
     @Override
