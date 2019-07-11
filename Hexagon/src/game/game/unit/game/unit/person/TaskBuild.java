@@ -19,6 +19,9 @@ public class TaskBuild extends Task {
             if (Map.has(tileX, tileY, Tile.missingWall.is()) != null) {
                 return true;
             }
+            else if (Map.has(tileX, tileY, Tile.missingDepot.is()) != null) {
+                return true;
+            }
         }
         if(person.carrying.contains(Item.wood)){
             if (Map.has(tileX, tileY, Tile.missingBed.is()) != null) {
@@ -44,6 +47,11 @@ public class TaskBuild extends Task {
             if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingWall.is()) != null) {
                 resource = Item.stone;
                 built = Tile.wall;
+                break;
+            }
+            else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingDepot.is()) != null) {
+                resource = Item.stone;
+                built = Tile.depot;
                 break;
             }
             else if (Map.has(unit.x + p[0], unit.y + p[1], Tile.missingAnvil.is()) != null) {

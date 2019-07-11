@@ -28,6 +28,8 @@ public class Tile {
 	public static Tile missingBed = new Tile("Missing bed", true);
 	public static Tile anvil = new Tile("Anvil", true);
 	public static Tile missingAnvil = new Tile("Missing anvil", true);
+	public static Tile depot = new Tile("Depot", true);
+	public static Tile missingDepot = new Tile("Missing depot", true);
 
 	public String name;
 	public boolean steppable;

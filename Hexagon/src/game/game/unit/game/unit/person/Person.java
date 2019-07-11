@@ -63,19 +63,21 @@ public class Person extends Unit {
             int[] position = pickUpPosition();
             if (position != null) {
                 int doorCount = Rnd.nextInt(12);
-                for (int i = -2; i <= 2; i++) {
-                    for (int j = -2; j <= 2; j++) {
-                        if (Map.distance(position[0], position[1], position[0] + i, position[1] + j) == 2) {
-                            if (doorCount == 0) {
-                                Map.overTile[position[0] + i][position[1] + j] = Tile.missingDoor;
-                            } else {
-                                Map.overTile[position[0] + i][position[1] + j] = Tile.missingWall;
-                            }
-                            doorCount--;
+                for (int[] p : MapIter.of(2)) {
+                    if (Map.distance(position[0], position[1], position[0] + p[0], position[1] + p[1]) == 2) {
+                        if (doorCount == 0) {
+                            Map.overTile[position[0] + p[0]][position[1] + p[1]] = Tile.missingDoor;
+                        } else {
+                            Map.overTile[position[0] + p[0]][position[1] + p[1]] = Tile.missingWall;
                         }
+                        doorCount--;
                     }
                 }
-                if (life < 100) {
+                if (Rnd.nextInt(4) == 0) {
+                    for (int[] p : MapIter.of(1)) {
+                        Map.overTile[position[0] + p[0]][position[1] + p[1]] = Tile.missingDepot;
+                    }
+                } else if (Rnd.nextInt(4) == 0) {
                     Map.overTile[position[0]][position[1]] = Tile.missingBed;
                 } else {
                     Map.overTile[position[0]][position[1]] = Tile.missingAnvil;
