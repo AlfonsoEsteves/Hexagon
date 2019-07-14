@@ -2,11 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08ff9d12-b2ce-44c0-8067-703f28883e26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Rnd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Rnd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskBuild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskBuild.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/CreateDemon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/CreateDemon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/Demon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/demon/Demon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/TaskDestroy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/demon/TaskDestroy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/TaskHuntPerson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/demon/TaskHuntPerson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/Unit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskBuild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskBuild.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskCollect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskCollect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskCreateWeapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskCreateWeapon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskFight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskFight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskReactToPerson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskReactToPerson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskSleep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskSleep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/MainPanel.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,27 +34,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/Map.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/game/unit/Unit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2380">
-              <caret line="151" column="26" selection-start-line="151" selection-start-column="26" selection-end-line="151" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/Rnd.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
@@ -58,16 +47,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskReactToPerson.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/game/unit/Task.java">
+        <entry file="file://$PROJECT_DIR$/src/game/unit/Task.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
               <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
@@ -75,14 +55,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/Person.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/game/unit/person/Person.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
+            <state relative-caret-position="1241">
               <caret line="77" column="74" selection-start-line="77" selection-start-column="74" selection-end-line="77" selection-end-column="74" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3744#3745#0" expanded="true" />
+                <element signature="e#3724#3725#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskBuild.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskBuild.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-221">
-              <caret line="50" column="13" lean-forward="true" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+            <state relative-caret-position="204">
+              <caret line="75" column="9" lean-forward="true" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#234#235#0" expanded="true" />
@@ -115,7 +95,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskSleep.java">
+        <entry file="file://$PROJECT_DIR$/src/game/unit/demon/Demon.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/game/unit/demon/TaskDestroy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/game/unit/demon/TaskHuntPerson.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskSleep.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
               <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
@@ -204,6 +214,8 @@
         <option value="$PROJECT_DIR$/src/game/Rnd.java" />
         <option value="$PROJECT_DIR$/src/game/game/unit/game/unit/person/Person.java" />
         <option value="$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskBuild.java" />
+        <option value="$PROJECT_DIR$/src/game/game/unit/person/Person.java" />
+        <option value="$PROJECT_DIR$/src/game/unit/person/Person.java" />
       </list>
     </option>
   </component>
@@ -245,14 +257,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="game" type="462c0819:PsiDirectoryNode" />
               <item name="unit" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Hexagon" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Hexagon" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
-              <item name="unit" type="462c0819:PsiDirectoryNode" />
-              <item name="person" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Hexagon" type="b2602c69:ProjectViewProjectNode" />
@@ -332,9 +336,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5735931" visible="true" weight="0.301059" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5735931" visible="true" weight="0.301059" />
       <window_info id="Structure" order="1" sideWeight="0.42640692" side_tool="true" weight="0.29198185" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -342,14 +345,14 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" sideWeight="0.32242227" side_tool="true" weight="0.25416037" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49394855" visible="true" weight="0.31423897" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49924356" weight="0.3289689" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49394855" weight="0.31423897" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4969743" weight="0.31423897" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49924356" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="8" sideWeight="0.5060514" side_tool="true" visible="true" weight="0.31423897" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50075644" side_tool="true" visible="true" weight="0.3289689" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49924356" weight="0.26841244" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -504,14 +507,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/game/Searchable.java" />
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskCreateWeapon.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskCreateWeapon.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="21" column="57" selection-start-line="21" selection-start-column="57" selection-end-line="21" selection-end-column="57" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskCollect.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskCollect.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="21" column="22" lean-forward="true" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
@@ -529,30 +532,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/TaskHuntPerson.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="24" column="28" lean-forward="true" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/TaskDestroy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="26" column="82" lean-forward="true" selection-start-line="26" selection-start-column="82" selection-end-line="26" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/Demon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -581,7 +560,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskFight.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskFight.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
@@ -609,7 +588,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/Unit.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/Unit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2380">
           <caret line="151" column="26" selection-start-line="151" selection-start-column="26" selection-end-line="151" selection-end-column="26" />
@@ -619,14 +598,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskReactToPerson.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskReactToPerson.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/Task.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/Task.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
@@ -640,7 +619,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskSleep.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskSleep.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
@@ -671,25 +650,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/Person.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskBuild.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="77" column="74" selection-start-line="77" selection-start-column="74" selection-end-line="77" selection-end-column="74" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3744#3745#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/game/unit/game/unit/person/TaskBuild.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-221">
-          <caret line="50" column="13" lean-forward="true" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+        <state relative-caret-position="204">
+          <caret line="75" column="9" lean-forward="true" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#234#235#0" expanded="true" />
             <element signature="e#261#262#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/unit/demon/Demon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/unit/demon/TaskDestroy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/unit/demon/TaskHuntPerson.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/Person.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="77" column="74" selection-start-line="77" selection-start-column="74" selection-end-line="77" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3724#3725#0" expanded="true" />
           </folding>
         </state>
       </provider>

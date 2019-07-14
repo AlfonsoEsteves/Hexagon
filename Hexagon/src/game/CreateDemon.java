@@ -1,6 +1,6 @@
 package game;
 
-import game.game.unit.Demon;
+import game.unit.demon.Demon;
 
 public class CreateDemon implements Executable {
 

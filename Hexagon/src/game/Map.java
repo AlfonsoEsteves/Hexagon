@@ -1,7 +1,7 @@
 package game;
 
-import game.game.unit.game.unit.person.Person;
-import game.game.unit.Unit;
+import game.unit.person.Person;
+import game.unit.Unit;
 
 import java.util.LinkedList;
 import java.util.function.Predicate;

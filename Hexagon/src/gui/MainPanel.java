@@ -10,8 +10,8 @@ import javax.swing.event.MouseInputListener;
 
 import game.Map;
 import game.MapIter;
-import game.game.unit.Unit;
-import game.game.unit.game.unit.person.Person;
+import game.unit.Unit;
+import game.unit.person.Person;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 

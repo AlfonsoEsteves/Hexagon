@@ -1,0 +1,3 @@
+I could make that only the top most item can be seen by the units (as wall as the player)
+  that would be more efficient
+  and it would be enough detriment to make putting a second item in a tile a bad idea
