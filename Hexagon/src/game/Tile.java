@@ -11,10 +11,10 @@ public class Tile {
 	public static Tile grass = new Tile("Grass", true);
 	public static Tile water = new Tile("Water", false);
 	public static Tile fertileGround = new Tile("Fertile ground", true);
-	public static Tile depletedStone = new Tile("Depleted stone", true);
-	public static Tile stone = new Tile("Stone", true, depletedStone, Item.stone);
-	public static Tile depletedIron = new Tile("Depleted iron", true);
-	public static Tile iron = new Tile("Iron", true, depletedIron, Item.iron);
+	public static Tile depletedStoneMine = new Tile("Depleted stone mine", true);
+	public static Tile stoneMine = new Tile("Stone mine", true, depletedStoneMine, Item.stone);
+	public static Tile depletedIronMine = new Tile("Depleted iron mine", true);
+	public static Tile ironMine = new Tile("Iron mine", true, depletedIronMine, Item.iron);
 	public static Tile cutTree = new Tile("Cut tree", true);
 	public static Tile tree = new Tile("Tree", true, cutTree, Item.wood);
 	public static Tile gate = new Tile("Gate", true);

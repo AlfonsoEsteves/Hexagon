@@ -48,6 +48,9 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			else{
 				graphics.drawImage(Map.overTile(x, y).image, screenX, screenY, 20, 20, this);
 			}
+			if(Map.dropped(x, y) != null) {
+				graphics.drawImage(Map.dropped(x, y).item.image, screenX, screenY, 20, 20, this);
+			}
 		}
 		for(int[] p : MapIter.of(viewSize)) {
 			int x = viewX + p[0];

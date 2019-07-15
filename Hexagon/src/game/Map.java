@@ -13,6 +13,7 @@ public class Map {
 	public static Tile[][] underTile = new Tile[size][size];
     public static Tile[][] overTile = new Tile[size][size];
 	public static Unit[][] unit = new Unit[size][size];
+	public static Dropped[][] dropped = new Dropped[size][size];
 
 	public static final int executableQueueSize = 200;
 
@@ -31,19 +32,19 @@ public class Map {
 					underTile[i][j] = Tile.water;
 				}
 				else if (Rnd.nextInt(90) == 0) {
-					underTile[i][j] = Tile.stone;
+					underTile[i][j] = Tile.stoneMine;
 				}
 				else if (Rnd.nextInt(120) == 0) {
 					underTile[i][j] = Tile.tree;
 				}
 				else if (Rnd.nextInt(150) == 0) {
-					underTile[i][j] = Tile.iron;
+					underTile[i][j] = Tile.ironMine;
 				}
-				/*else if (Rnd.nextInt(2500) == 0) {
+				else if (Rnd.nextInt(2500) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);
 					queueExecutable(createDemon, 1);
-				}*/
+				}
 				else {
 					underTile[i][j] = Tile.grass;
 					if (Rnd.nextInt(300) == 0) {
@@ -114,6 +115,15 @@ public class Map {
     public static Unit unit(int x, int y) {
 		if(x >= 0 && x < size && y >= 0 && y < size) {
 			return unit[x][y];
+		}
+		else {
+			return null;
+		}
+	}
+
+	public static Dropped dropped(int x, int y) {
+		if(x >= 0 && x < size && y >= 0 && y < size) {
+			return dropped[x][y];
 		}
 		else {
 			return null;

@@ -43,6 +43,7 @@ public class Person extends Unit {
         tasks.add(TaskBuild.instance);
         tasks.add(TaskCollect.instance);
         tasks.add(TaskCreateWeapon.instance);
+        tasks.add(TaskStore.instance);
     }
 
     @Override

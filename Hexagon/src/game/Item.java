@@ -1,5 +1,9 @@
 package game;
 
+import gui.ImageLoader;
+
+import java.awt.*;
+
 public class Item {
 
     public static Item stone = new Item("Stone");
@@ -8,8 +12,10 @@ public class Item {
     public static Item sword = new Item("Sword");
 
     public String name;
+    public Image image;
 
     public Item(String name) {
         this.name = name;
+        image = ImageLoader.load(name);
     }
 }

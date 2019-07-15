@@ -1,9 +1,6 @@
 package game.unit.person;
 
-import game.Item;
-import game.Map;
-import game.ResourceReplenish;
-import game.Tile;
+import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
@@ -19,7 +16,7 @@ public class TaskCollect extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(!person.carrying.contains(Item.stone)){
-            if (Map.has(tileX, tileY, Tile.stone.is().or(Tile.tree.is()).or(Tile.iron.is())) != null) {
+            if (Map.has(tileX, tileY, Tile.stoneMine.is().or(Tile.tree.is()).or(Tile.ironMine.is())) != null) {
                 return true;
             }
         }
@@ -29,20 +26,20 @@ public class TaskCollect extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        if(Map.has(unit.x, unit.y, Tile.stone.is()) != null) {
+        if(Map.has(unit.x, unit.y, Tile.stoneMine.is()) != null) {
             person.carrying.add(Item.stone);
-            Map.underTile[person.x][person.y] = Tile.depletedStone;
-            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.stone), 100);
+            Map.underTile[person.x][person.y] = Tile.depletedStoneMine;
+            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.stoneMine), 100);
         }
         else if(Map.has(unit.x, unit.y, Tile.tree.is()) != null) {
             person.carrying.add(Item.wood);
             Map.underTile[person.x][person.y] = Tile.cutTree;
             Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.tree), 100);
         }
-        else if(Map.has(unit.x, unit.y, Tile.iron.is()) != null) {
+        else if(Map.has(unit.x, unit.y, Tile.ironMine.is()) != null) {
             person.carrying.add(Item.iron);
-            Map.underTile[person.x][person.y] = Tile.depletedIron;
-            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.iron), 100);
+            Map.underTile[person.x][person.y] = Tile.depletedIronMine;
+            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.ironMine), 100);
         }
     }
 }
