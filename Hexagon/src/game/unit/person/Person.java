@@ -23,19 +23,11 @@ public class Person extends Unit {
 
     public Person leader;
 
-    public List<Person> alliance;
-    public List<Double> shouldTrust;
-    public List<Double> shouldBeTrusted;
-
     public Person(int x, int y) {
         super(x, y);
 
         carrying = new ArrayList<>();
         life = maxLife;
-
-        alliance = new ArrayList<>();
-        shouldTrust = new ArrayList<>();
-        shouldBeTrusted = new ArrayList<>();
 
         tasks.add(TaskFight.instance);
         tasks.add(TaskSleep.instance);

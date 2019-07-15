@@ -40,7 +40,7 @@ public class Map {
 				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.ironMine;
 				}
-				else if (Rnd.nextInt(2500) == 0) {
+				else if (Rnd.nextInt(3000) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);
 					queueExecutable(createDemon, 1);
