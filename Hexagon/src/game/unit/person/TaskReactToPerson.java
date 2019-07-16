@@ -40,6 +40,7 @@ public class TaskReactToPerson extends Task {
                             other.damage(person.getDamage());
                         }
                     }
+                    break;
                 }
             }
         }

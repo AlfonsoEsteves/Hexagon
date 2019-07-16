@@ -28,14 +28,6 @@ public class Person extends Unit {
 
         carrying = new ArrayList<>();
         life = maxLife;
-
-        tasks.add(TaskFight.instance);
-        tasks.add(TaskSleep.instance);
-        tasks.add(TaskReactToPerson.instance);
-        tasks.add(TaskBuild.instance);
-        tasks.add(TaskCollect.instance);
-        tasks.add(TaskCreateWeapon.instance);
-        tasks.add(TaskStore.instance);
     }
 
     @Override
@@ -52,6 +44,34 @@ public class Person extends Unit {
         if(leader != null && !leader.alive){
             leader = null;
         }
+
+        tasks.clear();
+        tasks.add(TaskFight.instance);
+        tasks.add(TaskSleep.instance);
+        tasks.add(TaskReactToPerson.instance);
+        if(carrying.contains(Item.stone)) {
+            tasks.add(TaskBuild.taskBuildStoneThings);
+        }
+        else{
+            tasks.add(TaskCollect.taskCollectStone);
+        }
+        if(carrying.contains(Item.wood)) {
+            tasks.add(TaskBuild.taskBuildWoodThings);
+        }
+        else{
+            tasks.add(TaskCollect.taskCollectWood);
+        }
+        if(carrying.contains(Item.iron)) {
+            tasks.add(TaskBuild.taskBuildIronThings);
+            tasks.add(TaskCreateWeapon.instance);
+        }
+        else{
+            tasks.add(TaskCollect.taskCollectIron);
+        }
+        if(carrying.size() > 1) {
+            tasks.add(TaskStore.instance);
+        }
+
         if(Rnd.nextInt(20) == 0) {
             int[] position = pickUpPosition();
             if (position != null) {

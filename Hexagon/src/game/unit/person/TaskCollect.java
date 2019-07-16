@@ -6,17 +6,22 @@ import game.unit.Unit;
 
 public class TaskCollect extends Task {
 
-    public static TaskCollect instance = new TaskCollect();
+    public static TaskCollect taskCollectStone = new TaskCollect(Item.stone);
+    public static TaskCollect taskCollectIron = new TaskCollect(Item.iron);
+    public static TaskCollect taskCollectWood = new TaskCollect(Item.wood);
 
-    private TaskCollect() {
+    public Item resource;
+
+    private TaskCollect(Item resource) {
         super(4, 0);
+        this.resource = resource;
     }
 
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        if(!person.carrying.contains(Item.stone)){
-            if (Map.has(tileX, tileY, Tile.stoneMine.is().or(Tile.tree.is()).or(Tile.ironMine.is())) != null) {
+        if(!person.carrying.contains(resource)){
+            if (Map.has(tileX, tileY, resource.producer.is()) != null) {
                 return true;
             }
         }
@@ -26,20 +31,10 @@ public class TaskCollect extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        if(Map.has(unit.x, unit.y, Tile.stoneMine.is()) != null) {
-            person.carrying.add(Item.stone);
-            Map.underTile[person.x][person.y] = Tile.depletedStoneMine;
-            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.stoneMine), 100);
-        }
-        else if(Map.has(unit.x, unit.y, Tile.tree.is()) != null) {
-            person.carrying.add(Item.wood);
-            Map.underTile[person.x][person.y] = Tile.cutTree;
-            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.tree), 100);
-        }
-        else if(Map.has(unit.x, unit.y, Tile.ironMine.is()) != null) {
-            person.carrying.add(Item.iron);
-            Map.underTile[person.x][person.y] = Tile.depletedIronMine;
-            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, Tile.ironMine), 100);
+        if(Map.has(unit.x, unit.y, resource.producer.is()) != null) {
+            person.carrying.add(resource);
+            Map.underTile[person.x][person.y] = resource.producer.depletedVersion;
+            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, resource.producer), 100);
         }
     }
 }
