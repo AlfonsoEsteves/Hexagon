@@ -15,7 +15,7 @@ public class Map {
 	public static Unit[][] unit = new Unit[size][size];
 	public static Dropped[][] dropped = new Dropped[size][size];
 
-	public static final int executableQueueSize = 200;
+	public static final int executableQueueSize = 500;
 
 	public static LinkedList<Executable>[] executableQueue = new LinkedList[executableQueueSize];
 
@@ -34,7 +34,7 @@ public class Map {
 				else if (Rnd.nextInt(90) == 0) {
 					underTile[i][j] = Tile.stoneMine;
 				}
-				else if (Rnd.nextInt(100) == 0) {
+				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.fruitBush;
 				}
 				else if (Rnd.nextInt(150) == 0) {

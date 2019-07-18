@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 public class Person extends Unit {
 
     public static final int maxLife = 100;
-    public static final int maxFood = 100;
+    public static final int maxFood = 80;
 
     public static Object personIdentity;
     public static Image imagePerson = ImageLoader.load("Person");
@@ -128,6 +128,10 @@ public class Person extends Unit {
             if(life <= 0) {
                 removeFromTileAndDestroy();
             }
+        }
+
+        if(food > maxFood / 2 && Rnd.nextInt(150) == 0) {
+            Map.addUnit(new Person(x, y));
         }
     }
 

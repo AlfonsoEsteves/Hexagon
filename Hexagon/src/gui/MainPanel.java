@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
+import game.Item;
 import game.Map;
 import game.MapIter;
 import game.unit.Unit;
@@ -98,6 +99,13 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 		if(selectedUnit != null) {
 			graphics.drawString("Unit:   N" + selectedUnit.id, 10, 30);
 			graphics.drawString("Leader: N" + selectedUnit.getSuperLeader().id, 10, 50);
+			graphics.drawString("Food: " + selectedUnit.food, 10, 70);
+
+			int y = 90;
+			for(Item item : selectedUnit.carrying){
+				graphics.drawString(item.name, 10, y);
+				y += 15;
+			}
 		}
 	}
 
