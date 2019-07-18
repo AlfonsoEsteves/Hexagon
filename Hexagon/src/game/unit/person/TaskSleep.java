@@ -1,6 +1,7 @@
 package game.unit.person;
 
 import game.Map;
+import game.OTId;
 import game.OverTile;
 import game.Tile;
 import game.unit.Task;
@@ -18,7 +19,7 @@ public class TaskSleep extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(person.life < Person.maxLife && person.food > 0) {
-            if (Map.has(tileX, tileY, OverTile.bed.is) != null) {
+            if (Map.has(tileX, tileY, OTId.bed.overTileIs) != null) {
                 return true;
             }
         }

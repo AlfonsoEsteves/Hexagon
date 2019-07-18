@@ -97,21 +97,21 @@ public class Person extends Unit {
                     int y = position[1] + p[1];
                     if (Map.distance(position[0], position[1], x, y) == 2) {
                         if (doorCount == 0) {
-                            Map.overTile[x][y] = new OverTile(OverTile.missingDoor, x, y);
+                            Map.overTile[x][y] = new OverTile(OTId.missingDoor, x, y);
                         } else {
-                            Map.overTile[x][y] = new OverTile(OverTile.missingWall, x, y);
+                            Map.overTile[x][y] = new OverTile(OTId.missingWall, x, y);
                         }
                         doorCount--;
                     }
                 }
                 if (Rnd.nextInt(4) == 0) {
                     for (int[] p : MapIter.of(1)) {
-                        Map.overTile[position[0] + p[0]][position[1] + p[1]] = new OverTile(OverTile.missingDepot, position[0] + p[0], position[1] + p[1]);
+                        Map.overTile[position[0] + p[0]][position[1] + p[1]] = new OverTile(OTId.missingDepot, position[0] + p[0], position[1] + p[1]);
                     }
                 } else if (Rnd.nextInt(4) == 0) {
-                    Map.overTile[position[0]][position[1]] = new OverTile(OverTile.missingBed, position[0], position[1]);
+                    Map.overTile[position[0]][position[1]] = new OverTile(OTId.missingBed, position[0], position[1]);
                 } else {
-                    Map.overTile[position[0]][position[1]] = new OverTile(OverTile.missingAnvil, position[0], position[1]);
+                    Map.overTile[position[0]][position[1]] = new OverTile(OTId.missingAnvil, position[0], position[1]);
                 }
             }
         }

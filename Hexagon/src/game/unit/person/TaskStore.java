@@ -16,7 +16,7 @@ public class TaskStore extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(!person.carrying.isEmpty()){
-            if (Map.has(tileX, tileY, OverTile.depot.is) != null && Map.dropped(tileX, tileY) == null) {
+            if (Map.has(tileX, tileY, OTId.depot.overTileIs) != null && Map.dropped(tileX, tileY) == null) {
                 return true;
             }
         }
@@ -26,7 +26,7 @@ public class TaskStore extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        if(Map.has(person.x, person.y, OverTile.depot.is) != null && Map.dropped(unit.x, unit.y) == null) {
+        if(Map.has(person.x, person.y, OTId.depot.overTileIs) != null && Map.dropped(unit.x, unit.y) == null) {
             Item item = person.carrying.remove(0);
             Map.dropped[unit.x][unit.y] = new Dropped(item);
         }

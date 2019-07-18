@@ -30,13 +30,13 @@ public class Map {
 
 	    List<Integer> richPointX = new ArrayList<>();
 	    List<Integer> richPointY = new ArrayList<>();
-	    List<OverTile.Id> richPointOverTileIds = new ArrayList<>();
+	    List<OTId> richPointOverTileIds = new ArrayList<>();
 
 	    double factor = size * size / 7500;
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor * 1.2, OverTile.stoneMine);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OverTile.fruitBush);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OverTile.tree);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OverTile.ironMine);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor * 1.2, OTId.stoneMine);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.fruitBush);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.tree);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.ironMine);
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -52,9 +52,8 @@ public class Map {
 
 				if (underTile[i][j] == Tile.grass && overTile[i][j] == null){
 					if(Rnd.nextInt(3000) == 0) {
-						overTile[i][j] = new OverTile(OverTile.gate, i, j);
-						EventCreateDemon createDemon = new EventCreateDemon(i, j);
-						queueExecutable(createDemon, 1);
+						overTile[i][j] = new OverTile(OTId.gate, i, j);
+						queueExecutable(overTile[i][j], 1);
 					}
 					else if (Rnd.nextInt(300) == 0) {
 						addUnit(new Person(i, j));
@@ -64,7 +63,7 @@ public class Map {
 		}
 	}
 
-	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<OverTile.Id> richPointOverTileIds, double amount, OverTile.Id overTileId) {
+	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<OTId> richPointOverTileIds, double amount, OTId overTileId) {
 		for(int i = 0;i<amount;i++) {
 			richPointX.add(Rnd.nextInt(size));
 			richPointY.add(Rnd.nextInt(size));

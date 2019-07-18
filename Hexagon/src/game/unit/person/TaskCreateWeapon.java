@@ -17,7 +17,7 @@ public class TaskCreateWeapon extends Task {
         Person person = (Person)unit;
         if(!person.carrying.contains(Item.sword)) {
             if (person.carrying.contains(Item.iron)) {
-                if (Map.has(tileX, tileY, OverTile.anvil.is) != null) {
+                if (Map.has(tileX, tileY, OTId.anvil.overTileIs) != null) {
                     return true;
                 }
             }

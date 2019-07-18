@@ -22,7 +22,7 @@ public class TaskCollect extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(!person.carrying.contains(resource)){
-            if (Map.has(tileX, tileY, resource.producer.is) != null) {
+            if (Map.has(tileX, tileY, resource.producer.overTileIs) != null) {
                 return true;
             }
         }
@@ -32,10 +32,10 @@ public class TaskCollect extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        if(Map.has(unit.x, unit.y, resource.producer.is) != null) {
+        if(Map.has(unit.x, unit.y, resource.producer.overTileIs) != null) {
             person.carrying.add(resource);
             Map.overTile[person.x][person.y].id = resource.producer.depletedVersion;
-            Map.queueExecutable(new EventResourceReplenish(Map.overTile[person.x][person.y]), 150 + Rnd.nextInt(150));
+            Map.queueExecutable(Map.overTile[person.x][person.y], 150 + Rnd.nextInt(150));
         }
     }
 }

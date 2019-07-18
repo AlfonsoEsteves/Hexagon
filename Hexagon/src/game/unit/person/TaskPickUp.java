@@ -25,7 +25,7 @@ public class TaskPickUp extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(!person.carrying.contains(item)){
-            if (Map.has(tileX, tileY, item.droppedIsItem()) != null) {
+            if (Map.has(tileX, tileY, item.droppedIsItem) != null) {
                 return true;
             }
         }
@@ -35,7 +35,7 @@ public class TaskPickUp extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        Dropped found = Map.has(person.x, person.y, item.droppedIsItem());
+        Dropped found = Map.has(person.x, person.y, item.droppedIsItem);
         if(found != null) {
             person.carrying.add(found.item);
             if(Map.dropped[person.x][person.y] == found) {
