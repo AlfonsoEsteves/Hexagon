@@ -17,6 +17,8 @@ public class Tile {
 	public static Tile ironMine = new Tile("Iron mine", true).setDepletedVersion(depletedIronMine).setProvidesItem(Item.iron);
 	public static Tile cutTree = new Tile("Cut tree", true);
 	public static Tile tree = new Tile("Tree", true).setDepletedVersion(cutTree).setProvidesItem(Item.wood);
+	public static Tile bush = new Tile("Bush", true);
+	public static Tile fruitBush = new Tile("Fruit bush", true).setDepletedVersion(bush).setProvidesItem(Item.fruit);
 	public static Tile gate = new Tile("Gate", true);
 
 	// OVERTILES:

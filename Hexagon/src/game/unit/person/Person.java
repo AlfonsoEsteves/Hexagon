@@ -71,6 +71,11 @@ public class Person extends Unit {
         if(carrying.size() > 1) {
             tasks.add(TaskStore.instance);
         }
+        else if(carrying.size() == 0) {
+            tasks.add(TaskPickUp.taskPickUpStone);
+            tasks.add(TaskPickUp.taskPickUpWood);
+            tasks.add(TaskPickUp.taskPickUpIron);
+        }
 
         if(Rnd.nextInt(20) == 0) {
             int[] position = pickUpPosition();

@@ -34,7 +34,7 @@ public class TaskCollect extends Task {
         if(Map.has(unit.x, unit.y, resource.producer.is()) != null) {
             person.carrying.add(resource);
             Map.underTile[person.x][person.y] = resource.producer.depletedVersion;
-            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, resource.producer), 100);
+            Map.queueExecutable(new ResourceReplenish(unit.x, unit.y, resource.producer), 120);
         }
     }
 }
