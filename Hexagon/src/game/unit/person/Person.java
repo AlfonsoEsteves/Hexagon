@@ -12,6 +12,7 @@ import java.util.function.Predicate;
 public class Person extends Unit {
 
     public static final int maxLife = 100;
+    public static final int maxFood = 100;
 
     public static Object personIdentity;
     public static Image imagePerson = ImageLoader.load("Person");
@@ -23,11 +24,15 @@ public class Person extends Unit {
 
     public Person leader;
 
+    public int food;
+
     public Person(int x, int y) {
         super(x, y);
 
         carrying = new ArrayList<>();
         life = maxLife;
+
+        food = maxFood;
     }
 
     @Override
@@ -68,6 +73,9 @@ public class Person extends Unit {
         else{
             tasks.add(TaskCollect.taskCollectIron);
         }
+        if(!carrying.contains(Item.fruit)) {
+            tasks.add(TaskCollect.taskCollectFruit);
+        }
         if(carrying.size() > 1) {
             tasks.add(TaskStore.instance);
         }
@@ -75,6 +83,9 @@ public class Person extends Unit {
             tasks.add(TaskPickUp.taskPickUpStone);
             tasks.add(TaskPickUp.taskPickUpWood);
             tasks.add(TaskPickUp.taskPickUpIron);
+        }
+        if(!carrying.contains(Item.fruit) && food < Person.maxFood / 2) {
+            tasks.add(TaskPickUp.taskPickUpFruit);
         }
 
         if(Rnd.nextInt(20) == 0) {
@@ -100,6 +111,22 @@ public class Person extends Unit {
                 } else {
                     Map.overTile[position[0]][position[1]] = Tile.missingAnvil;
                 }
+            }
+        }
+
+        if(food > 0) {
+            food--;
+        }
+        if(food < maxFood / 2) {
+            if(carrying.contains(Item.fruit)) {
+                carrying.remove(Item.fruit);
+                food += maxFood;
+            }
+        }
+        if(food == 0) {
+            life--;
+            if(life <= 0) {
+                removeFromTileAndDestroy();
             }
         }
     }

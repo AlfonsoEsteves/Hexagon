@@ -31,11 +31,11 @@ public class Map {
 				if (Rnd.nextInt(45) == 0) {
 					underTile[i][j] = Tile.water;
 				}
-				else if (Rnd.nextInt(80) == 0) {
-					underTile[i][j] = Tile.fruitBush;
+				else if (Rnd.nextInt(90) == 0) {
+					underTile[i][j] = Tile.stoneMine;
 				}
 				else if (Rnd.nextInt(100) == 0) {
-					underTile[i][j] = Tile.stoneMine;
+					underTile[i][j] = Tile.fruitBush;
 				}
 				else if (Rnd.nextInt(150) == 0) {
 					underTile[i][j] = Tile.tree;
@@ -43,11 +43,11 @@ public class Map {
 				else if (Rnd.nextInt(200) == 0) {
 					underTile[i][j] = Tile.ironMine;
 				}
-				/*else if (Rnd.nextInt(3000) == 0) {
+				else if (Rnd.nextInt(3000) == 0) {
 					underTile[i][j] = Tile.gate;
 					CreateDemon createDemon = new CreateDemon(i, j);
 					queueExecutable(createDemon, 1);
-				}*/
+				}
 				else {
 					underTile[i][j] = Tile.grass;
 					if (Rnd.nextInt(300) == 0) {
