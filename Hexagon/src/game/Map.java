@@ -13,7 +13,7 @@ public class Map {
 	public static final int size = 350;
 
 	public static Tile[][] underTile = new Tile[size][size];
-    public static Tile[][] overTile = new Tile[size][size];
+    public static OverTile[][] overTile = new OverTile[size][size];
 	public static Unit[][] unit = new Unit[size][size];
 	public static Dropped[][] dropped = new Dropped[size][size];
 
@@ -30,30 +30,29 @@ public class Map {
 
 	    List<Integer> richPointX = new ArrayList<>();
 	    List<Integer> richPointY = new ArrayList<>();
-	    List<Tile> richPointTiles = new ArrayList<>();
+	    List<OverTile.Id> richPointOverTileIds = new ArrayList<>();
 
 	    double factor = size * size / 7500;
-	    createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.water);
-		createRichPoint(richPointX, richPointY, richPointTiles, factor * 1.2, Tile.stoneMine);
-		createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.fruitBush);
-		createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.tree);
-		createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.ironMine);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor * 1.2, OverTile.stoneMine);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OverTile.fruitBush);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OverTile.tree);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OverTile.ironMine);
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				underTile[i][j] = Tile.grass;
-				for(int k = 0;k<richPointTiles.size();k++){
+				for(int k = 0;k<richPointOverTileIds.size();k++){
 					int x = richPointX.get(k);
 					int y = richPointY.get(k);
-					Tile tile = richPointTiles.get(k);
 					if(Rnd.nextInt(180) > distance(i, j, x, y) + 160){
-						underTile[i][j] = tile;
+						overTile[i][j] = new OverTile(richPointOverTileIds.get(k), i, j);
+						break;
 					}
 				}
 
-				if (underTile[i][j] == Tile.grass){
+				if (underTile[i][j] == Tile.grass && overTile[i][j] == null){
 					if(Rnd.nextInt(3000) == 0) {
-						underTile[i][j] = Tile.gate;
+						overTile[i][j] = new OverTile(OverTile.gate, i, j);
 						EventCreateDemon createDemon = new EventCreateDemon(i, j);
 						queueExecutable(createDemon, 1);
 					}
@@ -65,11 +64,11 @@ public class Map {
 		}
 	}
 
-	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<Tile> richPointTiles, double amount, Tile tile) {
+	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<OverTile.Id> richPointOverTileIds, double amount, OverTile.Id overTileId) {
 		for(int i = 0;i<amount;i++) {
 			richPointX.add(Rnd.nextInt(size));
 			richPointY.add(Rnd.nextInt(size));
-			richPointTiles.add(tile);
+			richPointOverTileIds.add(overTileId);
 		}
 	}
 
@@ -111,7 +110,7 @@ public class Map {
 		}
 	}
 
-    public static Tile overTile(int x, int y) {
+    public static OverTile overTile(int x, int y) {
         if(x >= 0 && x < size && y >= 0 && y < size) {
             return overTile[x][y];
         }
@@ -221,7 +220,7 @@ public class Map {
 	}
 	
 	public static boolean steppable(int x, int y) {
-		if (underTile(x, y).steppable && (overTile(x, y) == null || overTile(x, y).steppable)) {
+		if (underTile(x, y).steppable && (overTile(x, y) == null || overTile(x, y).id.steppable)) {
 			return true;
 		} else {
 			return false;

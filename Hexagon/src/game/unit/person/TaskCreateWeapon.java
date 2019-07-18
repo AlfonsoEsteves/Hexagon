@@ -1,9 +1,6 @@
 package game.unit.person;
 
-import game.Dropped;
-import game.Item;
-import game.Map;
-import game.Tile;
+import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
@@ -20,7 +17,7 @@ public class TaskCreateWeapon extends Task {
         Person person = (Person)unit;
         if(!person.carrying.contains(Item.sword)) {
             if (person.carrying.contains(Item.iron)) {
-                if (Map.has(tileX, tileY, Tile.anvil.is()) != null) {
+                if (Map.has(tileX, tileY, OverTile.anvil.is) != null) {
                     return true;
                 }
             }

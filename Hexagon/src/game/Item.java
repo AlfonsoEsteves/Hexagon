@@ -7,14 +7,14 @@ import java.util.function.Predicate;
 
 public class Item {
 
-    public static Item stone = new Item("Stone").setProducer(Tile.stoneMine);
-    public static Item wood = new Item("Wood").setProducer(Tile.tree);
-    public static Item iron = new Item("Iron").setProducer(Tile.ironMine);
-    public static Item fruit = new Item("Fruit").setProducer(Tile.fruitBush);
+    public static Item stone = new Item("Stone").setProducer(OverTile.stoneMine);
+    public static Item wood = new Item("Wood").setProducer(OverTile.tree);
+    public static Item iron = new Item("Iron").setProducer(OverTile.ironMine);
+    public static Item fruit = new Item("Fruit").setProducer(OverTile.fruitBush);
     public static Item sword = new Item("Sword");
 
     public String name;
-    public Tile producer;
+    public OverTile.Id producer;
     public Image image;
 
     public Item(String name) {
@@ -22,7 +22,7 @@ public class Item {
         image = ImageLoader.load(name);
     }
 
-    public Item setProducer(Tile producer){
+    public Item setProducer(OverTile.Id producer){
         this.producer = producer;
         return this;
     }

@@ -2,17 +2,14 @@ package game;
 
 public class EventResourceReplenish implements Executable {
 
-    public int x, y;
-    public Tile tile;
+    public OverTile tile;
 
-    public EventResourceReplenish(int x, int y, Tile tile){
-        this.x = x;
-        this.y = y;
+    public EventResourceReplenish(OverTile tile){
         this.tile = tile;
     }
 
     @Override
     public void execute() {
-        Map.underTile[x][y] = tile;
+        tile.id = tile.id.renewedVersion;
     }
 }

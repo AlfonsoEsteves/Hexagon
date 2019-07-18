@@ -93,23 +93,25 @@ public class Person extends Unit {
             if (position != null) {
                 int doorCount = Rnd.nextInt(12);
                 for (int[] p : MapIter.of(2)) {
-                    if (Map.distance(position[0], position[1], position[0] + p[0], position[1] + p[1]) == 2) {
+                    int x = position[0] + p[0];
+                    int y = position[1] + p[1];
+                    if (Map.distance(position[0], position[1], x, y) == 2) {
                         if (doorCount == 0) {
-                            Map.overTile[position[0] + p[0]][position[1] + p[1]] = Tile.missingDoor;
+                            Map.overTile[x][y] = new OverTile(OverTile.missingDoor, x, y);
                         } else {
-                            Map.overTile[position[0] + p[0]][position[1] + p[1]] = Tile.missingWall;
+                            Map.overTile[x][y] = new OverTile(OverTile.missingWall, x, y);
                         }
                         doorCount--;
                     }
                 }
                 if (Rnd.nextInt(4) == 0) {
                     for (int[] p : MapIter.of(1)) {
-                        Map.overTile[position[0] + p[0]][position[1] + p[1]] = Tile.missingDepot;
+                        Map.overTile[position[0] + p[0]][position[1] + p[1]] = new OverTile(OverTile.missingDepot, position[0] + p[0], position[1] + p[1]);
                     }
                 } else if (Rnd.nextInt(4) == 0) {
-                    Map.overTile[position[0]][position[1]] = Tile.missingBed;
+                    Map.overTile[position[0]][position[1]] = new OverTile(OverTile.missingBed, position[0], position[1]);
                 } else {
-                    Map.overTile[position[0]][position[1]] = Tile.missingAnvil;
+                    Map.overTile[position[0]][position[1]] = new OverTile(OverTile.missingAnvil, position[0], position[1]);
                 }
             }
         }

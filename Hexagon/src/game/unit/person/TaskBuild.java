@@ -22,7 +22,7 @@ public class TaskBuild extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(person.carrying.contains(material)){
-            if (Map.has(tileX, tileY, Tile.makeWith(material)) != null) {
+            if (Map.has(tileX, tileY, OverTile.makeWith(material)) != null) {
                 return true;
             }
         }
@@ -32,14 +32,14 @@ public class TaskBuild extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        Tile missing = null;
+        OverTile missing = null;
         int[] position = null;
         for(int[] p : MapIter.of(range)) {
             position = p;
-            missing = Map.has(unit.x + p[0], unit.y + p[1], Tile.makeWith(material));
+            missing = Map.has(unit.x + p[0], unit.y + p[1], OverTile.makeWith(material));
             if (missing != null) {
                 person.carrying.remove(material);
-                Map.overTile[person.x + position[0]][person.y + position[1]] = missing.completedVersion;
+                missing.id = missing.id.completedVersion;
                 break;
             }
         }

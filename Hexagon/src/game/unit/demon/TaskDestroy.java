@@ -14,7 +14,7 @@ public class TaskDestroy extends Task {
 
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
-        if (Map.has(tileX, tileY, Tile.isDestroyable) != null) {
+        if (Map.has(tileX, tileY, OverTile.isDestroyable) != null) {
             return true;
         }
         return false;
@@ -23,11 +23,10 @@ public class TaskDestroy extends Task {
     @Override
     public void execute(Unit unit) {
         for(int[] p : MapIter.of(range)) {
-            Tile tile = Map.has(unit.x + p[0], unit.y + p[1], Tile.isDestroyable);
-            if (tile != null) {
+            OverTile overTile = Map.has(unit.x + p[0], unit.y + p[1], OverTile.isDestroyable);
+            if (overTile != null) {
                 if(Rnd.nextInt(5) == 0) {
-                    Map.overTile[unit.x + p[0]][unit.y + p[1]] = tile.missingVersion;
-
+                    overTile.id = overTile.id.missingVersion;
                 }
                 return;
             }
