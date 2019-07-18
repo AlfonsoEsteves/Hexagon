@@ -2,11 +2,11 @@ package game;
 
 import game.unit.demon.Demon;
 
-public class CreateDemon implements Executable {
+public class EventCreateDemon implements Executable {
 
     public int x, y;
 
-    public CreateDemon(int x, int y){
+    public EventCreateDemon(int x, int y){
         this.x = x;
         this.y = y;
     }

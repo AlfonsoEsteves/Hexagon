@@ -3,11 +3,8 @@ package game.unit.person;
 import game.Dropped;
 import game.Item;
 import game.Map;
-import game.ResourceReplenish;
 import game.unit.Task;
 import game.unit.Unit;
-
-import javax.swing.*;
 
 public class TaskPickUp extends Task {
 

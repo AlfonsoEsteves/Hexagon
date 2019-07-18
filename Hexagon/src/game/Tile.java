@@ -39,6 +39,7 @@ public class Tile {
 	public Item providesItem;
 	public Item makeWith;
 	public Tile completedVersion;
+	public Tile missingVersion;
 	public Image image;
 
 	public Tile(String name, boolean steppable) {
@@ -65,6 +66,7 @@ public class Tile {
 
 	public Tile setCompletedVersion(Tile completedVersion){
 		this.completedVersion = completedVersion;
+		completedVersion.missingVersion = this;
 		return this;
 	}
 
@@ -75,4 +77,5 @@ public class Tile {
 	public static Predicate makeWith(Item item){
 		return x -> x instanceof Tile && ((Tile)x).makeWith == item;
 	}
+	public static Predicate isDestroyable = x -> x instanceof Tile && ((Tile)x).missingVersion != null;
 }

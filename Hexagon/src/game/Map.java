@@ -3,12 +3,14 @@ package game;
 import game.unit.person.Person;
 import game.unit.Unit;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 300;
+	public static final int size = 350;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static Tile[][] overTile = new Tile[size][size];
@@ -26,35 +28,48 @@ public class Map {
             executableQueue[i] = new LinkedList();
         }
 
+	    List<Integer> richPointX = new ArrayList<>();
+	    List<Integer> richPointY = new ArrayList<>();
+	    List<Tile> richPointTiles = new ArrayList<>();
+
+	    double factor = size * size / 7500;
+	    createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.water);
+		createRichPoint(richPointX, richPointY, richPointTiles, factor * 1.2, Tile.stoneMine);
+		createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.fruitBush);
+		createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.tree);
+		createRichPoint(richPointX, richPointY, richPointTiles, factor, Tile.ironMine);
+
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				if (Rnd.nextInt(45) == 0) {
-					underTile[i][j] = Tile.water;
+				underTile[i][j] = Tile.grass;
+				for(int k = 0;k<richPointTiles.size();k++){
+					int x = richPointX.get(k);
+					int y = richPointY.get(k);
+					Tile tile = richPointTiles.get(k);
+					if(Rnd.nextInt(180) > distance(i, j, x, y) + 160){
+						underTile[i][j] = tile;
+					}
 				}
-				else if (Rnd.nextInt(90) == 0) {
-					underTile[i][j] = Tile.stoneMine;
-				}
-				else if (Rnd.nextInt(150) == 0) {
-					underTile[i][j] = Tile.fruitBush;
-				}
-				else if (Rnd.nextInt(150) == 0) {
-					underTile[i][j] = Tile.tree;
-				}
-				else if (Rnd.nextInt(200) == 0) {
-					underTile[i][j] = Tile.ironMine;
-				}
-				else if (Rnd.nextInt(3000) == 0) {
-					underTile[i][j] = Tile.gate;
-					CreateDemon createDemon = new CreateDemon(i, j);
-					queueExecutable(createDemon, 1);
-				}
-				else {
-					underTile[i][j] = Tile.grass;
-					if (Rnd.nextInt(300) == 0) {
+
+				if (underTile[i][j] == Tile.grass){
+					if(Rnd.nextInt(3000) == 0) {
+						underTile[i][j] = Tile.gate;
+						EventCreateDemon createDemon = new EventCreateDemon(i, j);
+						queueExecutable(createDemon, 1);
+					}
+					else if (Rnd.nextInt(300) == 0) {
 						addUnit(new Person(i, j));
 					}
 				}
 			}
+		}
+	}
+
+	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<Tile> richPointTiles, double amount, Tile tile) {
+		for(int i = 0;i<amount;i++) {
+			richPointX.add(Rnd.nextInt(size));
+			richPointY.add(Rnd.nextInt(size));
+			richPointTiles.add(tile);
 		}
 	}
 
@@ -81,16 +96,6 @@ public class Map {
 			}
 		}
 		time++;
-		for(int i=0;i<size;i++){
-			for(int j=0;j<size;j++){
-				Unit u = unit(i,j);
-				if(u != null){
-					if(u.life<=0){
-						throw new RuntimeException();
-					}
-				}
-			}
-		}
 	}
 
 	public static void queueExecutable(Executable executable, int delay) {
