@@ -2,44 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08ff9d12-b2ce-44c0-8067-703f28883e26" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/game/OverTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/CreateDemon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/Dropped.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Hexagon/game/Item.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/Map.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/ResourceReplenish.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/Tile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/Task.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/Unit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/demon/Demon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/demon/TaskDestroy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/demon/TaskHuntPerson.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskBuild.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskCollect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskCreateWeapon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskFight.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskPickUp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskReactToPerson.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskSleep.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/game/unit/person/TaskStore.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/gui/ImageLoader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/gui/MainFrame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Hexagon/gui/MainPanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/EventResourceReplenish.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/EventResourceReplenish.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Item.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/unit/demon/TaskDestroy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/demon/TaskDestroy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/unit/person/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/unit/person/TaskBuild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskBuild.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/unit/person/TaskCollect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskCollect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/unit/person/TaskCreateWeapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskCreateWeapon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/unit/person/TaskSleep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskSleep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/unit/person/TaskStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/unit/person/TaskStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/MainPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/MainPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../images/Fertile ground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game/OverTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/OverTile.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,15 +19,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/unit/demon/TaskDestroy.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/unit/person/Person.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -91,20 +45,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskCreateWeapon.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/game/OverTile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="19" column="53" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
+            <state relative-caret-position="174">
+              <caret line="99" column="11" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3095#3096#0" expanded="true" />
+                <element signature="e#3118#3119#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game/OverTile.java">
+        <entry file="file://$PROJECT_DIR$/src/game/Executable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="46" column="51" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="51" />
+            <state relative-caret-position="34">
+              <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/reflect/Executable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -130,11 +98,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskCollect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="37" column="91" selection-start-line="37" selection-start-column="91" selection-end-line="37" selection-end-column="91" />
+            <state relative-caret-position="253">
+              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
             </state>
           </provider>
         </entry>
@@ -245,8 +213,8 @@
         <option value="$PROJECT_DIR$/src/game/unit/person/TaskStore.java" />
         <option value="$PROJECT_DIR$/src/game/unit/person/Person.java" />
         <option value="$PROJECT_DIR$/src/game/EventResourceReplenish.java" />
-        <option value="$PROJECT_DIR$/src/game/OverTile.java" />
         <option value="$PROJECT_DIR$/src/game/unit/person/TaskCollect.java" />
+        <option value="$PROJECT_DIR$/src/game/OverTile.java" />
       </list>
     </option>
   </component>
@@ -385,7 +353,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5735931" visible="true" weight="0.3139183" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5735931" visible="true" weight="0.3139183" />
       <window_info id="Structure" order="1" sideWeight="0.42640692" side_tool="true" weight="0.29198185" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -394,15 +362,15 @@
       <window_info id="Favorites" order="6" sideWeight="0.32242227" side_tool="true" weight="0.25416037" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49848714" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.494705" weight="0.31423897" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49394855" visible="true" weight="0.31423897" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4969743" weight="0.31423897" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49924356" weight="0.3289689" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50680786" side_tool="true" visible="true" weight="0.26841244" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5060514" side_tool="true" visible="true" weight="0.31423897" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Messages" order="10" sideWeight="0.49319214" visible="true" weight="0.26841244" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49319214" weight="0.26841244" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -493,13 +461,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="934" column="16" selection-start-line="934" selection-start-column="16" selection-end-line="934" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/Executable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -779,17 +740,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/OverTile.java">
+    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskCollect.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="46" column="51" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="51" />
+        <state relative-caret-position="253">
+          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/unit/person/TaskCollect.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/lang/reflect/Executable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="37" column="91" selection-start-line="37" selection-start-column="91" selection-end-line="37" selection-end-column="91" />
+        <state relative-caret-position="204">
+          <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/Executable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/OverTile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="99" column="11" selection-start-line="99" selection-start-column="11" selection-end-line="99" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3095#3096#0" expanded="true" />
+            <element signature="e#3118#3119#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

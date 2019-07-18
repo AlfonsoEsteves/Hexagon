@@ -5,7 +5,7 @@ import gui.ImageLoader;
 import java.awt.*;
 import java.util.function.Predicate;
 
-public class OverTile {
+public class OverTile implements Executable {
 
 	public static class Id {
 		public String name;
@@ -16,6 +16,7 @@ public class OverTile {
 		public Id missingVersion;
 		public Item providesItem;
 		public Item makeWith;
+		public Event event;
 		public Image image;
 
 		public Predicate is;
@@ -93,4 +94,9 @@ public class OverTile {
 		return x -> x instanceof OverTile && ((OverTile)x).id.makeWith == item;
 	}
 	public static Predicate isDestroyable = x -> x instanceof OverTile && ((OverTile)x).id.missingVersion != null;
+
+	@Override
+	public void execute() {
+		id.execute(this);
+	}
 }
