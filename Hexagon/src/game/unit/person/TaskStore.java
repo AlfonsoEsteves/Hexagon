@@ -4,6 +4,8 @@ import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
+import java.util.Collections;
+
 public class TaskStore extends Task {
 
     public static TaskStore instance = new TaskStore();
@@ -27,7 +29,24 @@ public class TaskStore extends Task {
     public void execute(Unit unit) {
         Person person = (Person)unit;
         if(Map.has(person.x, person.y, OTId.depot.overTileIs) != null && Map.dropped(unit.x, unit.y) == null) {
-            Item item = person.carrying.remove(0);
+            Item item = null;
+            if(Collections.frequency(person.carrying, Item.sword) > 1) {
+                item = Item.sword;
+            }
+            else if(Collections.frequency(person.carrying, Item.iron) > 1) {
+                item = Item.iron;
+            }
+            else if(Collections.frequency(person.carrying, Item.wood) > 1) {
+                item = Item.wood;
+            }
+            else if(Collections.frequency(person.carrying, Item.stone) > 1) {
+                item = Item.stone;
+            }
+            else if(Collections.frequency(person.carrying, Item.fruit) > 1) {
+                item = Item.fruit;
+            }
+
+            person.carrying.remove(item);
             Map.dropped[unit.x][unit.y] = new Dropped(item);
         }
     }

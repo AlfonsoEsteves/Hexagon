@@ -6,6 +6,7 @@ import gui.ImageLoader;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -46,76 +47,21 @@ public class Person extends Unit {
 
     @Override
     public void initExecute(){
-        if(leader != null && !leader.alive){
+        if(leader != null && !leader.alive) {
             leader = null;
         }
 
-        tasks.clear();
-        tasks.add(TaskFight.instance);
-        tasks.add(TaskSleep.instance);
-        tasks.add(TaskReactToPerson.instance);
-        if(carrying.contains(Item.stone)) {
-            tasks.add(TaskBuild.taskBuildStoneThings);
-        }
-        else{
-            tasks.add(TaskCollect.taskCollectStone);
-        }
-        if(carrying.contains(Item.wood)) {
-            tasks.add(TaskBuild.taskBuildWoodThings);
-        }
-        else{
-            tasks.add(TaskCollect.taskCollectWood);
-        }
-        if(carrying.contains(Item.iron)) {
-            tasks.add(TaskBuild.taskBuildIronThings);
-            tasks.add(TaskCreateWeapon.instance);
-        }
-        else{
-            tasks.add(TaskCollect.taskCollectIron);
-        }
-        if(!carrying.contains(Item.fruit)) {
-            tasks.add(TaskCollect.taskCollectFruit);
-        }
-        if(carrying.size() > 1) {
-            tasks.add(TaskStore.instance);
-        }
-        else if(carrying.size() == 0) {
-            tasks.add(TaskPickUp.taskPickUpStone);
-            tasks.add(TaskPickUp.taskPickUpWood);
-            tasks.add(TaskPickUp.taskPickUpIron);
-        }
-        if(!carrying.contains(Item.fruit) && food < Person.maxFood / 2) {
-            tasks.add(TaskPickUp.taskPickUpFruit);
+        checkFood();
+        setTasks();
+        checkBuilding();
+
+        if(food > maxFood / 2 && Rnd.nextInt(150) == 0) {
+            Map.addUnit(new Person(x, y));
         }
 
-        if(Rnd.nextInt(20) == 0) {
-            int[] position = pickUpPosition();
-            if (position != null) {
-                int doorCount = Rnd.nextInt(12);
-                for (int[] p : MapIter.of(2)) {
-                    int x = position[0] + p[0];
-                    int y = position[1] + p[1];
-                    if (Map.distance(position[0], position[1], x, y) == 2) {
-                        if (doorCount == 0) {
-                            Map.overTile[x][y] = new OverTile(OTId.missingDoor, x, y);
-                        } else {
-                            Map.overTile[x][y] = new OverTile(OTId.missingWall, x, y);
-                        }
-                        doorCount--;
-                    }
-                }
-                if (Rnd.nextInt(4) == 0) {
-                    for (int[] p : MapIter.of(1)) {
-                        Map.overTile[position[0] + p[0]][position[1] + p[1]] = new OverTile(OTId.missingDepot, position[0] + p[0], position[1] + p[1]);
-                    }
-                } else if (Rnd.nextInt(4) == 0) {
-                    Map.overTile[position[0]][position[1]] = new OverTile(OTId.missingBed, position[0], position[1]);
-                } else {
-                    Map.overTile[position[0]][position[1]] = new OverTile(OTId.missingAnvil, position[0], position[1]);
-                }
-            }
-        }
+    }
 
+    private void checkFood() {
         if(food > 0) {
             food--;
         }
@@ -131,10 +77,100 @@ public class Person extends Unit {
                 removeFromTileAndDestroy();
             }
         }
+    }
 
-        if(food > maxFood / 2 && Rnd.nextInt(150) == 0) {
-            Map.addUnit(new Person(x, y));
+    private void setTasks() {
+        tasks.clear();
+        tasks.add(TaskFight.instance);
+        tasks.add(TaskSleep.instance);
+        tasks.add(TaskReactToPerson.instance);
+
+        int amountStone = Collections.frequency(carrying, Item.stone);
+        if(amountStone < 2) {
+            tasks.add(TaskCollect.taskCollectStone);
         }
+        if(amountStone > 0) {
+            tasks.add(TaskBuild.taskBuildStoneThings);
+        }
+        else{
+            tasks.add(TaskPickUp.taskPickUpStone);
+        }
+
+        int amountWood = Collections.frequency(carrying, Item.wood);
+        if(amountWood < 2) {
+            tasks.add(TaskCollect.taskCollectWood);
+        }
+        if(amountWood > 0) {
+            tasks.add(TaskBuild.taskBuildWoodThings);
+        }
+        else{
+            tasks.add(TaskPickUp.taskPickUpWood);
+        }
+
+        int amountIron = Collections.frequency(carrying, Item.iron);
+        if(amountIron < 2) {
+            tasks.add(TaskCollect.taskCollectIron);
+        }
+        if(amountIron > 0) {
+            tasks.add(TaskBuild.taskBuildIronThings);
+            tasks.add(TaskCreateWeapon.instance);
+        }
+        else{
+            tasks.add(TaskPickUp.taskPickUpIron);
+        }
+
+        int amountFruit = Collections.frequency(carrying, Item.fruit);
+        if(amountFruit < 2) {
+            tasks.add(TaskCollect.taskCollectFruit);
+        }
+        if(amountFruit == 0) {
+            tasks.add(TaskPickUp.taskPickUpFruit);
+        }
+
+        int amountSword = Collections.frequency(carrying, Item.sword);
+        if(amountSword == 0) {
+            tasks.add(TaskPickUp.taskPickUpSword);
+        }
+
+        if(amountFruit > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1) {
+            tasks.add(TaskStore.instance);
+        }
+    }
+
+    private void checkBuilding() {
+        if(carrying.contains(Item.stone) && Rnd.nextInt(50) == 0) {
+            int[] position = pickUpPosition();
+            if (position != null) {
+                int doorCount = Rnd.nextInt(12);
+                for (int[] p : MapIter.of(2)) {
+                    int x = position[0] + p[0];
+                    int y = position[1] + p[1];
+                    if (Map.distance(position[0], position[1], x, y) == 2) {
+                        if (doorCount == 0) {
+                            planBuilding(OTId.missingDoor, x, y);
+                        } else {
+                            planBuilding(OTId.missingWall, x, y);
+                        }
+                        doorCount--;
+                    }
+                }
+                if (Rnd.nextInt(4) == 0) {
+                    for (int[] p : MapIter.of(1)) {
+                        planBuilding(OTId.missingDepot, position[0] + p[0], position[1] + p[1]);
+                    }
+                } else if (Rnd.nextInt(4) == 0) {
+                    planBuilding(OTId.missingBed, position[0], position[1]);
+                } else {
+                    planBuilding(OTId.missingAnvil, position[0], position[1]);
+                }
+            }
+        }
+    }
+
+    private void planBuilding(OTId missingDoor, int x, int y) {
+        OverTile overTile = new OverTile(missingDoor, x, y);
+        Map.overTile[x][y] = overTile;
+        Map.queueExecutable(overTile, OTIdMissingBuilding.timeToBeForgot);
     }
 
     private int[] pickUpPosition() {
@@ -169,7 +205,13 @@ public class Person extends Unit {
         }
     }
 
-    public int getDamage() {
-        return carrying.contains(Item.sword) ? 10 : 5;
+    public void causeDamage(Unit unit) {
+        if(carrying.contains(Item.sword)){
+            unit.receiveDamage(25);
+            carrying.remove(Item.sword);
+        }
+        else{
+            unit.receiveDamage(6);
+        }
     }
 }

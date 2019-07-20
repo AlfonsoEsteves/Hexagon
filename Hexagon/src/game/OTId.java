@@ -21,15 +21,15 @@ public class OTId {
 
 	// BUILDABLE:
 	public static OTId wall = new OTId("Wall").setSteppableFalse();
-	public static OTId missingWall = new OTId("Missing wall").setMakeWith(Item.stone).setCompletedVersion(wall);
+	public static OTId missingWall = new OTIdMissingBuilding("Missing wall").setMakeWith(Item.stone).setCompletedVersion(wall);
 	public static OTId door = new OTId("Door");
-	public static OTId missingDoor = new OTId("Missing door").setMakeWith(Item.wood).setCompletedVersion(door);
+	public static OTId missingDoor = new OTIdMissingBuilding("Missing door").setMakeWith(Item.wood).setCompletedVersion(door);
 	public static OTId bed = new OTId("Bed");
-	public static OTId missingBed = new OTId("Missing bed").setMakeWith(Item.wood).setCompletedVersion(bed);
+	public static OTId missingBed = new OTIdMissingBuilding("Missing bed").setMakeWith(Item.wood).setCompletedVersion(bed);
 	public static OTId anvil = new OTId("Anvil");
-	public static OTId missingAnvil = new OTId("Missing anvil").setMakeWith(Item.iron).setCompletedVersion(anvil);
+	public static OTId missingAnvil = new OTIdMissingBuilding("Missing anvil").setMakeWith(Item.iron).setCompletedVersion(anvil);
 	public static OTId depot = new OTId("Depot");
-	public static OTId missingDepot = new OTId("Missing depot").setMakeWith(Item.stone).setCompletedVersion(depot);
+	public static OTId missingDepot = new OTIdMissingBuilding("Missing depot").setMakeWith(Item.stone).setCompletedVersion(depot);
 
 	public String name;
 	public boolean steppable;

@@ -9,7 +9,7 @@ public class TaskDestroy extends Task {
     public static TaskDestroy instance = new TaskDestroy();
 
     private TaskDestroy() {
-        super(5, 1);
+        super(1, 1);
     }
 
     @Override
@@ -26,7 +26,11 @@ public class TaskDestroy extends Task {
             OverTile overTile = Map.has(unit.x + p[0], unit.y + p[1], OverTile.isDestroyable);
             if (overTile != null) {
                 if(Rnd.nextInt(5) == 0) {
-                    overTile.id = overTile.id.missingVersion;
+                    // I need to create a new overtile, it can not just reset the overtile id
+                    // Because if an overtile is destroyed, it could imediatele be forgotten
+                    OverTile newOverTile = new OverTile(overTile.id.missingVersion, overTile.x, overTile.y);
+                    Map.overTile[newOverTile.x][newOverTile.y] = newOverTile;
+                    Map.queueExecutable(newOverTile, OTIdMissingBuilding.timeToBeForgot);
                 }
                 return;
             }

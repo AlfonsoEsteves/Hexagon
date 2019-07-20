@@ -25,8 +25,8 @@ public class TaskHuntPerson extends Task {
     public void execute(Unit unit) {
         Person person = (Person)Map.has(unit.x, unit.y, Person.is);
         if(person != null) {
-            person.damage(9);
+            person.receiveDamage(9);
         }
-        unit.damage(1);
+        unit.receiveDamage(1);
     }
 }

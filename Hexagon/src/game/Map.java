@@ -10,14 +10,14 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 350;
+	public static final int size = 400;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static OverTile[][] overTile = new OverTile[size][size];
 	public static Unit[][] unit = new Unit[size][size];
 	public static Dropped[][] dropped = new Dropped[size][size];
 
-	public static final int executableQueueSize = 500;
+	public static final int executableQueueSize = OTIdMissingBuilding.timeToBeForgot + 1;
 
 	public static LinkedList<Executable>[] executableQueue = new LinkedList[executableQueueSize];
 
@@ -32,8 +32,8 @@ public class Map {
 	    List<Integer> richPointY = new ArrayList<>();
 	    List<OTId> richPointOverTileIds = new ArrayList<>();
 
-	    double factor = size * size / 7500;
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor * 1.2, OTId.stoneMine);
+	    double factor = size * size / 7800;
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor * 1.5, OTId.stoneMine);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.fruitBush);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.tree);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.ironMine);

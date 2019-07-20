@@ -4,6 +4,8 @@ import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
+import java.util.Collections;
+
 public class TaskCollect extends Task {
 
     public static TaskCollect taskCollectStone = new TaskCollect(Item.stone);
@@ -21,7 +23,7 @@ public class TaskCollect extends Task {
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        if(!person.carrying.contains(resource)){
+        if(Collections.frequency(person.carrying, resource) < 2){
             if (Map.has(tileX, tileY, resource.producer.overTileIs) != null) {
                 return true;
             }

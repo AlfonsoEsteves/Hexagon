@@ -27,7 +27,7 @@ public class TaskFight extends Task {
         for(int[] p : MapIter.of(range)) {
             Demon demon = Map.has(unit.x + p[0], unit.y + p[1], Demon.is);
             if (demon != null) {
-                demon.damage(person.getDamage());
+                person.causeDamage(demon);
                 return;
             }
         }

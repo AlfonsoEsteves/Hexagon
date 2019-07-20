@@ -152,7 +152,10 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	public void keyTyped(KeyEvent e) {}
 
 	@Override
-	public void keyPressed(KeyEvent e) {}
+	public void keyPressed(KeyEvent e) {
+		viewX = Map.size / 2;
+		viewY = Map.size / 2;
+	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {}

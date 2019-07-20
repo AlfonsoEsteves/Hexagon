@@ -37,7 +37,7 @@ public class TaskReactToPerson extends Task {
                             other.leader = leader;
                         }
                         else{
-                            other.damage(person.getDamage());
+                            person.causeDamage(other);
                         }
                     }
                     break;

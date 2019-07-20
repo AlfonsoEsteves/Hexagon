@@ -4,6 +4,7 @@ import game.Executable;
 import game.Log;
 import game.Map;
 import game.Rnd;
+import gui.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,10 +63,10 @@ public abstract class Unit implements Executable {
 
 
 
-        /*if(id == 139) {
+        /*if(id == 1443) {
             MainPanel.viewX = x;
             MainPanel.viewY = y;
-            if (Map.time > 70) {
+            if (Map.time >= 615) {
                 System.out.println();
             }
         }*/
@@ -278,7 +279,7 @@ public abstract class Unit implements Executable {
         alive = false;
     }
 
-    public void damage(int amount){
+    public void receiveDamage(int amount){
         life -= amount;
         if(life <= 0){
             removeFromTileAndDestroy();
