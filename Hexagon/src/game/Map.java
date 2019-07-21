@@ -32,11 +32,12 @@ public class Map {
 	    List<Integer> richPointY = new ArrayList<>();
 	    List<OTId> richPointOverTileIds = new ArrayList<>();
 
-	    double factor = size * size / 7800;
+	    double factor = size * size / 8000;
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor * 1.5, OTId.stoneMine);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.fruitBush);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.tree);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.ironMine);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.richGrass);
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
