@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
+import game.Executable;
 import game.Item;
 import game.Map;
 import game.MapIter;
@@ -20,6 +21,8 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	public static int viewSize = 20;
 	public static int viewX = Map.size / 2;
 	public static int viewY = Map.size / 2;
+	public static int tileWidth = 20;
+	public static int tileHeight = 10;
 
 	public MainPanel(int x, int y, int width, int height) {
 		setBounds(x, y, width, height);
@@ -107,6 +110,22 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				y += 15;
 			}
 		}
+
+		for(int i = 0; i < Map.executableQueueSize; i++) {
+			for(int j = 0;j < Map.executableQueue[i].size(); j++) {
+				Executable e = (Executable)Map.executableQueue[i].get(j);
+				if(e instanceof Person) {
+					Person p = (Person)e;
+					int x = (p.x + p.y) * MainFrame.height / Map.size / 6;
+					int y = (p.x - p.y) * 2 * MainFrame.height / Map.size / 6 + MainFrame.height / 2;
+					graphics.drawLine(x, y, x + 1, y);
+				}
+			}
+		}
+		int sX = (viewX + viewY) * MainFrame.height / Map.size / 6;
+		int sY = (viewX - viewY) * 2 * MainFrame.height / Map.size / 6 + MainFrame.height / 2;
+		graphics.setColor(Color.red);
+		graphics.drawLine(sX-1 , sY, sX + 2, sY);
 	}
 
 	@Override

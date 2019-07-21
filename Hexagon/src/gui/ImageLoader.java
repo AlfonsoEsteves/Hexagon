@@ -9,7 +9,7 @@ import game.Tile;
 
 public class ImageLoader {
 	
-	public static String path = "C:\\Users\\Usuario\\Documents\\Projects\\Hexagon\\images\\";
+	public static String path = "C:\\Users\\Usuario\\Documents\\Projects\\Hexagon\\images\\" + MainPanel.tileWidth + "-" + MainPanel.tileHeight + "\\";
 
 	public static Image load(String name) {
 		try {

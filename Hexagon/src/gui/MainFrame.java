@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 public class MainFrame extends JFrame {
 
 	public static int width = 1000;
-	public static int height = 668;
+	public static int height = 728;
 
 	public static MainFrame instance;
 
