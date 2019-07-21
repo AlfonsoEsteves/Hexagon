@@ -142,13 +142,29 @@ public class Person extends Unit {
 
     private void checkBuilding() {
         if(carrying.contains(Item.stone) && Rnd.nextInt(50) == 0) {
-            int[] position = pickUpPosition();
+            OTId toBeBuilt = null;
+            int size = 2;
+            if (Rnd.nextInt(4) == 0) {
+                toBeBuilt = OTId.missingDepot;
+            }
+            else if (Rnd.nextInt(4) == 0) {
+                toBeBuilt = OTId.missingBed;
+            }
+            else /*if (Rnd.nextInt(4) == 0)*/ {
+                toBeBuilt = OTId.missingAnvil;
+            }
+            /*else {
+                toBeBuilt = OTId.missingHenHouse;
+                size = 3;
+            }*/
+
+            int[] position = pickUpPosition(size);
             if (position != null) {
-                int doorCount = Rnd.nextInt(12);
-                for (int[] p : MapIter.of(2)) {
+                int doorCount = Rnd.nextInt(size * 6);
+                for (int[] p : MapIter.of(size)) {
                     int x = position[0] + p[0];
                     int y = position[1] + p[1];
-                    if (Map.distance(position[0], position[1], x, y) == 2) {
+                    if (Map.distance(position[0], position[1], x, y) == size) {
                         if (doorCount == 0) {
                             planBuilding(OTId.missingDoor, x, y);
                         } else {
@@ -157,14 +173,14 @@ public class Person extends Unit {
                         doorCount--;
                     }
                 }
-                if (Rnd.nextInt(4) == 0) {
+
+                if (toBeBuilt == OTId.missingDepot) {
                     for (int[] p : MapIter.of(1)) {
                         planBuilding(OTId.missingDepot, position[0] + p[0], position[1] + p[1]);
                     }
-                } else if (Rnd.nextInt(4) == 0) {
-                    planBuilding(OTId.missingBed, position[0], position[1]);
-                } else {
-                    planBuilding(OTId.missingAnvil, position[0], position[1]);
+                }
+                else {
+                    planBuilding(toBeBuilt, position[0], position[1]);
                 }
             }
         }
@@ -176,11 +192,11 @@ public class Person extends Unit {
         Map.queueExecutable(overTile, OTIdMissingBuilding.timeToBeForgot);
     }
 
-    private int[] pickUpPosition() {
+    private int[] pickUpPosition(int size) {
         int var = 6;
         int rndX = x + Rnd.nextInt(var * 2 + 1) - var;
         int rndY = y + Rnd.nextInt(var * 2 + 1) - var;
-        if(checkPickedPosition(rndX, rndY)){
+        if(checkPickedPosition(rndX, rndY, size)){
             int[] position = {rndX, rndY};
             return position;
         }
@@ -189,8 +205,8 @@ public class Person extends Unit {
         }
     }
 
-    private boolean checkPickedPosition(int pickedX, int pickedY) {
-        for(int[] p : MapIter.of(3)) {
+    private boolean checkPickedPosition(int pickedX, int pickedY, int size) {
+        for(int[] p : MapIter.of(size + 1)) {
             if(Map.underTile(pickedX + p[0], pickedY + p[1]) != Tile.grass ||
                     Map.overTile(pickedX + p[0], pickedY + p[1]) != null) {
                 return false;

@@ -1,0 +1,25 @@
+Notar que la gracia es que la idea es poder hacer que las zonas produscan distintos recursos para que comercien
+  si todas las sonas pueden crear carne o guevos o X, entonces no estimula el comercio
+
+
+chicken give white-meat and eggs
+cows give red-meat and milk
+
+
+3 sizes of cow
+ baby
+ medium, will have at least one son
+ big, can continue to have sons, can be butchered
+
+
+with grain you can
+  create beer
+  wheat/bread
+  feed chicken needs also watter
+
+
+fish
+
+
+bee nests
+

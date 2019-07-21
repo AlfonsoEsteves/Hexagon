@@ -38,7 +38,7 @@ public class Map {
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.fruitBush);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.tree);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.ironMine);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.richGrass);
+		//createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.richGrass);
 
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {

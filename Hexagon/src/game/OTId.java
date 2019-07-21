@@ -30,6 +30,8 @@ public class OTId {
 	public static OTId missingBed = new OTIdMissingBuilding("Missing bed").setMakeWith(Item.wood).setCompletedVersion(bed);
 	public static OTId anvil = new OTId("Anvil");
 	public static OTId missingAnvil = new OTIdMissingBuilding("Missing anvil").setMakeWith(Item.iron).setCompletedVersion(anvil);
+	public static OTId henHouse = new OTId("Hen house");
+	public static OTId missingHenHouse = new OTIdMissingBuilding("Missing hen house").setMakeWith(Item.wood).setCompletedVersion(henHouse);
 	public static OTId depot = new OTId("Depot");
 	public static OTId missingDepot = new OTIdMissingBuilding("Missing depot").setMakeWith(Item.stone).setCompletedVersion(depot);
 
