@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 
 public class Demon extends Unit {
 
-    public static Object demonIdentity = new Object();
     public static Image imageDemon = ImageLoader.load("Demon");
 
     public static Predicate is = x -> (x instanceof Demon);
@@ -23,10 +22,6 @@ public class Demon extends Unit {
     @Override
     public Image image() {
         return imageDemon;
-    }
-
-    public boolean is(Object identity) {
-        return identity == demonIdentity;
     }
 
     @Override

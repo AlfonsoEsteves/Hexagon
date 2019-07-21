@@ -15,7 +15,6 @@ public class Person extends Unit {
     public static final int maxLife = 100;
     public static final int maxFood = 80;
 
-    public static Object personIdentity;
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
 
@@ -39,10 +38,6 @@ public class Person extends Unit {
     @Override
     public Image image() {
         return carrying.contains(Item.sword) ? imagePersonWithSword : imagePerson;
-    }
-
-    public boolean is(Object identity) {
-        return identity == personIdentity;
     }
 
     @Override

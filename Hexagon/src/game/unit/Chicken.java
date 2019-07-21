@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 
 public class Chicken extends Unit {
 
-    public static Object demonIdentity = new Object();
     public static Image imageChicken = ImageLoader.load("Chicken");
     public static Image imageLittleChicken = ImageLoader.load("Little chicken");
 
@@ -30,10 +29,6 @@ public class Chicken extends Unit {
         else{
             return imageLittleChicken;
         }
-    }
-
-    public boolean is(Object identity) {
-        return identity == demonIdentity;
     }
 
     @Override
