@@ -122,6 +122,14 @@ public class Person extends Unit {
             tasks.add(TaskPickUp.taskPickUpFruit);
         }
 
+        int amountMeat = Collections.frequency(carrying, Item.meat);
+        if(amountMeat < 2) {
+            tasks.add(TaskTakeChicken.instance);
+        }
+        if(amountFruit == 0) {
+            tasks.add(TaskPickUp.taskPickUpMeat);
+        }
+
         int amountSword = Collections.frequency(carrying, Item.sword);
         if(amountSword == 0) {
             tasks.add(TaskPickUp.taskPickUpSword);

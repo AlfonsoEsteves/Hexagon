@@ -12,6 +12,7 @@ public class Item {
     public static Item iron = new Item("Iron").setProducer(OTId.ironMine);
     public static Item fruit = new Item("Fruit").setProducer(OTId.fruitBush);
     public static Item sword = new Item("Sword");
+    public static Item meat = new Item("Meat");
 
     public String name;
     public OTId producer;
