@@ -1,7 +1,9 @@
-package game.unit;
+package game.unit.chicken;
 
-import game.unit.demon.TaskDestroy;
-import game.unit.demon.TaskHuntPerson;
+import game.Map;
+import game.Rnd;
+import game.unit.Unit;
+import game.unit.person.Person;
 import gui.ImageLoader;
 
 import java.awt.*;
@@ -14,11 +16,13 @@ public class Chicken extends Unit {
 
     public static Predicate is = x -> (x instanceof Chicken);
 
+    public int food;
     public boolean grown;
 
     public Chicken(int x, int y) {
         super(x, y);
         grown = false;
+        food = 30;
     }
 
     @Override
@@ -33,10 +37,24 @@ public class Chicken extends Unit {
 
     @Override
     public void initExecute(){
-        life --;
-        if(life <= 0){
+        food --;
+        if(food <= 0){
             removeFromTileAndDestroy();
+        }
+        else {
+            tasks.clear();
+            if(food < (grown ? 70 : 100)) {
+                tasks.add(TaskChicken.instance);
+            }
+        }
+
+        if(grown && food > 30 && Rnd.nextInt(50) == 0) {
+            Map.addUnit(new Chicken(x, y));
         }
     }
 
+    @Override
+    public int delay(){
+        return 3;
+    }
 }

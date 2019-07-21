@@ -78,21 +78,30 @@ public abstract class Unit implements Executable {
         priorityTask = null;
         initExecute();
         if(alive) {
-            scanForTasks();
-            if (priorityTask != null) {
-                if (Map.distance(x, y, destinationX, destinationY) > priorityTask.range) {
-                    goTo(destinationX, destinationY);
-                } else {
-                    priorityTask.execute(this);
+            if(!tasks.isEmpty()) {
+                scanForTasks();
+                if (priorityTask != null) {
+                    if (Map.distance(x, y, destinationX, destinationY) > priorityTask.range) {
+                        goTo(destinationX, destinationY);
+                    } else {
+                        priorityTask.execute(this);
+                    }
+                }
+                else {
+                    moveRandomly();
                 }
             }
-            else{
+            else {
                 moveRandomly();
             }
         }
         if(alive) {
-            Map.queueExecutable(this, 1);
+            Map.queueExecutable(this, delay());
         }
+    }
+
+    public int delay() {
+        return 1;
     }
 
     private void moveRandomly(){

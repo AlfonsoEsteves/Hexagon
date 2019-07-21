@@ -1,5 +1,6 @@
 package game;
 
+import game.unit.chicken.Chicken;
 import game.unit.person.Person;
 import game.unit.Unit;
 
@@ -47,6 +48,11 @@ public class Map {
 					int y = richPointY.get(k);
 					if(Rnd.nextInt(180) > distance(i, j, x, y) + 160){
 						overTile[i][j] = new OverTile(richPointOverTileIds.get(k), i, j);
+						if(overTile[i][j].id == OTId.richGrass) {
+							if(Rnd.nextInt(20) == 0) {
+								addUnit(new Chicken(i, j));
+							}
+						}
 						break;
 					}
 				}
