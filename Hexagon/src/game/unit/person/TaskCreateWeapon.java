@@ -4,6 +4,8 @@ import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
+import java.util.Collections;
+
 public class TaskCreateWeapon extends Task {
 
     public static TaskCreateWeapon instance = new TaskCreateWeapon();
@@ -15,7 +17,7 @@ public class TaskCreateWeapon extends Task {
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        if(!person.carrying.contains(Item.sword)) {
+        if(Collections.frequency(person.carrying, Item.sword) < 2) {
             if (person.carrying.contains(Item.iron)) {
                 if (Map.has(tileX, tileY, OTId.anvil.overTileIs) != null) {
                     return true;

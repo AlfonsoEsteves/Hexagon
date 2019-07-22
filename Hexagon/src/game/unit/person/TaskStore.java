@@ -45,6 +45,12 @@ public class TaskStore extends Task {
             else if(Collections.frequency(person.carrying, Item.fruit) > 1) {
                 item = Item.fruit;
             }
+            else if(Collections.frequency(person.carrying, Item.honey) > 1) {
+                item = Item.honey;
+            }
+            else if(Collections.frequency(person.carrying, Item.mushroom) > 1) {
+                item = Item.mushroom;
+            }
 
             person.carrying.remove(item);
             Map.dropped[unit.x][unit.y] = new Dropped(item);

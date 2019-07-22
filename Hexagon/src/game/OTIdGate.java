@@ -4,6 +4,8 @@ import game.unit.demon.Demon;
 
 public class OTIdGate extends OTId {
 
+    public static int maxDelay = 150;
+
     public OTIdGate(String name){
         super(name);
     }
@@ -11,6 +13,6 @@ public class OTIdGate extends OTId {
     @Override
     public void execute(OverTile overTile) {
         Map.addUnit(new Demon(overTile.x, overTile.y));
-        Map.queueExecutable(overTile, Rnd.nextInt(80) + 80);
+        Map.queueExecutable(overTile, 1 + Rnd.nextInt(maxDelay));
     }
 }

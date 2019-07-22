@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 400;
+	public static final int size = 650;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static OverTile[][] overTile = new OverTile[size][size];
@@ -32,12 +32,15 @@ public class Map {
 	    List<Integer> richPointX = new ArrayList<>();
 	    List<Integer> richPointY = new ArrayList<>();
 	    List<OTId> richPointOverTileIds = new ArrayList<>();
+		List<Integer> richPointSize = new ArrayList<>();
 
-	    double factor = size * size / 8000;
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor * 1.5, OTId.stoneMine);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.fruitBush);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.tree);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.ironMine);
+	    double factor = size * size / 9000;
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 3, OTId.stoneMine);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 0.9, OTId.tree);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.ironMine);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.beeNest);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.mushrooms);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.fruitBush);
 		//createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.richGrass);
 
 		for (int i = 0; i < size; i++) {
@@ -46,23 +49,24 @@ public class Map {
 				for(int k = 0;k<richPointOverTileIds.size();k++){
 					int x = richPointX.get(k);
 					int y = richPointY.get(k);
-					if(Rnd.nextInt(180) > distance(i, j, x, y) + 160){
+					int size = richPointSize.get(k);
+					if(Rnd.nextInt(size) >= distance(i, j, x, y) & Rnd.nextInt(3) == 0){
 						overTile[i][j] = new OverTile(richPointOverTileIds.get(k), i, j);
-						if(overTile[i][j].id == OTId.richGrass) {
+						/*if(overTile[i][j].id == OTId.richGrass) {
 							if(Rnd.nextInt(20) == 0) {
 								addUnit(new Chicken(i, j));
 							}
-						}
+						}*/
 						break;
 					}
 				}
 
 				if (underTile[i][j] == Tile.grass && overTile[i][j] == null){
-					if(Rnd.nextInt(3000) == 0) {
+					if(Rnd.nextInt(4000) == 0) {
 						overTile[i][j] = new OverTile(OTId.gate, i, j);
-						queueExecutable(overTile[i][j], 1);
+						queueExecutable(overTile[i][j], 1 + Rnd.nextInt(OTIdGate.maxDelay / 2));
 					}
-					else if (Rnd.nextInt(300) == 0) {
+					else if (Rnd.nextInt(700) == 0) {
 						addUnit(new Person(i, j));
 					}
 				}
@@ -70,11 +74,12 @@ public class Map {
 		}
 	}
 
-	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<OTId> richPointOverTileIds, double amount, OTId overTileId) {
+	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<OTId> richPointOverTileIds, List<Integer> richPointSize, double amount, OTId overTileId) {
 		for(int i = 0;i<amount;i++) {
 			richPointX.add(Rnd.nextInt(size));
 			richPointY.add(Rnd.nextInt(size));
 			richPointOverTileIds.add(overTileId);
+			richPointSize.add(2 + Rnd.nextInt(15));
 		}
 	}
 

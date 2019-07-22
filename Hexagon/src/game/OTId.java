@@ -17,6 +17,10 @@ public class OTId {
 	public static OTId tree = new OTId("Tree").setDepletedVersion(cutTree).setProvidesItem(Item.wood);
 	public static OTId bush = new OTIdDepletedResource("Bush");
 	public static OTId fruitBush = new OTId("Fruit bush").setDepletedVersion(bush).setProvidesItem(Item.fruit);
+	public static OTId cutMushrooms = new OTIdDepletedResource("Cut mushrooms");
+	public static OTId mushrooms = new OTId("Mushrooms").setDepletedVersion(cutMushrooms).setProvidesItem(Item.mushroom);
+	public static OTId takenBeeNest = new OTIdDepletedResource("Taken bee nest");
+	public static OTId beeNest = new OTId("Bee nest").setDepletedVersion(takenBeeNest).setProvidesItem(Item.honey);
 	public static OTId eatenRichGrass = new OTIdDepletedResource("Eaten rich grass");
 	public static OTId richGrass = new OTId("Rich grass").setDepletedVersion(eatenRichGrass);
 	public static OTId gate = new OTIdGate("Gate");

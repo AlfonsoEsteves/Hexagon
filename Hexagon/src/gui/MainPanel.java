@@ -13,6 +13,7 @@ import game.Item;
 import game.Map;
 import game.MapIter;
 import game.unit.Unit;
+import game.unit.demon.Demon;
 import game.unit.person.Person;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
@@ -118,14 +119,24 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 					Person p = (Person)e;
 					int x = (p.x + p.y) * MainFrame.height / Map.size / 6;
 					int y = (p.x - p.y) * 2 * MainFrame.height / Map.size / 6 + MainFrame.height / 2;
+					graphics.setColor(Color.white);
+					graphics.drawLine(x, y, x + 1, y);
+				}
+				else if(e instanceof Demon) {
+					Demon p = (Demon) e;
+					int x = (p.x + p.y) * MainFrame.height / Map.size / 6;
+					int y = (p.x - p.y) * 2 * MainFrame.height / Map.size / 6 + MainFrame.height / 2;
+					graphics.setColor(Color.red);
 					graphics.drawLine(x, y, x + 1, y);
 				}
 			}
 		}
 		int sX = (viewX + viewY) * MainFrame.height / Map.size / 6;
 		int sY = (viewX - viewY) * 2 * MainFrame.height / Map.size / 6 + MainFrame.height / 2;
-		graphics.setColor(Color.red);
+		graphics.setColor(Color.yellow);
+		graphics.drawLine(sX-1 , sY - 1, sX + 2, sY - 1);
 		graphics.drawLine(sX-1 , sY, sX + 2, sY);
+		graphics.drawLine(sX-1 , sY + 1, sX + 2, sY + 1);
 	}
 
 	@Override

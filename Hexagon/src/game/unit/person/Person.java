@@ -26,13 +26,17 @@ public class Person extends Unit {
 
     public int food;
 
+    public static int foods = 3;
+    public int lastFoodIndex = 0;
+    public Item[] lastFood = new Item[foods];
+
     public Person(int x, int y) {
         super(x, y);
 
         carrying = new ArrayList<>();
         life = maxLife;
 
-        food = maxFood;
+        food = maxFood / 2;
     }
 
     @Override
@@ -50,8 +54,11 @@ public class Person extends Unit {
         setTasks();
         checkBuilding();
 
-        if(food > maxFood / 2 && Rnd.nextInt(150) == 0) {
-            Map.addUnit(new Person(x, y));
+        if(food > maxFood * 0.9 && Rnd.nextInt(150) == 0) {
+            int totalFood = Collections.frequency(carrying, Item.fruit) + Collections.frequency(carrying, Item.mushroom) + Collections.frequency(carrying, Item.honey);
+            if(totalFood > 2) {
+                Map.addUnit(new Person(x, y));
+            }
         }
 
     }
@@ -60,10 +67,31 @@ public class Person extends Unit {
         if(food > 0) {
             food--;
         }
-        if(food < maxFood / 2) {
+        if(food < maxFood) {
+            Item foodType = null;
+            int foodValue = 0;
             if(carrying.contains(Item.fruit)) {
-                carrying.remove(Item.fruit);
-                food += maxFood;
+                foodValue = calculateFoodValue(Item.fruit);
+                foodType = Item.fruit;
+            }
+            if(carrying.contains(Item.honey)) {
+                int newFoodValue = calculateFoodValue(Item.honey);
+                if(newFoodValue > foodValue) {
+                    foodType = Item.honey;
+                    foodValue = newFoodValue;
+                }
+            }
+            if(carrying.contains(Item.mushroom)) {
+                int newFoodValue = calculateFoodValue(Item.mushroom);
+                if(newFoodValue > foodValue) {
+                    foodType = Item.mushroom;
+                    foodValue = newFoodValue;
+                }
+            }
+            if(foodType != null) {
+                lastFoodIndex = (lastFoodIndex + 1) % foods;
+                carrying.remove(foodType);
+                food += foodValue;
             }
         }
         if(food == 0) {
@@ -71,6 +99,18 @@ public class Person extends Unit {
             if(life <= 0) {
                 removeFromTileAndDestroy();
             }
+        }
+    }
+
+    private int calculateFoodValue(Item food) {
+        if(lastFood[lastFoodIndex] == food) {
+            return maxFood * 40;
+        }
+        else if(lastFood[(lastFoodIndex + 1 ) % foods] == food) {
+            return maxFood * 70;
+        }
+        else {
+            return maxFood;
         }
     }
 
@@ -122,6 +162,22 @@ public class Person extends Unit {
             tasks.add(TaskPickUp.taskPickUpFruit);
         }
 
+        int amountHoney = Collections.frequency(carrying, Item.honey);
+        if(amountHoney < 2) {
+            tasks.add(TaskCollect.taskCollectHoney);
+        }
+        if(amountHoney == 0) {
+            tasks.add(TaskPickUp.taskPickUpHoney);
+        }
+
+        int amountMushroom = Collections.frequency(carrying, Item.mushroom);
+        if(amountMushroom < 2) {
+            tasks.add(TaskCollect.taskCollectMushroom);
+        }
+        if(amountMushroom == 0) {
+            tasks.add(TaskPickUp.taskPickUpMushroom);
+        }
+
         int amountMeat = Collections.frequency(carrying, Item.meat);
         if(amountMeat < 2) {
             tasks.add(TaskTakeChicken.instance);
@@ -135,7 +191,7 @@ public class Person extends Unit {
             tasks.add(TaskPickUp.taskPickUpSword);
         }
 
-        if(amountFruit > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1) {
+        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1) {
             tasks.add(TaskStore.instance);
         }
     }
@@ -226,7 +282,7 @@ public class Person extends Unit {
 
     public void causeDamage(Unit unit) {
         if(carrying.contains(Item.sword)){
-            unit.receiveDamage(25);
+            unit.receiveDamage(30);
             carrying.remove(Item.sword);
         }
         else{

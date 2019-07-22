@@ -12,6 +12,8 @@ public class TaskCollect extends Task {
     public static TaskCollect taskCollectIron = new TaskCollect(Item.iron);
     public static TaskCollect taskCollectWood = new TaskCollect(Item.wood);
     public static TaskCollect taskCollectFruit = new TaskCollect(Item.fruit);
+    public static TaskCollect taskCollectMushroom = new TaskCollect(Item.mushroom);
+    public static TaskCollect taskCollectHoney = new TaskCollect(Item.honey);
 
     public Item resource;
 
@@ -37,7 +39,7 @@ public class TaskCollect extends Task {
         if(Map.has(unit.x, unit.y, resource.producer.overTileIs) != null) {
             person.carrying.add(resource);
             Map.overTile[person.x][person.y].id = resource.producer.depletedVersion;
-            Map.queueExecutable(Map.overTile[person.x][person.y], 150 + Rnd.nextInt(150));
+            Map.queueExecutable(Map.overTile[person.x][person.y], 100 + Rnd.nextInt(200));
         }
     }
 }

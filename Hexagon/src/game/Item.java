@@ -7,10 +7,12 @@ import java.util.function.Predicate;
 
 public class Item {
 
-    public static Item stone = new Item("Stone").setProducer(OTId.stoneMine);
-    public static Item wood = new Item("Wood").setProducer(OTId.tree);
-    public static Item iron = new Item("Iron").setProducer(OTId.ironMine);
-    public static Item fruit = new Item("Fruit").setProducer(OTId.fruitBush);
+    public static Item stone = new Item("Stone");
+    public static Item wood = new Item("Wood");
+    public static Item iron = new Item("Iron");
+    public static Item fruit = new Item("Fruit");
+    public static Item mushroom = new Item("Mushroom");
+    public static Item honey = new Item("Honey");
     public static Item sword = new Item("Sword");
     public static Item meat = new Item("Meat");
 
