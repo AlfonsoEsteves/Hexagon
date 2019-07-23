@@ -14,6 +14,7 @@ public class TaskCollect extends Task {
     public static TaskCollect taskCollectFruit = new TaskCollect(Item.fruit);
     public static TaskCollect taskCollectMushroom = new TaskCollect(Item.mushroom);
     public static TaskCollect taskCollectHoney = new TaskCollect(Item.honey);
+    public static TaskCollect taskCollectCarrot = new TaskCollect(Item.carrot);
 
     public Item resource;
 

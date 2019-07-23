@@ -58,6 +58,12 @@ public abstract class Unit implements Executable {
         return alive;
     }
 
+
+    public static long timeScan = 0;
+    public static long timeOther = 0;
+    public static long t1 = System.nanoTime();
+    public static long t2 = t1;
+
     @Override
     public void execute() {
 
@@ -79,7 +85,15 @@ public abstract class Unit implements Executable {
         initExecute();
         if(alive) {
             if(!tasks.isEmpty()) {
+
+                t1 = System.nanoTime();
+                timeOther += t1 - t2;
+
                 scanForTasks();
+
+                t2 = System.nanoTime();
+                timeScan += t2 - t1;
+
                 if (priorityTask != null) {
                     if (Map.distance(x, y, destinationX, destinationY) > priorityTask.range) {
                         goTo(destinationX, destinationY);

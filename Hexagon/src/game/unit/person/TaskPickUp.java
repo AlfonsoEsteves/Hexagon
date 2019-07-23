@@ -14,6 +14,7 @@ public class TaskPickUp extends Task {
     public static TaskPickUp taskPickUpFruit = new TaskPickUp(Item.fruit);
     public static TaskPickUp taskPickUpHoney = new TaskPickUp(Item.honey);
     public static TaskPickUp taskPickUpMushroom = new TaskPickUp(Item.mushroom);
+    public static TaskPickUp taskPickUpCarrot = new TaskPickUp(Item.carrot);
     public static TaskPickUp taskPickUpMeat = new TaskPickUp(Item.meat);
     public static TaskPickUp taskPickUpSword = new TaskPickUp(Item.sword);
 

@@ -26,7 +26,7 @@ public class Person extends Unit {
 
     public int food;
 
-    public static int foods = 3;
+    public static int foods = 4;
     public int lastFoodIndex = 0;
     public Item[] lastFood = new Item[foods];
 
@@ -88,6 +88,13 @@ public class Person extends Unit {
                     foodValue = newFoodValue;
                 }
             }
+            if(carrying.contains(Item.carrot)) {
+                int newFoodValue = calculateFoodValue(Item.carrot);
+                if(newFoodValue > foodValue) {
+                    foodType = Item.carrot;
+                    foodValue = newFoodValue;
+                }
+            }
             if(foodType != null) {
                 lastFoodIndex = (lastFoodIndex + 1) % foods;
                 carrying.remove(foodType);
@@ -104,10 +111,13 @@ public class Person extends Unit {
 
     private int calculateFoodValue(Item food) {
         if(lastFood[lastFoodIndex] == food) {
-            return maxFood * 40;
+            return maxFood * 25;
         }
         else if(lastFood[(lastFoodIndex + 1 ) % foods] == food) {
-            return maxFood * 70;
+            return maxFood * 50;
+        }
+        else if(lastFood[(lastFoodIndex + 2 ) % foods] == food) {
+            return maxFood * 75;
         }
         else {
             return maxFood;
@@ -178,20 +188,28 @@ public class Person extends Unit {
             tasks.add(TaskPickUp.taskPickUpMushroom);
         }
 
-        int amountMeat = Collections.frequency(carrying, Item.meat);
+        int amountCarrot = Collections.frequency(carrying, Item.carrot);
+        if(amountCarrot < 2) {
+            tasks.add(TaskCollect.taskCollectCarrot);
+        }
+        if(amountCarrot == 0) {
+            tasks.add(TaskPickUp.taskPickUpCarrot);
+        }
+
+        /*int amountMeat = Collections.frequency(carrying, Item.meat);
         if(amountMeat < 2) {
             tasks.add(TaskTakeChicken.instance);
         }
-        if(amountFruit == 0) {
+        if(amountMeat == 0) {
             tasks.add(TaskPickUp.taskPickUpMeat);
-        }
+        }*/
 
         int amountSword = Collections.frequency(carrying, Item.sword);
         if(amountSword == 0) {
             tasks.add(TaskPickUp.taskPickUpSword);
         }
 
-        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1) {
+        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1) {
             tasks.add(TaskStore.instance);
         }
     }

@@ -41,6 +41,7 @@ public class Map {
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.beeNest);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.mushrooms);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.fruitBush);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.carrots);
 		//createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.richGrass);
 
 		for (int i = 0; i < size; i++) {
@@ -106,6 +107,15 @@ public class Map {
 			}
 		}
 		time++;
+
+		if(time == 500) {
+			//Scan  75264
+			//Other 11438
+			System.out.println("Scan  " + Unit.timeScan / 1000000);
+			System.out.println("Other " + Unit.timeOther / 1000000);
+			System.out.println();
+		}
+
 	}
 
 	public static void queueExecutable(Executable executable, int delay) {

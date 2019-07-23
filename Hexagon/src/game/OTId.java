@@ -21,6 +21,8 @@ public class OTId {
 	public static OTId mushrooms = new OTId("Mushrooms").setDepletedVersion(cutMushrooms).setProvidesItem(Item.mushroom);
 	public static OTId takenBeeNest = new OTIdDepletedResource("Taken bee nest");
 	public static OTId beeNest = new OTId("Bee nest").setDepletedVersion(takenBeeNest).setProvidesItem(Item.honey);
+	public static OTId takenCarrots = new OTIdDepletedResource("Taken carrots");
+	public static OTId carrots = new OTId("Carrots").setDepletedVersion(takenCarrots).setProvidesItem(Item.carrot);
 	public static OTId eatenRichGrass = new OTIdDepletedResource("Eaten rich grass");
 	public static OTId richGrass = new OTId("Rich grass").setDepletedVersion(eatenRichGrass);
 	public static OTId gate = new OTIdGate("Gate");
