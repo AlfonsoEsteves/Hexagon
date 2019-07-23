@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 650;
+	public static final int size = 750;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static OverTile[][] overTile = new OverTile[size][size];
