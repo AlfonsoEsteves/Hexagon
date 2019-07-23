@@ -44,8 +44,8 @@ public class Map {
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.carrots);
 		//createRichPoint(richPointX, richPointY, richPointOverTileIds, factor, OTId.richGrass);
 
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 1; i < size - 1; i++) {
+			for (int j = 1; j < size - 1; j++) {
 				underTile[i][j] = Tile.grass;
 				for(int k = 0;k<richPointOverTileIds.size();k++){
 					int x = richPointX.get(k);
@@ -72,6 +72,12 @@ public class Map {
 					}
 				}
 			}
+		}
+		for (int i = 0; i < size; i++) {
+			underTile[i][0] = Tile.water;
+			underTile[i][size - 1] = Tile.water;
+			underTile[0][i] = Tile.water;
+			underTile[size - 1][i] = Tile.water;
 		}
 	}
 
