@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 750;
+	public static final int size = 650;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static OverTile[][] overTile = new OverTile[size][size];
@@ -67,7 +67,7 @@ public class Map {
 						overTile[i][j] = new OverTile(OTId.gate, i, j);
 						queueExecutable(overTile[i][j], 1 + Rnd.nextInt(OTIdGate.maxDelay / 2));
 					}
-					else if (Rnd.nextInt(700) == 0) {
+					else if (Rnd.nextInt(750) == 0) {
 						addUnit(new Person(i, j));
 					}
 				}
@@ -114,12 +114,13 @@ public class Map {
 		}
 		time++;
 
-		if(time == 500) {
+		if(time == 2000) {
 			//Scan  75264
 			//Other 11438
 			System.out.println("Scan  " + Unit.timeScan / 1000000);
 			System.out.println("Other " + Unit.timeOther / 1000000);
 			System.out.println();
+			return;
 		}
 
 	}

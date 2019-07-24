@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class Main {
 	
-	public static final long frameDuration = 100000000;
+	public static final long frameDuration = 10000000;
 
 	public static void main(String[] args) {
 		Game.instantiate();
