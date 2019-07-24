@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 650;
+	public static final int size = 600;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static OverTile[][] overTile = new OverTile[size][size];
@@ -114,13 +114,12 @@ public class Map {
 		}
 		time++;
 
-		if(time == 2000) {
+		if(time == 1000) {
 			//Scan  75264
 			//Other 11438
 			System.out.println("Scan  " + Unit.timeScan / 1000000);
 			System.out.println("Other " + Unit.timeOther / 1000000);
 			System.out.println();
-			return;
 		}
 
 	}

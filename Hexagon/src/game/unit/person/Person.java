@@ -1,10 +1,12 @@
 package game.unit.person;
 
 import game.*;
+import game.unit.Task;
 import game.unit.Unit;
 import gui.ImageLoader;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -126,92 +128,95 @@ public class Person extends Unit {
 
     private void setTasks() {
         tasks.clear();
-        tasks.add(TaskFight.instance);
-        tasks.add(TaskSleep.instance);
-        tasks.add(TaskReactToPerson.instance);
+        addTask(TaskFight.instance);
+        addTask(TaskSleep.instance);
+        addTask(TaskReactToPerson.instance);
 
         int amountStone = Collections.frequency(carrying, Item.stone);
         if(amountStone < 2) {
-            tasks.add(TaskCollect.taskCollectStone);
+            addTask(TaskCollect.taskCollectStone);
         }
         if(amountStone > 0) {
-            tasks.add(TaskBuild.taskBuildStoneThings);
+            addTask(TaskBuild.taskBuildStoneThings);
         }
         else{
-            tasks.add(TaskPickUp.taskPickUpStone);
+            addTask(TaskPickUp.taskPickUpStone);
         }
 
         int amountWood = Collections.frequency(carrying, Item.wood);
         if(amountWood < 2) {
-            tasks.add(TaskCollect.taskCollectWood);
+            addTask(TaskCollect.taskCollectWood);
         }
         if(amountWood > 0) {
-            tasks.add(TaskBuild.taskBuildWoodThings);
+            addTask(TaskBuild.taskBuildWoodThings);
         }
         else{
-            tasks.add(TaskPickUp.taskPickUpWood);
+            addTask(TaskPickUp.taskPickUpWood);
         }
 
         int amountIron = Collections.frequency(carrying, Item.iron);
         if(amountIron < 2) {
-            tasks.add(TaskCollect.taskCollectIron);
+            addTask(TaskCollect.taskCollectIron);
         }
         if(amountIron > 0) {
-            tasks.add(TaskBuild.taskBuildIronThings);
-            tasks.add(TaskCreateWeapon.instance);
+            addTask(TaskBuild.taskBuildIronThings);
+            addTask(TaskCreateWeapon.instance);
         }
         else{
-            tasks.add(TaskPickUp.taskPickUpIron);
+            addTask(TaskPickUp.taskPickUpIron);
         }
 
         int amountFruit = Collections.frequency(carrying, Item.fruit);
         if(amountFruit < 2) {
-            tasks.add(TaskCollect.taskCollectFruit);
+            addTask(TaskCollect.taskCollectFruit);
         }
         if(amountFruit == 0) {
-            tasks.add(TaskPickUp.taskPickUpFruit);
+            addTask(TaskPickUp.taskPickUpFruit);
         }
 
         int amountHoney = Collections.frequency(carrying, Item.honey);
         if(amountHoney < 2) {
-            tasks.add(TaskCollect.taskCollectHoney);
+            addTask(TaskCollect.taskCollectHoney);
         }
         if(amountHoney == 0) {
-            tasks.add(TaskPickUp.taskPickUpHoney);
+            addTask(TaskPickUp.taskPickUpHoney);
         }
 
         int amountMushroom = Collections.frequency(carrying, Item.mushroom);
         if(amountMushroom < 2) {
-            tasks.add(TaskCollect.taskCollectMushroom);
+            addTask(TaskCollect.taskCollectMushroom);
         }
         if(amountMushroom == 0) {
-            tasks.add(TaskPickUp.taskPickUpMushroom);
+            addTask(TaskPickUp.taskPickUpMushroom);
         }
 
         int amountCarrot = Collections.frequency(carrying, Item.carrot);
         if(amountCarrot < 2) {
-            tasks.add(TaskCollect.taskCollectCarrot);
+            addTask(TaskCollect.taskCollectCarrot);
         }
         if(amountCarrot == 0) {
-            tasks.add(TaskPickUp.taskPickUpCarrot);
+            addTask(TaskPickUp.taskPickUpCarrot);
         }
-
-        /*int amountMeat = Collections.frequency(carrying, Item.meat);
-        if(amountMeat < 2) {
-            tasks.add(TaskTakeChicken.instance);
-        }
-        if(amountMeat == 0) {
-            tasks.add(TaskPickUp.taskPickUpMeat);
-        }*/
 
         int amountSword = Collections.frequency(carrying, Item.sword);
         if(amountSword == 0) {
-            tasks.add(TaskPickUp.taskPickUpSword);
+            addTask(TaskPickUp.taskPickUpSword);
         }
 
         if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1) {
-            tasks.add(TaskStore.instance);
+            addTask(TaskStore.instance);
         }
+    }
+
+    private void addTask(Task task) {
+        int position = 0;
+        while(position < tasks.size()) {
+            if(tasks.get(position).priority <= task.priority) {
+                break;
+            }
+            position++;
+        }
+        ((ArrayList)tasks).add(position, task);
     }
 
     private void checkBuilding() {
