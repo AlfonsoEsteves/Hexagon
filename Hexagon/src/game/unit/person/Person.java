@@ -10,12 +10,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class Person extends Unit {
 
     public static final int maxLife = 100;
     public static final int maxFood = 80;
+    public static final int goingBackDistance = 50;
 
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
@@ -32,6 +34,10 @@ public class Person extends Unit {
     public int lastFoodIndex = 0;
     public Item[] lastFood = new Item[foods];
 
+    public int usualX;
+    public int usualY;
+    public boolean goingBack;
+
     public Person(int x, int y) {
         super(x, y);
 
@@ -39,6 +45,10 @@ public class Person extends Unit {
         life = maxLife;
 
         food = maxFood / 2;
+
+        usualX = x;
+        usualY = y;
+        goingBack = false;
     }
 
     @Override
@@ -51,6 +61,36 @@ public class Person extends Unit {
         if(leader != null && !leader.alive) {
             leader = null;
         }
+
+
+
+        if(Rnd.nextInt(20) == 0) {
+            if(usualX < x) {
+                usualX ++;
+            }
+            if(usualX > x) {
+                usualX --;
+            }
+            if(usualY < y) {
+                usualY ++;
+            }
+            if(usualY > y) {
+                usualY --;
+            }
+        }
+        int distance = Map.distance(x, y, usualX, usualY);
+        if(goingBack) {
+            if(distance < goingBackDistance / 2) {
+                goingBack = false;
+            }
+        }
+        else{
+            if(distance > goingBackDistance) {
+                goingBack = true;
+            }
+        }
+
+
 
         checkFood();
         setTasks();
@@ -128,6 +168,11 @@ public class Person extends Unit {
 
     private void setTasks() {
         tasks.clear();
+
+        if(goingBack) {
+            addTask(TaskGoBackToBase.instance);
+        }
+
         addTask(TaskFight.instance);
         addTask(TaskSleep.instance);
         addTask(TaskReactToPerson.instance);

@@ -12,6 +12,7 @@ import game.Executable;
 import game.Item;
 import game.Map;
 import game.MapIter;
+import game.unit.Task;
 import game.unit.Unit;
 import game.unit.demon.Demon;
 import game.unit.person.Person;
@@ -110,6 +111,12 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				graphics.drawString(item.name, 10, y);
 				y += 15;
 			}
+
+			/*y += 40;
+			for(Task t : selectedUnit.tasks){
+				graphics.drawString(t.getClass().toString(), -80, y);
+				y += 15;
+			}*/
 		}
 
 		for(int i = 0; i < Map.executableQueueSize; i++) {
