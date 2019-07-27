@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 600;
+	public static final int size = 750;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static OverTile[][] overTile = new OverTile[size][size];
@@ -34,7 +34,7 @@ public class Map {
 	    List<OTId> richPointOverTileIds = new ArrayList<>();
 		List<Integer> richPointSize = new ArrayList<>();
 
-	    double factor = size * size / 9000;
+	    double factor = size * size / 9500;
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 3, OTId.stoneMine);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 0.9, OTId.tree);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.ironMine);
@@ -82,11 +82,12 @@ public class Map {
 	}
 
 	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<OTId> richPointOverTileIds, List<Integer> richPointSize, double amount, OTId overTileId) {
+		int margin = 50;
 		for(int i = 0;i<amount;i++) {
-			richPointX.add(Rnd.nextInt(size));
-			richPointY.add(Rnd.nextInt(size));
+			richPointX.add(Rnd.nextInt(size - margin * 2) + margin);
+			richPointY.add(Rnd.nextInt(size - margin * 2) + margin);
 			richPointOverTileIds.add(overTileId);
-			richPointSize.add(2 + Rnd.nextInt(15));
+			richPointSize.add(1 + Rnd.nextInt(12));
 		}
 	}
 

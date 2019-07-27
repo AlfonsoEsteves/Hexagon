@@ -82,8 +82,11 @@ public abstract class Unit implements Executable {
 
 
         Log.log("UNIT", toString());
-        priority = 0;
+
+        priority -= 1.0;
+        //priority = 0;
         priorityTask = null;
+
         initExecute();
         if(alive) {
             if(!tasks.isEmpty()) {
