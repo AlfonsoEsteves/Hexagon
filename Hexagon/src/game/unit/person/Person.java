@@ -26,6 +26,7 @@ public class Person extends Unit {
 
     public List<Item> carrying;
 
+    // If a unit is his own leader it means it can not be conquered
     public Person leader;
 
     public int food;
@@ -59,7 +60,7 @@ public class Person extends Unit {
     @Override
     public void initExecute(){
         if(leader != null && !leader.alive) {
-            leader = null;
+            leader = this;
         }
 
 
@@ -78,7 +79,8 @@ public class Person extends Unit {
                 usualY --;
             }
         }
-        int distance = Map.distance(x, y, usualX, usualY);
+        Person superLider = getSuperLeader();
+        int distance = Map.distance(x, y, superLider.usualX, superLider.usualY);
         if(goingBack) {
             if(distance < goingBackDistance / 2) {
                 goingBack = false;
@@ -341,6 +343,9 @@ public class Person extends Unit {
 
     public Person getSuperLeader() {
         if(leader == null) {
+            return this;
+        }
+        else if(leader == this) {
             return this;
         }
         else{

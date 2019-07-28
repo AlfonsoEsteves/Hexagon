@@ -20,8 +20,9 @@ public class TaskGoBackToBase extends Task {
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        int distance = Map.distance(person.x, person.y, person.usualX, person.usualY);
-        if (distance > Map.distance(tileX, tileY, person.usualX, person.usualY)) {
+        Person superLeader = person.getSuperLeader();
+        int distance = Map.distance(person.x, person.y, superLeader.usualX, superLeader.usualY);
+        if (distance > Map.distance(tileX, tileY, superLeader.usualX, superLeader.usualY)) {
             return true;
         }
         return false;

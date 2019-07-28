@@ -14,7 +14,7 @@ public class TaskReactToPerson extends Task {
 
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
-        if (Map.has(tileX, tileY, Person.is.and(x -> ((Person)x).getSuperLeader() != ((Person)unit).getSuperLeader())) != null) {
+        if (Map.has(tileX, tileY, Person.is.and(x -> ((Person)x).leader == null)) != null) {
             return true;
         }
         return false;
@@ -25,22 +25,11 @@ public class TaskReactToPerson extends Task {
         Person person = (Person)unit;
         Person leader = person.getSuperLeader();
         for(int[] p : MapIter.of(range)) {
-            Person other = (Person)Map.has(unit.x + p[0], unit.y + p[1], Person.is.and(x -> ((Person)x).getSuperLeader() != ((Person)unit).getSuperLeader()));
+            Person other = (Person)Map.has(unit.x + p[0], unit.y + p[1], Person.is.and(x -> ((Person)x).leader == null));
             if (other != null) {
-                Person otherLeader = other.getSuperLeader();
-                if(leader != otherLeader) {
-                    if(leader == person) {
-                        person.leader = otherLeader;
-                    }
-                    else{
-                        if(otherLeader == other) {
-                            other.leader = leader;
-                        }
-                        else{
-                            person.causeDamage(other);
-                        }
-                    }
-                    break;
+                other.leader = person;
+                if(person.leader == null) {
+                    person.leader = person;
                 }
             }
         }
