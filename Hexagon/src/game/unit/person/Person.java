@@ -267,7 +267,7 @@ public class Person extends Unit {
     }
 
     private void checkBuilding() {
-        if(carrying.contains(Item.stone) && Rnd.nextInt(50) == 0) {
+        if(carrying.contains(Item.stone) && Rnd.nextInt(50) == 0 && Map.distance(x, y, getSuperLeader().usualX, getSuperLeader().usualY) < goingBackDistance / 2) {
             OTId toBeBuilt = null;
             int size = 2;
             if (Rnd.nextInt(4) == 0) {
