@@ -31,6 +31,8 @@ public class Person extends Unit {
 
     public int food;
 
+    public int credit = 0;
+
     public static int foods = 4;
     public int lastFoodIndex = 0;
     public Item[] lastFood = new Item[foods];
