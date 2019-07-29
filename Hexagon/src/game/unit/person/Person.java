@@ -13,6 +13,27 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
 
+
+
+
+
+
+
+
+
+la siguiente idea es:
+  borrar la clase OTIdMissingBuilding
+  para crear un edificio, hay que colocar el primer muro (o cualquier otra parte)
+  cuando se coloca la primer parte, se crea un objeto edificio que cuenta la cantidad de partes colocadas
+  a medida que se van colocando partes o quitando, se reajusta la cuenta
+  si la cantidad de partes colocadas llega a 0, el edificio entero es olvidado
+  entonces, cada parte (y missing parte) va a tener una referencia a su objeto edificio
+    este objeto edificio no necesita estar guardado en ningun otro lado
+
+
+
+
+
 public class Person extends Unit {
 
     public static final int maxLife = 100;
