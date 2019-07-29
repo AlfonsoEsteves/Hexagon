@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 
 
 
-
+/*
 la siguiente idea es:
   borrar la clase OTIdMissingBuilding
   para crear un edificio, hay que colocar el primer muro (o cualquier otra parte)
@@ -31,7 +31,7 @@ la siguiente idea es:
     este objeto edificio no necesita estar guardado en ningun otro lado
 
 
-
+*/
 
 
 public class Person extends Unit {
@@ -119,7 +119,6 @@ public class Person extends Unit {
 
         checkFood();
         setTasks();
-        checkBuilding();
 
         if(food > maxFood * 0.9 && Rnd.nextInt(150) == 0) {
             int totalFood = Collections.frequency(carrying, Item.fruit) + Collections.frequency(carrying, Item.mushroom) + Collections.frequency(carrying, Item.honey);
@@ -196,6 +195,13 @@ public class Person extends Unit {
 
         if(goingBack) {
             addTask(TaskGoBackToBase.instance);
+        }
+
+        if(carrying.contains(Item.stone) && Rnd.nextInt(50) == 0 && Map.distance(x, y, getSuperLeader().usualX, getSuperLeader().usualY) < goingBackDistance / 2) {
+
+            if (checkPickedPosition(x, y, 2)) {
+                addTask(TaskPlanBuilding.instance);
+            }
         }
 
         addTask(TaskFight.instance);
@@ -289,59 +295,7 @@ public class Person extends Unit {
         ((ArrayList)tasks).add(position, task);
     }
 
-    private void checkBuilding() {
-        if(carrying.contains(Item.stone) && Rnd.nextInt(50) == 0 && Map.distance(x, y, getSuperLeader().usualX, getSuperLeader().usualY) < goingBackDistance / 2) {
-            OTId toBeBuilt = null;
-            int size = 2;
-            if (Rnd.nextInt(4) == 0) {
-                toBeBuilt = OTId.missingDepot;
-            }
-            else if (Rnd.nextInt(4) == 0) {
-                toBeBuilt = OTId.missingBed;
-            }
-            else /*if (Rnd.nextInt(4) == 0)*/ {
-                toBeBuilt = OTId.missingAnvil;
-            }
-            /*else {
-                toBeBuilt = OTId.missingHenHouse;
-                size = 3;
-            }*/
-
-            int[] position = pickUpPosition(size);
-            if (position != null) {
-                int doorCount = Rnd.nextInt(size * 6);
-                for (int[] p : MapIter.of(size)) {
-                    int x = position[0] + p[0];
-                    int y = position[1] + p[1];
-                    if (Map.distance(position[0], position[1], x, y) == size) {
-                        if (doorCount == 0) {
-                            planBuilding(OTId.missingDoor, x, y);
-                        } else {
-                            planBuilding(OTId.missingWall, x, y);
-                        }
-                        doorCount--;
-                    }
-                }
-
-                if (toBeBuilt == OTId.missingDepot) {
-                    for (int[] p : MapIter.of(1)) {
-                        planBuilding(OTId.missingDepot, position[0] + p[0], position[1] + p[1]);
-                    }
-                }
-                else {
-                    planBuilding(toBeBuilt, position[0], position[1]);
-                }
-            }
-        }
-    }
-
-    private void planBuilding(OTId missingDoor, int x, int y) {
-        OverTile overTile = new OverTile(missingDoor, x, y);
-        Map.overTile[x][y] = overTile;
-        Map.queueExecutable(overTile, OTIdMissingBuilding.timeToBeForgot);
-    }
-
-    private int[] pickUpPosition(int size) {
+    /*private int[] pickUpPosition(int size) {
         int var = 6;
         int rndX = x + Rnd.nextInt(var * 2 + 1) - var;
         int rndY = y + Rnd.nextInt(var * 2 + 1) - var;
@@ -352,7 +306,7 @@ public class Person extends Unit {
         else {
             return null;
         }
-    }
+    }*/
 
     private boolean checkPickedPosition(int pickedX, int pickedY, int size) {
         for(int[] p : MapIter.of(size + 1)) {
