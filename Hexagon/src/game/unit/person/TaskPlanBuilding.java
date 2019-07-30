@@ -3,6 +3,7 @@ package game.unit.person;
 import game.*;
 import game.unit.Task;
 import game.unit.Unit;
+import gui.MainPanel;
 
 public class TaskPlanBuilding extends Task {
 
@@ -10,12 +11,16 @@ public class TaskPlanBuilding extends Task {
 
     private TaskPlanBuilding()
     {
-        super(12, 1);
+        super(12, 2);
     }
 
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
-        return true;
+        Person person = (Person)unit;
+        if(tileX == person.planX && tileY == person.planY) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -34,33 +39,42 @@ public class TaskPlanBuilding extends Task {
             toBeBuilt = OTId.missingAnvil;
         }
 
-        int doorCount = Rnd.nextInt(size * 6);
+        Building building = new Building(person.planX, person.planY);
+
+        int doorCount = Rnd.nextInt(size * 6 - 1);
         for (int[] p : MapIter.of(size)) {
-            int x = person.x + p[0];
-            int y = person.y + p[1];
-            if (Map.distance(person.x, person.y, x, y) == size) {
-                if (doorCount == 0) {
-                    planBuilding(OTId.missingDoor, x, y);
-                } else {
-                    planBuilding(OTId.missingWall, x, y);
+            int x = person.planX + p[0];
+            int y = person.planY + p[1];
+            if (Map.distance(person.planX, person.planY, x, y) == size) {
+                if(x == person.x && y == person.y) {
+                    Map.overTile[x][y] = new OverTile(OTId.wall, x, y);
                 }
-                doorCount--;
+                else {
+                    if (doorCount == 0) {
+                        Map.overTile[x][y] = new OverTile(OTId.missingDoor, x, y, building);
+                    } else {
+                        Map.overTile[x][y] = new OverTile(OTId.missingWall, x, y, building);
+                    }
+                    doorCount--;
+                }
             }
         }
 
         if (toBeBuilt == OTId.missingDepot) {
             for (int[] p : MapIter.of(1)) {
-                planBuilding(OTId.missingDepot, person.x + p[0], person.y + p[1]);
+                Map.overTile[person.planX + p[0]][person.planY + p[1]] = new OverTile(OTId.missingDepot, person.planX + p[0], person.planY + p[1], building);
             }
         }
         else {
-            planBuilding(toBeBuilt, person.x, person.y);
+            Map.overTile[person.planX][person.planY] = new OverTile(toBeBuilt, person.planX, person.planY, building);
         }
+
+        person.planning = false;
     }
 
-    private void planBuilding(OTId missingDoor, int x, int y) {
+    /*private void planBuilding(OTId missingDoor, int x, int y) {
         OverTile overTile = new OverTile(missingDoor, x, y);
         Map.overTile[x][y] = overTile;
         Map.queueExecutable(overTile, OTIdMissingBuilding.timeToBeForgot);
-    }
+    }*/
 }

@@ -62,6 +62,10 @@ public class Person extends Unit {
     public int usualY;
     public boolean goingBack;
 
+    public int planX;
+    public int planY;
+    public boolean planning;
+
     public Person(int x, int y) {
         super(x, y);
 
@@ -197,11 +201,8 @@ public class Person extends Unit {
             addTask(TaskGoBackToBase.instance);
         }
 
-        if(carrying.contains(Item.stone) && Rnd.nextInt(50) == 0 && Map.distance(x, y, getSuperLeader().usualX, getSuperLeader().usualY) < goingBackDistance / 2) {
-
-            if (checkPickedPosition(x, y, 2)) {
-                addTask(TaskPlanBuilding.instance);
-            }
+        if(carrying.contains(Item.stone) && Map.distance(x, y, getSuperLeader().usualX, getSuperLeader().usualY) < goingBackDistance / 2) {
+            tryPickUpPosition(2);
         }
 
         addTask(TaskFight.instance);
@@ -295,18 +296,21 @@ public class Person extends Unit {
         ((ArrayList)tasks).add(position, task);
     }
 
-    /*private int[] pickUpPosition(int size) {
+    private void tryPickUpPosition(int size) {
         int var = 6;
         int rndX = x + Rnd.nextInt(var * 2 + 1) - var;
         int rndY = y + Rnd.nextInt(var * 2 + 1) - var;
-        if(checkPickedPosition(rndX, rndY, size)){
-            int[] position = {rndX, rndY};
-            return position;
+        // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
+        // if the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
+        if(Map.distance(x, y, rndX, rndY) > 1) {
+            if (checkPickedPosition(rndX, rndY, size)) {
+                planX = rndX;
+                planY = rndY;
+                planning = true;
+                addTask(TaskPlanBuilding.instance);
+            }
         }
-        else {
-            return null;
-        }
-    }*/
+    }
 
     private boolean checkPickedPosition(int pickedX, int pickedY, int size) {
         for(int[] p : MapIter.of(size + 1)) {
