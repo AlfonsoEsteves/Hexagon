@@ -29,10 +29,10 @@ public class TaskPlanBuilding extends Task {
 
         OTId toBeBuilt = null;
         int size = 2;
-        if (Rnd.nextInt(4) == 0) {
+        if (Rnd.nextInt(2) == 0) {
             toBeBuilt = OTId.missingDepot;
         }
-        else if (Rnd.nextInt(4) == 0) {
+        else if (Rnd.nextInt(2) == 0) {
             toBeBuilt = OTId.missingBed;
         }
         else /*if (Rnd.nextInt(4) == 0)*/ {
@@ -47,7 +47,7 @@ public class TaskPlanBuilding extends Task {
             int y = person.planY + p[1];
             if (Map.distance(person.planX, person.planY, x, y) == size) {
                 if(x == person.x && y == person.y) {
-                    Map.overTile[x][y] = new OverTile(OTId.wall, x, y);
+                    Map.overTile[x][y] = new OverTile(OTId.wall, x, y, building);
                 }
                 else {
                     if (doorCount == 0) {

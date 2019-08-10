@@ -14,7 +14,7 @@ public class Demon extends Unit {
 
     public Demon(int x, int y) {
         super(x, y);
-        life = 140;
+        life = 138;
         tasks.add(TaskHuntPerson.instance);
         tasks.add(TaskDestroy.instance);
     }

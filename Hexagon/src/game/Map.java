@@ -1,6 +1,5 @@
 package game;
 
-import game.unit.chicken.Chicken;
 import game.unit.person.Person;
 import game.unit.Unit;
 
@@ -11,14 +10,14 @@ import java.util.function.Predicate;
 
 public class Map {
 
-	public static final int size = 700;
+	public static final int size = 780;
 
 	public static Tile[][] underTile = new Tile[size][size];
     public static OverTile[][] overTile = new OverTile[size][size];
 	public static Unit[][] unit = new Unit[size][size];
 	public static Dropped[][] dropped = new Dropped[size][size];
 
-	public static final int executableQueueSize = OTIdMissingBuilding.timeToBeForgot + 1;
+	public static final int executableQueueSize = 300;
 
 	public static LinkedList<Executable>[] executableQueue = new LinkedList[executableQueueSize];
 
@@ -34,7 +33,7 @@ public class Map {
 	    List<OTId> richPointOverTileIds = new ArrayList<>();
 		List<Integer> richPointSize = new ArrayList<>();
 
-	    double factor = size * size / 9500;
+	    double factor = size * size / 9400;
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 3, OTId.stoneMine);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 0.9, OTId.tree);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.ironMine);
@@ -51,7 +50,7 @@ public class Map {
 					int x = richPointX.get(k);
 					int y = richPointY.get(k);
 					int size = richPointSize.get(k);
-					if(Rnd.nextInt(size) >= distance(i, j, x, y) & Rnd.nextInt(3) == 0){
+					if(Rnd.nextInt(size) >= distance(i, j, x, y) & Rnd.nextInt(4) == 0){
 						overTile[i][j] = new OverTile(richPointOverTileIds.get(k), i, j);
 						/*if(overTile[i][j].id == OTId.richGrass) {
 							if(Rnd.nextInt(20) == 0) {
@@ -82,7 +81,7 @@ public class Map {
 	}
 
 	private static void createRichPoint(List<Integer> richPointX, List<Integer> richPointY, List<OTId> richPointOverTileIds, List<Integer> richPointSize, double amount, OTId overTileId) {
-		int margin = 50;
+		int margin = 40;
 		for(int i = 0;i<amount;i++) {
 			richPointX.add(Rnd.nextInt(size - margin * 2) + margin);
 			richPointY.add(Rnd.nextInt(size - margin * 2) + margin);

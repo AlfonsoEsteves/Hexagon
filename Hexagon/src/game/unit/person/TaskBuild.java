@@ -40,6 +40,7 @@ public class TaskBuild extends Task {
             if (missing != null) {
                 person.carrying.remove(material);
                 missing.id = missing.id.completedVersion;
+                ((Building)missing.state).placed++;
                 break;
             }
         }

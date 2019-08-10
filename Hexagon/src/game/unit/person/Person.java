@@ -21,16 +21,8 @@ import java.util.function.Predicate;
 
 
 /*
-la siguiente idea es:
-  borrar la clase OTIdMissingBuilding
-  para crear un edificio, hay que colocar el primer muro (o cualquier otra parte)
-  cuando se coloca la primer parte, se crea un objeto edificio que cuenta la cantidad de partes colocadas
-  a medida que se van colocando partes o quitando, se reajusta la cuenta
-  si la cantidad de partes colocadas llega a 0, el edificio entero es olvidado
-  entonces, cada parte (y missing parte) va a tener una referencia a su objeto edificio
-    este objeto edificio no necesita estar guardado en ningun otro lado
-
-
+cada persona que deposita en un deot es la que indica cuales son sus necesidades y en vase a eso se reajustan los precios
+//primero coloca y luego reajusta los precios
 */
 
 

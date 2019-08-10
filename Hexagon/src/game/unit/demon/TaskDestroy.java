@@ -26,11 +26,14 @@ public class TaskDestroy extends Task {
             OverTile overTile = Map.has(unit.x + p[0], unit.y + p[1], OverTile.isDestroyable);
             if (overTile != null) {
                 if(Rnd.nextInt(5) == 0) {
-                    // I need to create a new overtile, it can not just reset the overtile id
-                    // Because if an overtile is destroyed, it could imediatele be forgotten
-                    OverTile newOverTile = new OverTile(overTile.id.missingVersion, overTile.x, overTile.y);
-                    Map.overTile[newOverTile.x][newOverTile.y] = newOverTile;
-                    Map.queueExecutable(newOverTile, OTIdMissingBuilding.timeToBeForgot);
+                    overTile.id = overTile.id.missingVersion;
+                    Building building = (Building)overTile.state;
+                    building.placed --;
+                    if(building.placed == 0) {
+                        for(int[] p2 : MapIter.of(2)) {
+                            Map.overTile[building.x + p2[0]][building.y + p2[1]] = null;
+                        }
+                    }
                 }
                 return;
             }
