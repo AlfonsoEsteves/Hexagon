@@ -105,8 +105,9 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			graphics.drawString("Unit:   N" + selectedUnit.id, 10, 30);
 			graphics.drawString("Leader: N" + selectedUnit.getSuperLeader().id, 10, 50);
 			graphics.drawString("Food: " + selectedUnit.food, 10, 70);
+			graphics.drawString("Gold: " + selectedUnit.gold, 10, 90);
 
-			int y = 90;
+			int y = 110;
 			for(Item item : selectedUnit.carrying){
 				graphics.drawString(item.name, 10, y);
 				y += 15;

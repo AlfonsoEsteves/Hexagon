@@ -45,9 +45,12 @@ public class TaskPickUp extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        BuildingStorage buildingStorage = (BuildingStorage)Map.overTile(person.x, person.y).state;
-        person.gold -= buildingStorage.itemValue[item.id];
-        buildingStorage.gold += buildingStorage.itemValue[item.id];
+        OverTile depot = Map.overTile(person.x, person.y);
+        if (depot != null) {
+            BuildingStorage buildingStorage = (BuildingStorage)depot.state;
+            person.gold -= buildingStorage.itemValue[item.id];
+            buildingStorage.gold += buildingStorage.itemValue[item.id];
+        }
         Dropped found = Map.has(person.x, person.y, item.droppedIsItem);
         if(found != null) {
             person.carrying.add(found.item);
