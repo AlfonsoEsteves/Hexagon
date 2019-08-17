@@ -4,6 +4,8 @@ public class Building {
 
     public int x;
     public int y;
+
+    // The amount of placed tiles
     public int placed;
 
     public Building(int x, int y) {
