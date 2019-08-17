@@ -39,7 +39,13 @@ public class TaskPlanBuilding extends Task {
             toBeBuilt = OTId.missingAnvil;
         }
 
-        Building building = new Building(person.planX, person.planY);
+        Building building;
+        if(toBeBuilt == OTId.missingDepot) {
+            building = new Building(person.planX, person.planY);
+        }
+        else {
+            building = new BuildingStorage(person.planX, person.planY, person);
+        }
 
         int doorCount = Rnd.nextInt(size * 6 - 1);
         for (int[] p : MapIter.of(size)) {

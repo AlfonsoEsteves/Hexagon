@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 public class Item {
 
     public static int itemTypes = 9;
+    public static int currentItemId = 0;
 
     public static Item stone = new Item("Stone");
     public static Item wood = new Item("Wood");
@@ -22,6 +23,7 @@ public class Item {
     public String name;
     public OTId producer;
     public Image image;
+    public int id;
 
     public Predicate droppedIsItem = d -> d instanceof Dropped && ((Dropped)d).item == this;
     public Predicate makeWithItem = x -> x instanceof OverTile && ((OverTile) x).id.makeWith == this;
@@ -29,6 +31,8 @@ public class Item {
     public Item(String name) {
         this.name = name;
         image = ImageLoader.load(name);
+        id = currentItemId;
+        currentItemId ++;
     }
 
     public Item setProducer(OTId producer){

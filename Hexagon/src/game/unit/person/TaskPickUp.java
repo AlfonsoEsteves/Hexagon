@@ -1,8 +1,6 @@
 package game.unit.person;
 
-import game.Dropped;
-import game.Item;
-import game.Map;
+import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
@@ -30,7 +28,15 @@ public class TaskPickUp extends Task {
         Person person = (Person)unit;
         if(!person.carrying.contains(item)){
             if (Map.has(tileX, tileY, item.droppedIsItem) != null) {
-                return true;
+                OverTile depot = Map.has(tileX, tileY, OTId.depot.overTileIs);
+                if(depot != null){
+                    if(((BuildingStorage)depot.state).itemValue[item.id] <= person.gold) {
+                        return true;
+                    }
+                }
+                else {
+                    return true;
+                }
             }
         }
         return false;
@@ -39,6 +45,9 @@ public class TaskPickUp extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
+        BuildingStorage buildingStorage = (BuildingStorage)Map.overTile(person.x, person.y).state;
+        person.gold -= buildingStorage.itemValue[item.id];
+        buildingStorage.gold += buildingStorage.itemValue[item.id];
         Dropped found = Map.has(person.x, person.y, item.droppedIsItem);
         if(found != null) {
             person.carrying.add(found.item);
