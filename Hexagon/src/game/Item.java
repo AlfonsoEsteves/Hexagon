@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 
 public class Item {
 
+    public static int itemTypes = 9;
+
     public static Item stone = new Item("Stone");
     public static Item wood = new Item("Wood");
     public static Item iron = new Item("Iron");

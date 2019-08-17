@@ -42,6 +42,8 @@ public class Person extends Unit {
     // If a unit is his own leader it means it can not be conquered
     public Person leader;
 
+    public int gold;
+    public int[] itemValues;
     public int food;
 
     public int credit = 0;
@@ -63,6 +65,12 @@ public class Person extends Unit {
 
         carrying = new ArrayList<>();
         life = maxLife;
+
+        gold = 30;
+        itemValues = new int[Item.itemTypes];
+        for(int i = 0; i<Item.itemTypes;i++) {
+            itemValues[i] = 6;
+        }
 
         food = maxFood / 2;
 
