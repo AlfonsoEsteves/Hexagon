@@ -4,6 +4,7 @@ import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 import gui.ImageLoader;
+import gui.MainPanel;
 
 import java.awt.*;
 import java.lang.reflect.Array;
@@ -28,6 +29,7 @@ public class Person extends Unit {
 
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
+    public static Image imagePersonWithBow = ImageLoader.load("Person with bow");
 
     public static Predicate is = x -> (x instanceof Person);
 
@@ -75,7 +77,15 @@ public class Person extends Unit {
 
     @Override
     public Image image() {
-        return carrying.contains(Item.sword) ? imagePersonWithSword : imagePerson;
+        if(carrying.contains(Item.bow) ) {
+            return imagePersonWithBow;
+        }
+        else if(carrying.contains(Item.sword) ) {
+            return imagePersonWithSword;
+        }
+        else{
+            return imagePerson;
+        }
     }
 
     @Override
@@ -220,6 +230,7 @@ public class Person extends Unit {
         }
         if(amountWood > 0) {
             addTask(TaskBuild.taskBuildWoodThings);
+            addTask(TaskCreateWeapon.createCarpentryWeapon);
         }
         else{
             addTask(TaskPickUp.taskPickUpWood);
@@ -274,7 +285,16 @@ public class Person extends Unit {
             addTask(TaskPickUp.taskPickUpSword);
         }
 
-        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1) {
+        int amountBow = Collections.frequency(carrying, Item.bow);
+        if(amountBow == 0) {
+            addTask(TaskPickUp.taskPickUpBow);
+        }
+        else {
+            MainPanel.viewX = x;
+            MainPanel.viewY = y;
+        }
+
+        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
             addTask(TaskStore.instance);
         }
     }
