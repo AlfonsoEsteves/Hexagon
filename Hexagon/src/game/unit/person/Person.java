@@ -231,7 +231,7 @@ public class Person extends Unit {
         }
         if(amountIron > 0) {
             addTask(TaskBuild.taskBuildIronThings);
-            addTask(TaskCreateWeapon.instance);
+            addTask(TaskCreateWeapon.createAnvilWeapon);
         }
         else{
             addTask(TaskPickUp.taskPickUpIron);

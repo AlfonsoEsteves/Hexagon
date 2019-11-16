@@ -34,9 +34,9 @@ public class OTId {
 	public static OTId missingDoor = new OTId("Missing door").setMakeWith(Item.wood).setCompletedVersion(door);
 	public static OTId bed = new OTId("Bed");
 	public static OTId missingBed = new OTId("Missing bed").setMakeWith(Item.wood).setCompletedVersion(bed);
-	public static OTId anvil = new OTId("Anvil");
+	public static OTId anvil = new OTId("Anvil").tranformsItemInto(Item.iron, Item.sword);
 	public static OTId missingAnvil = new OTId("Missing anvil").setMakeWith(Item.iron).setCompletedVersion(anvil);
-	public static OTId carpentry = new OTId("Carpentry");
+	public static OTId carpentry = new OTId("Carpentry").tranformsItemInto(Item.wood, Item.bow);
 	public static OTId missingCarpentry = new OTId("Missing Carpentry").setMakeWith(Item.wood).setCompletedVersion(carpentry);
 	public static OTId henHouse = new OTId("Hen house");
 	public static OTId missingHenHouse = new OTId("Missing hen house").setMakeWith(Item.wood).setCompletedVersion(henHouse);
@@ -50,6 +50,7 @@ public class OTId {
 	public OTId completedVersion;
 	public OTId missingVersion;
 	public Item providesItem;
+	public Item tranformsItem;
 	public Item makeWith;
 	public Event event;
 	public Image image;
@@ -87,6 +88,12 @@ public class OTId {
 	public OTId setCompletedVersion(OTId completedVersion) {
 		this.completedVersion = completedVersion;
 		completedVersion.missingVersion = this;
+		return this;
+	}
+
+	private OTId tranformsItemInto(Item from, Item into) {
+		this.tranformsItem = from;
+		this.providesItem = into;
 		return this;
 	}
 
