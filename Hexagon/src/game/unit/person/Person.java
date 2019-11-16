@@ -14,12 +14,6 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 
-
-
-
-
-
-
 /*
 cada persona que deposita en un deot es la que indica cuales son sus necesidades y en vase a eso se reajustan los precios
 //primero coloca y luego reajusta los precios
@@ -46,7 +40,7 @@ public class Person extends Unit {
     public int[] itemValues;
     public int food;
 
-    public int credit = 0;
+    // public int credit = 0;
 
     public static int foods = 4;
     public int lastFoodIndex = 0;
@@ -124,7 +118,7 @@ public class Person extends Unit {
         checkFood();
         setTasks();
 
-        if(food > maxFood * 0.9 && Rnd.nextInt(150) == 0) {
+        if(food > maxFood * 0.9 && Rnd.nextInt(180) == 0) {
             int totalFood = Collections.frequency(carrying, Item.fruit) + Collections.frequency(carrying, Item.mushroom) + Collections.frequency(carrying, Item.honey);
             if(totalFood > 2) {
                 Map.addUnit(new Person(x, y));

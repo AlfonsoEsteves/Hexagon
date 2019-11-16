@@ -26,7 +26,7 @@ hell gates will have different sizes/intensities
 
 
 IDEA:
-  some demons will fligh, others no
+  some demons will fly others no
 
 
 flying demons can stand over walls and roofs, but they can not steal or attack something beneath a roof

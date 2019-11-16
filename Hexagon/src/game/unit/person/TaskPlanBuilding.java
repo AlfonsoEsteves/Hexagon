@@ -29,14 +29,17 @@ public class TaskPlanBuilding extends Task {
 
         OTId toBeBuilt = null;
         int size = 2;
-        if (Rnd.nextInt(2) == 0) {
+        if (Rnd.nextInt(4) == 0) {
             toBeBuilt = OTId.missingDepot;
         }
-        else if (Rnd.nextInt(2) == 0) {
+        else if (Rnd.nextInt(3) == 0) {
             toBeBuilt = OTId.missingBed;
         }
-        else /*if (Rnd.nextInt(4) == 0)*/ {
+        else if (Rnd.nextInt(2) == 0) {
             toBeBuilt = OTId.missingAnvil;
+        }
+        else {
+            toBeBuilt = OTId.missingCarpentry;
         }
 
         Building building;

@@ -18,6 +18,7 @@ public class Item {
     public static Item honey = new Item("Honey");
     public static Item carrot = new Item("Carrot");
     public static Item sword = new Item("Sword");
+    public static Item bow = new Item("Bow");
     public static Item meat = new Item("Meat");
 
     public String name;
