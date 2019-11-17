@@ -2,6 +2,7 @@ package game;
 
 import game.unit.person.Person;
 import game.unit.Unit;
+import gui.MainPanel;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -35,7 +36,7 @@ public class Map {
 
 	    double factor = size * size / 9400;
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 3, OTId.stoneMine);
-		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor * 0.9, OTId.tree);
+		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.tree);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.ironMine);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.beeNest);
 		createRichPoint(richPointX, richPointY, richPointOverTileIds, richPointSize, factor, OTId.mushrooms);
@@ -114,7 +115,7 @@ public class Map {
 		}
 		time++;
 
-		if(time == 1000) {
+		if(time % 1000 == 0) {
 			//Scan  75264
 			//Other 11438
 			System.out.println("Scan  " + Unit.timeScan / 1000000);

@@ -33,6 +33,9 @@ public class TaskStore extends Task {
             if(Collections.frequency(person.carrying, Item.sword) > 1) {
                 item = Item.sword;
             }
+            else if(Collections.frequency(person.carrying, Item.bow) > 1) {
+                item = Item.bow;
+            }
             else if(Collections.frequency(person.carrying, Item.iron) > 1) {
                 item = Item.iron;
             }
@@ -53,6 +56,9 @@ public class TaskStore extends Task {
             }
             else if(Collections.frequency(person.carrying, Item.carrot) > 1) {
                 item = Item.carrot;
+            }
+            else {
+                throw new RuntimeException("Unit doesn't have an item to store");
             }
 
             person.carrying.remove(item);

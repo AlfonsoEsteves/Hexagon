@@ -8,10 +8,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-import game.Executable;
-import game.Item;
-import game.Map;
-import game.MapIter;
+import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 import game.unit.demon.Demon;
@@ -54,6 +51,7 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			else{
 				graphics.drawImage(Map.overTile(x, y).id.image, screenX, screenY, 20, 20, this);
 			}
+
 			if(Map.dropped(x, y) != null) {
 				graphics.drawImage(Map.dropped(x, y).item.image, screenX, screenY, 20, 20, this);
 			}
@@ -112,12 +110,6 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				graphics.drawString(item.name, 10, y);
 				y += 15;
 			}
-
-			/*y += 40;
-			for(Task t : selectedUnit.tasks){
-				graphics.drawString(t.getClass().toString(), -80, y);
-				y += 15;
-			}*/
 		}
 
 		for(int i = 0; i < Map.executableQueueSize; i++) {

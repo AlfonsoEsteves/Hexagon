@@ -94,8 +94,6 @@ public class Person extends Unit {
             leader = this;
         }
 
-
-
         if(Rnd.nextInt(20) == 0) {
             if(usualX < x) {
                 usualX ++;
@@ -209,7 +207,12 @@ public class Person extends Unit {
             tryPickUpPosition(2);
         }
 
-        addTask(TaskFight.instance);
+        if(carrying.contains(Item.bow)) {
+            addTask(TaskFight.taskFightLongDistance);
+        }
+        else{
+            addTask(TaskFight.taskFightMelee);
+        }
         addTask(TaskSleep.instance);
         addTask(TaskReactToPerson.instance);
 
@@ -289,10 +292,6 @@ public class Person extends Unit {
         if(amountBow == 0) {
             addTask(TaskPickUp.taskPickUpBow);
         }
-        else {
-            MainPanel.viewX = x;
-            MainPanel.viewY = y;
-        }
 
         if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
             addTask(TaskStore.instance);
@@ -348,13 +347,21 @@ public class Person extends Unit {
         }
     }
 
-    public void causeDamage(Unit unit) {
-        if(carrying.contains(Item.sword)){
-            unit.receiveDamage(30);
-            carrying.remove(Item.sword);
+    public void causeDamage(Unit unit, int range) {
+        if (range == 1) {
+            if(carrying.contains(Item.sword)){
+                unit.receiveDamage(30);
+                carrying.remove(Item.sword);
+            }
+            else{
+                unit.receiveDamage(6);
+            }
         }
-        else{
-            unit.receiveDamage(6);
+        else if(range == 3){
+            if(carrying.contains(Item.bow)){
+                unit.receiveDamage(25);
+                carrying.remove(Item.bow);
+            }
         }
     }
 }
