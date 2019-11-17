@@ -17,6 +17,7 @@ import game.unit.person.Person;
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 
 	public static Person selectedUnit;
+	public static OverTile selectedDepot;
 	public static int viewSize = 20;
 	public static int viewX = Map.size / 2;
 	public static int viewY = Map.size / 2;
@@ -111,6 +112,13 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				y += 15;
 			}
 		}
+		if(selectedDepot != null) {
+			BuildingStorage storage = (BuildingStorage)selectedDepot.state;
+			graphics.drawString("Gold: " + storage.gold, 10, 30);
+			for(int i=0;i<Item.itemTypes;i++) {
+				graphics.drawString(storage.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 50 + i * 20);
+			}
+		}
 
 		for(int i = 0; i < Map.executableQueueSize; i++) {
 			for(int j = 0;j < Map.executableQueue[i].size(); j++) {
@@ -145,18 +153,28 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		selectedUnit = null;
+		selectedDepot = null;
 		double minDistance = 250;
 		for(int[] p : MapIter.of(viewSize)){
 			int x = viewX + p[0];
 			int y = viewY + p[1];
 			Person person = Map.has(x, y, Person.is);
+			int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
+			int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
+			int diffX = screenX - e.getX();
+			int diffY = screenY - e.getY();
 			if(person != null) {
-				int screenX = MainFrame.width / 2 + p[0] * 10 + p[1] * 10;
-				int screenY = MainFrame.height / 2 + p[0] * 20 - p[1] * 20;
-				int diffX = screenX - e.getX();
-				int diffY = screenY - e.getY();
 				if (Math.sqrt(diffX * diffX + diffY * diffY) < minDistance) {
 					selectedUnit = person;
+					selectedDepot = null;
+					minDistance = Math.sqrt(diffX * diffX + diffY * diffY);
+				}
+			}
+			OverTile depot = Map.has(x, y, OTId.depot.overTileIs);
+			if(depot != null) {
+				if (Math.sqrt(diffX * diffX + diffY * diffY) < minDistance) {
+					selectedDepot = depot;
+					selectedUnit = null;
 					minDistance = Math.sqrt(diffX * diffX + diffY * diffY);
 				}
 			}

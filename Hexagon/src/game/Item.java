@@ -3,12 +3,15 @@ package game;
 import gui.ImageLoader;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class Item {
 
-    public static int itemTypes = 9;
-    public static int currentItemId = 0;
+    public static int itemTypes = 0;
+
+    public static List<Item> itemsList = new ArrayList<>();
 
     public static Item stone = new Item("Stone");
     public static Item wood = new Item("Wood");
@@ -32,8 +35,9 @@ public class Item {
     public Item(String name) {
         this.name = name;
         image = ImageLoader.load(name);
-        id = currentItemId;
-        currentItemId ++;
+        id = itemTypes;
+        itemTypes++;
+        itemsList.add(this);
     }
 
     public Item setProducer(OTId producer){
