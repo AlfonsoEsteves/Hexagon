@@ -50,7 +50,6 @@ public class TaskPickUp extends Task {
         if (depot != null) {
             BuildingStorage buildingStorage = (BuildingStorage)depot.state;
             person.gold -= buildingStorage.itemValue[item.id];
-            buildingStorage.gold += buildingStorage.itemValue[item.id];
         }
         Dropped found = Map.has(person.x, person.y, item.droppedIsItem);
         if(found != null) {

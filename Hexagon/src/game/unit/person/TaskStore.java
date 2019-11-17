@@ -28,7 +28,8 @@ public class TaskStore extends Task {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-        if(Map.has(person.x, person.y, OTId.depot.overTileIs) != null && Map.dropped(unit.x, unit.y) == null) {
+        OverTile depot = Map.has(person.x, person.y, OTId.depot.overTileIs);
+        if(depot != null && Map.dropped(unit.x, unit.y) == null) {
             Item item = null;
             if(Collections.frequency(person.carrying, Item.sword) > 1) {
                 item = Item.sword;
@@ -61,6 +62,8 @@ public class TaskStore extends Task {
                 throw new RuntimeException("Unit doesn't have an item to store");
             }
 
+            BuildingStorage buildingStorage = (BuildingStorage)depot.state;
+            person.gold += buildingStorage.itemValue[item.id];
             person.carrying.remove(item);
             Map.dropped[unit.x][unit.y] = new Dropped(item);
         }

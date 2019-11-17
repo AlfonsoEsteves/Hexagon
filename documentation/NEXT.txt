@@ -1,3 +1,22 @@
+
+
+
+PROBLEMA ACTUAL:
+  que los persons no vayan a comprar cosas si no les da la guita
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 quiero hacer que haya comercio cross pueblo
 
 
@@ -14,3 +33,4 @@ talto el lider como los seguidores tienen que
   de curas, posicones ara pelear, armas
   objetos baratos que sobren en el pueblo para vender
   
+

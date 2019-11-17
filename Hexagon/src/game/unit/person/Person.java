@@ -4,14 +4,11 @@ import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 import gui.ImageLoader;
-import gui.MainPanel;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 
 
@@ -39,10 +36,10 @@ public class Person extends Unit {
     public Person leader;
 
     public int gold;
-    public int[] itemValues;
-    public int food;
 
-    // public int credit = 0;
+    public int[] itemValue;
+
+    public int food;
 
     public static int foods = 4;
     public int lastFoodIndex = 0;
@@ -62,10 +59,10 @@ public class Person extends Unit {
         carrying = new ArrayList<>();
         life = maxLife;
 
-        gold = 30;
-        itemValues = new int[Item.itemTypes];
+        gold = 0;
+        itemValue = new int[Item.itemTypes];
         for(int i = 0; i<Item.itemTypes;i++) {
-            itemValues[i] = 6;
+            itemValue[i] = 6;
         }
 
         food = maxFood / 2;
@@ -121,9 +118,8 @@ public class Person extends Unit {
             }
         }
 
-
-
         checkFood();
+        checkItemValues();
         setTasks();
 
         if(food > maxFood * 0.9 && Rnd.nextInt(180) == 0) {
@@ -133,6 +129,20 @@ public class Person extends Unit {
             }
         }
 
+    }
+
+    private void checkItemValues() {
+        if((Map.time + id) % 100 == 0) {
+            for (Item item : Item.itemsList) {
+                int amount = Collections.frequency(carrying, item);
+                if (amount == 0) {
+                    itemValue[item.id]++;
+                }
+                if (amount == 2 && itemValue[item.id] > 3) {
+                    itemValue[item.id]--;
+                }
+            }
+        }
     }
 
     private void checkFood() {

@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
 import game.*;
-import game.unit.Task;
 import game.unit.Unit;
 import game.unit.demon.Demon;
 import game.unit.person.Person;
@@ -111,12 +110,14 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				graphics.drawString(item.name, 10, y);
 				y += 15;
 			}
+			for(int i=0;i<Item.itemTypes;i++) {
+				graphics.drawString(selectedUnit.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 30 + y + i * 15);
+			}
 		}
 		if(selectedDepot != null) {
 			BuildingStorage storage = (BuildingStorage)selectedDepot.state;
-			graphics.drawString("Gold: " + storage.gold, 10, 30);
 			for(int i=0;i<Item.itemTypes;i++) {
-				graphics.drawString(storage.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 50 + i * 20);
+				graphics.drawString(storage.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 30 + i * 20);
 			}
 		}
 

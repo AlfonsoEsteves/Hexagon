@@ -1,0 +1,24 @@
+Persons are created with 0 money
+They will have to sell something to start having money
+  This makes sense, because at the beginning depots also start without items to sell.
+
+Depots don't have a money variable
+  They can buy infinite amount of things
+
+PRICE REGULATION FOR PERSONS
+If the lack the item the price increase
+If they have to much of the same item the price goes down
+
+PRICE REGULATION FOR DEPOTS
+If somebody buys an item the price goes up
+If somebody sells an item the price goes down
+
+But, what happens in the opposite case?
+  The person that does not buy becasuse the price is too high
+  The person that does not sell because the price is too low
+
+The first is easy, the depot can detect that and decrease the price.
+
+The seconds is more tricky, because it could lead to an item having a ridiculously big price.
+
+But I guess this favours traders, so I will leave like that.
