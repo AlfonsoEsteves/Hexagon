@@ -66,6 +66,7 @@ public class TaskStore extends Task {
             person.gold += buildingStorage.itemValue[item.id];
             person.carrying.remove(item);
             Map.dropped[unit.x][unit.y] = new Dropped(item);
+            buildingStorage.store(item.id);
         }
     }
 }
