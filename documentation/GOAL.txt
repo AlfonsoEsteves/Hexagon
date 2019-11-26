@@ -1,4 +1,4 @@
-A simulation that attempts to simulate amazing battles abong armies and heros.
+A simulation that attempts to simulate amazing battles among armies and heros.
 
 
 Combat:

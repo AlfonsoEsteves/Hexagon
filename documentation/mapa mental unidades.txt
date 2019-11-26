@@ -1,0 +1,13 @@
+Capas lo mejor es hacer que las unidades tengan un mapa mental,
+  que indique donde se puede encontrar tal recurso
+
+ventajes:
+  eficiencia y inteligencia
+    las unidades van a poder abastecerce mejor ejecutando menos pathfinding pesado
+
+
+un rey podria decidir atacar otro pueble en funcion de los recursos que tiene
+
+
+
+los comerciantes no saldrian a la deriva a buscar recursos

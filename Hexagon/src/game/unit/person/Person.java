@@ -11,18 +11,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-
-/*
-cada persona que deposita en un deot es la que indica cuales son sus necesidades y en vase a eso se reajustan los precios
-//primero coloca y luego reajusta los precios
-*/
-
-
 public class Person extends Unit {
 
     public static final int maxLife = 100;
     public static final int maxFood = 80;
-    public static final int goingBackDistance = 50;
+    public static final int goingBackDistance = 40;
 
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
