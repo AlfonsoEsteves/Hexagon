@@ -17,10 +17,7 @@ public class TaskPlanBuilding extends Task {
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        if(tileX == person.planX && tileY == person.planY) {
-            return true;
-        }
-        return false;
+        return tileX == person.planX && tileY == person.planY;
     }
 
     @Override
@@ -29,26 +26,21 @@ public class TaskPlanBuilding extends Task {
 
         OTId toBeBuilt = null;
         int size = 2;
-        if (Rnd.nextInt(4) == 0) {
+        int r = Rnd.nextInt(4);
+        if (r == 0) {
             toBeBuilt = OTId.missingDepot;
         }
-        else if (Rnd.nextInt(3) == 0) {
+        else if (r == 1) {
             toBeBuilt = OTId.missingBed;
         }
-        else if (Rnd.nextInt(2) == 0) {
+        else if (r == 2) {
             toBeBuilt = OTId.missingAnvil;
         }
         else {
             toBeBuilt = OTId.missingCarpentry;
         }
 
-        Building building;
-        if(toBeBuilt == OTId.missingDepot) {
-            building = new BuildingStorage(person.planX, person.planY, person);
-        }
-        else {
-            building = new Building(person.planX, person.planY);
-        }
+        Building building  = new Building(person.planX, person.planY, person);
 
         int doorCount = Rnd.nextInt(size * 6 - 1);
         for (int[] p : MapIter.of(size)) {
@@ -80,10 +72,4 @@ public class TaskPlanBuilding extends Task {
 
         person.planning = false;
     }
-
-    /*private void planBuilding(OTId missingDoor, int x, int y) {
-        OverTile overTile = new OverTile(missingDoor, x, y);
-        Map.overTile[x][y] = overTile;
-        Map.queueExecutable(overTile, OTIdMissingBuilding.timeToBeForgot);
-    }*/
 }

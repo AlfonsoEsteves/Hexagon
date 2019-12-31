@@ -68,9 +68,6 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-
-
-
         /*if(id == 10) {
             MainPanel.viewX = x;
             MainPanel.viewY = y;
@@ -79,12 +76,9 @@ public abstract class Unit implements Executable {
             }
         }*/
 
-
-
         Log.log("UNIT", toString());
 
         priority -= 1.0;
-        //priority = 0;
         priorityTask = null;
 
         initExecute();
@@ -154,7 +148,7 @@ public abstract class Unit implements Executable {
         queueX.add(x);
         queueY.add(y);
         queueDir.add(-1);
-        int distance = 0; // The currently checked distance, it starts at one to avoid divisions by 0
+        int distance = 0; // The currently checked distance
         int currentIteration = 0; //The iteration number for the currently checked distance
         int nextDistanceIteration = 1; //The iteration where the unit starts considering the next distance path
         while (!queueX.isEmpty()) {

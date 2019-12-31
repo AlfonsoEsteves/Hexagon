@@ -4,9 +4,9 @@ import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
-public class TaskPickUp extends Task {
+public class TaskPickUp {
 
-    public static TaskPickUp taskPickUpStone = new TaskPickUp(Item.stone);
+    /*public static TaskPickUp taskPickUpStone = new TaskPickUp(Item.stone);
     public static TaskPickUp taskPickUpIron = new TaskPickUp(Item.iron);
     public static TaskPickUp taskPickUpWood = new TaskPickUp(Item.wood);
     public static TaskPickUp taskPickUpFruit = new TaskPickUp(Item.fruit);
@@ -66,5 +66,5 @@ public class TaskPickUp extends Task {
                 current.next = found.next;
             }
         }
-    }
+    }*/
 }

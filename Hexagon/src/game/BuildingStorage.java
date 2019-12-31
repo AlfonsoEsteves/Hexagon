@@ -2,18 +2,18 @@ package game;
 
 import game.unit.person.Person;
 
-public class BuildingStorage extends Building implements Executable{
+public class BuildingStorage{
 
-    public int totalStock;
+    /*public int totalStock;
     public int[] itemStock;
     public int[] itemValue;
 
-    public BuildingStorage(int x, int y, Person person) {
-        super(x, y);
+    public BuildingStorage(int x, int y, Person owner) {
+        super(x, y, owner);
         itemStock = new int[Item.itemTypes];
         itemValue = new int[Item.itemTypes];
         for(int i = 0;i<Item.itemTypes;i++) {
-            itemValue[i] = person.itemValue[i];
+            itemValue[i] = owner.itemValue[i];
         }
     }
 
@@ -55,5 +55,5 @@ public class BuildingStorage extends Building implements Executable{
         if(itemValue[itemId] < 100) {
             itemValue[itemId]++;
         }
-    }
+    }*/
 }

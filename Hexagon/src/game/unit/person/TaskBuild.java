@@ -22,7 +22,7 @@ public class TaskBuild extends Task {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(person.carrying.contains(material)){
-            if (Map.has(tileX, tileY, OverTile.makeWith(material)) != null) {
+            if (Map.has(tileX, tileY, OverTile.makeWith(material).and(x -> ((Building)((OverTile)x).state).owner == person)) != null) {
                 return true;
             }
         }

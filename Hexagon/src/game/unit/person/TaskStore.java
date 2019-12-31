@@ -6,9 +6,9 @@ import game.unit.Unit;
 
 import java.util.Collections;
 
-public class TaskStore extends Task {
+public class TaskStore {
 
-    public static TaskStore instance = new TaskStore();
+    /*public static TaskStore instance = new TaskStore();
 
     private TaskStore() {
         super(3, 0);
@@ -68,5 +68,5 @@ public class TaskStore extends Task {
             Map.dropped[unit.x][unit.y] = new Dropped(item);
             buildingStorage.store(item.id);
         }
-    }
+    }*/
 }

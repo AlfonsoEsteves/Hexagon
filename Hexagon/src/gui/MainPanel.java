@@ -16,7 +16,6 @@ import game.unit.person.Person;
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 
 	public static Person selectedUnit;
-	public static OverTile selectedDepot;
 	public static int viewSize = 20;
 	public static int viewX = Map.size / 2;
 	public static int viewY = Map.size / 2;
@@ -114,12 +113,6 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				graphics.drawString(selectedUnit.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 30 + y + i * 15);
 			}
 		}
-		if(selectedDepot != null) {
-			BuildingStorage storage = (BuildingStorage)selectedDepot.state;
-			for(int i=0;i<Item.itemTypes;i++) {
-				graphics.drawString(storage.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 30 + i * 20);
-			}
-		}
 
 		for(int i = 0; i < Map.executableQueueSize; i++) {
 			for(int j = 0;j < Map.executableQueue[i].size(); j++) {
@@ -154,7 +147,6 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		selectedUnit = null;
-		selectedDepot = null;
 		double minDistance = 250;
 		for(int[] p : MapIter.of(viewSize)){
 			int x = viewX + p[0];
@@ -167,15 +159,6 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			if(person != null) {
 				if (Math.sqrt(diffX * diffX + diffY * diffY) < minDistance) {
 					selectedUnit = person;
-					selectedDepot = null;
-					minDistance = Math.sqrt(diffX * diffX + diffY * diffY);
-				}
-			}
-			OverTile depot = Map.has(x, y, OTId.depot.overTileIs);
-			if(depot != null) {
-				if (Math.sqrt(diffX * diffX + diffY * diffY) < minDistance) {
-					selectedDepot = depot;
-					selectedUnit = null;
 					minDistance = Math.sqrt(diffX * diffX + diffY * diffY);
 				}
 			}
