@@ -188,6 +188,16 @@ public abstract class Unit implements Executable {
             int currentY = queueY.removeFirst();
             int currentDir = queueDir.removeFirst();
             processTile(currentX, currentY, distance, currentDir);
+            currentIteration++;
+            if(currentIteration == nextDistanceIteration){
+                distance++;
+                if(distance >= pathfindingDistanceLimit) {
+                    break;
+                }
+                if(tasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
+                    break;
+                }
+            }
             if (Map.steppable(currentX, currentY)) {
                 for (int i = 0; i < 6; i++) {
                     int newX = currentX + Map.getX(i);
@@ -201,19 +211,9 @@ public abstract class Unit implements Executable {
                     }
                 }
             }
-            currentIteration++;
             if(currentIteration == nextDistanceIteration){
-                distance++;
-                if(distance >= pathfindingDistanceLimit) {
-                    break;
-                }
-                else if(tasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
-                    break;
-                }
-                else{
-                    currentIteration = 0;
-                    nextDistanceIteration = queueX.size();
-                }
+                currentIteration = 0;
+                nextDistanceIteration = queueX.size();
             }
         }
     }
