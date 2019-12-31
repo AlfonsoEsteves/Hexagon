@@ -21,4 +21,4 @@ The first is easy, the depot can detect that and decrease the price.
 
 The seconds is more tricky, because it could lead to an item having a ridiculously big price.
 
-But I guess this favours traders, so I will leave like that.
+But I guess this favours traders, so I will leave it like that.

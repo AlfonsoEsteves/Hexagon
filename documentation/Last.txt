@@ -1,0 +1,60 @@
+If I want the simulation and the towns to be more complex
+  then I have to implement place-ownership
+
+
+
+
+
+
+Each building will have an owner (the one that builds it)
+
+The door of a building can be passed just by the owner of it.
+
+
+
+
+
+what happens to forlon buildings?
+  how about taxes
+  if you leave town you can pay upfront for the time you are going to leave
+  if you don't pay the goverment will send somebody to break into your house to sell the items and sell the house
+  el loco que cobra los taxes podria dejar una carta en la pueta como advertencia de que no se esta pagando
+
+
+
+
+
+
+Only the owner of a storage will be able to enter it, and he is supposed to stand n the door wating for customers that come to sell or to buy things.
+  Or also the customers can go to the storage (or blacksmith or whatever) and knock the door
+
+
+
+Units will have a mental map of different storages
+where they store:
+  item price
+  item abundance
+
+They also have a score of "security", this score is 1 if the unit immediately visited the storage
+  and decreasess over time
+
+
+
+Units tend to visit those stores that have low score, to see if there is something new 
+
+
+
+
+
+
+
+List of steps to acheive this:
+each building has an owner
+only the owner build the building
+units can not pass doors that are not theirs
+the map of scores
+units sometimes spend some time in their work places (storages or blacksmith or whatever)
+buyers go to shops if they see the owner in the entrance, and increase their score
+buyers go and buy things
+
+
