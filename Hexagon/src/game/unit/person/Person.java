@@ -304,7 +304,7 @@ public class Person extends Unit {
     private void addTask(Task task) {
         int position = 0;
         while(position < tasks.size()) {
-            if(tasks.get(position).priority <= task.priority) {
+            if(tasks.get(position).maxPriorityPossible <= task.maxPriorityPossible) {
                 break;
             }
             position++;

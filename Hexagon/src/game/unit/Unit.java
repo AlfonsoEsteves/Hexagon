@@ -4,7 +4,6 @@ import game.Executable;
 import game.Log;
 import game.Map;
 import game.Rnd;
-import gui.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -85,10 +84,10 @@ public abstract class Unit implements Executable {
             If conserve task time is not over
               Conserve task
             Else
-              Reduce the current task priority
+              Reduce the current task maxPriorityPossible
               Scan
           Else
-            Set current current task to null and task priority to 0
+            Set current current task to null and task maxPriorityPossible to 0
             Scan
         Else
           Scan
@@ -104,7 +103,7 @@ public abstract class Unit implements Executable {
                 if (currentTask.applies(this, destinationX, destinationY)) {
                     if (Map.time > conserveTaskTime) {
                         // Don't reset the current task
-                        // Just decrease the priority in case the goal has moved farther
+                        // Just decrease the maxPriorityPossible in case the goal has moved farther
                         // or in case an obstacle appeared
                         resetPriority(currentTaskPriority - 1);
                     } else {
@@ -208,7 +207,7 @@ public abstract class Unit implements Executable {
                 if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
-                else if(calculatePriority(tasks.get(0).priority, distance) <= currentTaskPriority) {
+                else if(tasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
                     break;
                 }
                 else{
@@ -219,22 +218,10 @@ public abstract class Unit implements Executable {
         }
     }
 
-    // Priority calculation does not take into consideration the range
-    // Because otherwise, it wouldn't be possible to order the tasks from most priority to least priority
-    // Cause this order would depend on the distance to the goal
-    protected double calculatePriority(double pri, int distance){
-        if(distance == 0) {
-            return pri;
-        }
-        else {
-            return pri / distance;
-        }
-    }
-
     private void processTile(int tileX, int tileY, int distance, int dir) {
         for(Task task : tasks) {
-            double pri = calculatePriority(task.priority, distance);
-            if (pri <= currentTaskPriority) {
+            double priority = task.calculatePriority(distance);
+            if (priority <= currentTaskPriority) {
                 // This means that all the subsequent tasks don't need to be
                 // checked because they have lower maxPriorityPossible
                 break;
@@ -242,7 +229,7 @@ public abstract class Unit implements Executable {
             if(task.applies(this, tileX, tileY)) {
                 currentTask = task;
                 dirToDestination = dir;
-                resetPriority(pri);
+                resetPriority(priority);
                 destinationX = tileX;
                 destinationY = tileY;
                 break;
