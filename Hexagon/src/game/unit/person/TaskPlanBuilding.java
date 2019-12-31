@@ -17,7 +17,7 @@ public class TaskPlanBuilding extends Task {
     @Override
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        return tileX == person.planX && tileY == person.planY;
+        return person.planning && tileX == person.planX && tileY == person.planY;
     }
 
     @Override

@@ -2,8 +2,6 @@ package game.unit.person;
 
 import game.Map;
 import game.OTId;
-import game.OverTile;
-import game.Tile;
 import game.unit.Task;
 import game.unit.Unit;
 
@@ -32,7 +30,7 @@ public class TaskSleep extends Task {
         person.life += 10;
         if(person.life >= Person.maxLife && person.food > 0) {
             person.life = Person.maxLife;
-            person.priorityTask = null;
+            person.currentTask = null;
         }
     }
 }

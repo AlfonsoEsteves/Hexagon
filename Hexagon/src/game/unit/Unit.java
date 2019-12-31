@@ -14,6 +14,8 @@ public abstract class Unit implements Executable {
 
     public static final int pathfindingDistanceLimit = 15;
 
+    public static final double turnsPerPriorityFactor = 1.0;
+
     public static Unit[][] checkedTilesUnit = new Unit[Map.size][Map.size];
     public static int[][] checkedTilesTime = new int[Map.size][Map.size];
 
@@ -34,13 +36,12 @@ public abstract class Unit implements Executable {
     public int life;
 
     public java.util.List<Task> tasks;
-    public double priority;
-    public Task priorityTask;
-    public int distToDestination;
+    public double currentTaskPriority;
+    public Task currentTask;
+    public int conserveTaskTime;
     public int dirToDestination;
-
-    //public int destinationX;
-    //public int destinationY;
+    public int destinationX;
+    public int destinationY;
 
     private int randomDirection;
 
@@ -60,7 +61,6 @@ public abstract class Unit implements Executable {
         return alive;
     }
 
-
     public static long timeScan = 0;
     public static long timeOther = 0;
     public static long t1 = System.nanoTime();
@@ -68,23 +68,55 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        /*if(id == 10) {
+        /*if(id == 328) {
             MainPanel.viewX = x;
             MainPanel.viewY = y;
-            if (Map.time >= 615) {
+            if (Map.time >= 40) {
                 System.out.println();
             }
         }*/
 
         Log.log("UNIT", toString());
 
-        priority -= 1.0;
-        priorityTask = null;
+        /* PSEUDO CODE:
+
+        If I have a current task and a destiny
+          If they apply
+            If conserve task time is not over
+              Conserve task
+            Else
+              Reduce the current task priority
+              Scan
+          Else
+            Set current current task to null and task priority to 0
+            Scan
+        Else
+          Scan
+        Execute task
+        */
 
         initExecute();
         if(alive) {
-            if(!tasks.isEmpty()) {
+            dirToDestination = -1;
 
+            boolean scan = true;
+            if (currentTask != null) {
+                if (currentTask.applies(this, destinationX, destinationY)) {
+                    if (Map.time > conserveTaskTime) {
+                        // Don't reset the current task
+                        // Just decrease the priority in case the goal has moved farther
+                        // or in case an obstacle appeared
+                        resetPriority(currentTaskPriority - 1);
+                    } else {
+                        scan = false;
+                    }
+                } else {
+                    currentTask = null;
+                    currentTaskPriority = 0;
+                }
+            }
+
+            if(scan) {
                 t1 = System.nanoTime();
                 timeOther += t1 - t2;
 
@@ -92,27 +124,28 @@ public abstract class Unit implements Executable {
 
                 t2 = System.nanoTime();
                 timeScan += t2 - t1;
+            }
 
-                if (priorityTask != null) {
-                    if (distToDestination > priorityTask.range) {
-                        removeFromTile();
-                        x += Map.getX(dirToDestination);
-                        y += Map.getY(dirToDestination);
-                        addToTile();
-                    } else {
-                        priorityTask.execute(this);
+            if(currentTask != null) {
+                if (Map.distance(x, y, destinationX, destinationY) > currentTask.range) {
+                    if(dirToDestination == -1) {
+                        dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
                     }
-                }
-                else {
-                    moveRandomly();
+                    removeFromTile();
+                    x += Map.getX(dirToDestination);
+                    y += Map.getY(dirToDestination);
+                    addToTile();
+                } else {
+                    currentTask.execute(this);
                 }
             }
             else {
                 moveRandomly();
             }
-        }
-        if(alive) {
-            Map.queueExecutable(this, delay());
+
+            if(alive) {
+                Map.queueExecutable(this, delay());
+            }
         }
     }
 
@@ -175,7 +208,7 @@ public abstract class Unit implements Executable {
                 if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
-                else if(calculatePriority(tasks.get(0).priority, distance) <= priority) {
+                else if(calculatePriority(tasks.get(0).priority, distance) <= currentTaskPriority) {
                     break;
                 }
                 else{
@@ -186,6 +219,9 @@ public abstract class Unit implements Executable {
         }
     }
 
+    // Priority calculation does not take into consideration the range
+    // Because otherwise, it wouldn't be possible to order the tasks from most priority to least priority
+    // Cause this order would depend on the distance to the goal
     protected double calculatePriority(double pri, int distance){
         if(distance == 0) {
             return pri;
@@ -198,98 +234,26 @@ public abstract class Unit implements Executable {
     private void processTile(int tileX, int tileY, int distance, int dir) {
         for(Task task : tasks) {
             double pri = calculatePriority(task.priority, distance);
-            if (pri <= priority) {
+            if (pri <= currentTaskPriority) {
                 // This means that all the subsequent tasks don't need to be
-                // chacked because they have lower maxPriorityPossible
+                // checked because they have lower maxPriorityPossible
                 break;
             }
             if(task.applies(this, tileX, tileY)) {
-                priorityTask = task;
-                distToDestination = distance;
+                currentTask = task;
                 dirToDestination = dir;
-                priority = pri;
+                resetPriority(pri);
+                destinationX = tileX;
+                destinationY = tileY;
                 break;
             }
         }
     }
 
-    /*public void goTo(int destinationX, int destinationY) {
-        int dir;
-        if(Map.distance(x, y, destinationX, destinationY) < pathfindingDistanceLimit) {
-            dir = directionTowardsDestination(destinationX, destinationY);
-        }
-        else {
-            dir = Map.closestDirection(destinationX - x, destinationY - y);
-            if(!Map.steppable(x + Map.getX(dir), y + Map.getY(dir))){
-                dir = -1;
-            }
-        }
-        if(dir != -1) {
-            removeFromTile();
-            x += Map.getX(dir);
-            y += Map.getY(dir);
-            addToTile();
-        }
+    private void resetPriority(double pri){
+        currentTaskPriority = pri;
+        conserveTaskTime = Map.time + 1 + (int)(pri * turnsPerPriorityFactor);
     }
-
-    public int directionTowardsDestination(int destinationX, int destinationY) {
-        for(int i = 0;i<checkedTilesSize;i++) {
-            for(int j = 0;j<checkedTilesSize;j++) {
-                checkedTiles[i][j] = false;
-            }
-        }
-        LinkedList<Integer> queueX = new LinkedList<>();
-        LinkedList<Integer> queueY = new LinkedList<>();
-        LinkedList<Integer> queueInitialDir = new LinkedList<>();
-        for (int i = 0; i < 6; i++) {
-            int newX = x + Map.getX(i);
-            int newY = y + Map.getY(i);
-            if(newX == destinationX && newY == destinationY){
-                return i;
-            }
-            if (Map.steppable(newX, newY)) {
-                queueX.addLast(newX);
-                queueY.addLast(newY);
-                queueInitialDir.addLast(i);
-                checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2] = true;
-            }
-        }
-        int distance = 1;
-        int currentIteration = 0; //The iteration number for the currently checked distance
-        int nextDistanceIteration = queueX.size(); //The iteration where the unit starts considering the next distance path
-        while (!queueX.isEmpty()) {
-            int currentX = queueX.removeFirst();
-            int currentY = queueY.removeFirst();
-            int currentInitialDir = queueInitialDir.removeFirst();
-            for (int i = 0; i < 6; i++) {
-                int newX = currentX + Map.getX(i);
-                int newY = currentY + Map.getY(i);
-                if(newX == destinationX && newY == destinationY){
-                    return currentInitialDir;
-                }
-                if(!checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2]) {
-                    if (Map.steppable(newX, newY)) {
-                        queueX.add(newX);
-                        queueY.add(newY);
-                        queueInitialDir.add(currentInitialDir);
-                        checkedTiles[newX - x + checkedTilesSize / 2][newY - y + checkedTilesSize / 2] = true;
-                    }
-                }
-            }
-            currentIteration++;
-            if(currentIteration == nextDistanceIteration){
-                distance++;
-                if(distance >= pathfindingDistanceLimit) {
-                    break;
-                }
-                else{
-                    currentIteration = 0;
-                    nextDistanceIteration = queueX.size();
-                }
-            }
-        }
-        return -1;
-    }*/
 
     public void addToTile() {
         next = Map.unit[x][y];
