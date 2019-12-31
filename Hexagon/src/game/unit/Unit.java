@@ -38,7 +38,6 @@ public abstract class Unit implements Executable {
     public double currentTaskPriority;
     public Task currentTask;
     public int conserveTaskTime;
-    public int dirToDestination;
     public int destinationX;
     public int destinationY;
 
@@ -96,8 +95,6 @@ public abstract class Unit implements Executable {
 
         initExecute();
         if(alive) {
-            dirToDestination = -1;
-
             boolean scan = true;
             if (currentTask != null) {
                 if (currentTask.applies(this, destinationX, destinationY)) {
@@ -127,9 +124,7 @@ public abstract class Unit implements Executable {
 
             if(currentTask != null) {
                 if (Map.distance(x, y, destinationX, destinationY) > currentTask.range) {
-                    if(dirToDestination == -1) {
-                        dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
-                    }
+                    int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
                     removeFromTile();
                     x += Map.getX(dirToDestination);
                     y += Map.getY(dirToDestination);
@@ -176,18 +171,15 @@ public abstract class Unit implements Executable {
     private void scanForTasks() {
         LinkedList<Integer> queueX = new LinkedList<>();
         LinkedList<Integer> queueY = new LinkedList<>();
-        LinkedList<Integer> queueDir = new LinkedList<>();
         queueX.add(x);
         queueY.add(y);
-        queueDir.add(-1);
         int distance = 0; // The currently checked distance
         int currentIteration = 0; //The iteration number for the currently checked distance
         int nextDistanceIteration = 1; //The iteration where the unit starts considering the next distance path
         while (!queueX.isEmpty()) {
             int currentX = queueX.removeFirst();
             int currentY = queueY.removeFirst();
-            int currentDir = queueDir.removeFirst();
-            processTile(currentX, currentY, distance, currentDir);
+            processTile(currentX, currentY, distance);
             currentIteration++;
             if(currentIteration == nextDistanceIteration){
                 distance++;
@@ -205,7 +197,6 @@ public abstract class Unit implements Executable {
                     if(checkedTilesUnit[newX][newY] != this || checkedTilesTime[newX][newY] != Map.time) {
                         queueX.add(newX);
                         queueY.add(newY);
-                        queueDir.add(currentDir == -1 ? i : currentDir);
                         checkedTilesUnit[newX][newY] = this;
                         checkedTilesTime[newX][newY] = Map.time;
                     }
@@ -218,7 +209,7 @@ public abstract class Unit implements Executable {
         }
     }
 
-    private void processTile(int tileX, int tileY, int distance, int dir) {
+    private void processTile(int tileX, int tileY, int distance) {
         for(Task task : tasks) {
             double priority = task.calculatePriority(distance);
             if (priority <= currentTaskPriority) {
@@ -228,7 +219,6 @@ public abstract class Unit implements Executable {
             }
             if(task.applies(this, tileX, tileY)) {
                 currentTask = task;
-                dirToDestination = dir;
                 resetPriority(priority);
                 destinationX = tileX;
                 destinationY = tileY;
