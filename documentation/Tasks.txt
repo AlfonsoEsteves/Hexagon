@@ -1,0 +1,20 @@
+Tasks can be of 2 types:
+  scan
+  travel
+
+Scan tasks scan for a goal in the nearby area.
+Travel tasks make the unit move towards a destination that is far away
+
+
+Some tasks are relevant only as scan
+  fight to defend yourself
+
+Some tasks are relevant only as travel
+  build your house
+
+Some tasks are relevant in both cases
+  collect resource
+     you may know of a particular place with abundunce of iron
+     but if you find iron on the way you might as well collect it
+
+
