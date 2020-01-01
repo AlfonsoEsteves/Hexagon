@@ -94,7 +94,9 @@ public class Person extends Unit {
 
         travelTasks.clear();
         if(roomPosition == null || blacksmithPosition == null || carpentryPosition == null || storagePosition == null) {
-            travelTasks.add(TaskPlanBuilding.instance);
+            if(carrying.contains(Item.stone)) {
+                travelTasks.add(TaskPlanBuilding.instance);
+            }
         }
     }
 

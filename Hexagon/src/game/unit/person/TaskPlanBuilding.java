@@ -55,6 +55,7 @@ public class TaskPlanBuilding extends TaskTravel {
             }
         }
 
+        Debug.check(person.carrying.contains(Item.stone));
         Debug.check(toBeBuilt != null);
 
         Building building  = new Building(person.destinationX, person.destinationY, person);
@@ -66,6 +67,7 @@ public class TaskPlanBuilding extends TaskTravel {
             if (Map.distance(person.destinationX - x, person.destinationY - y) == size) {
                 if(x == person.x && y == person.y) {
                     Map.overTile[x][y] = new OverTile(OTId.wall, x, y, building);
+                    person.carrying.remove(Item.stone);
                 }
                 else {
                     if (doorCount == 0) {

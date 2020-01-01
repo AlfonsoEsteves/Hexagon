@@ -4,6 +4,7 @@ import game.Executable;
 import game.Log;
 import game.Map;
 import game.Rnd;
+import gui.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -64,13 +65,13 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        /*if(id == 328) {
+        if(id == 48) {
             MainPanel.viewX = x;
             MainPanel.viewY = y;
             if (Map.time >= 40) {
                 System.out.println();
             }
-        }*/
+        }
 
         Log.log("UNIT", toString());
 
