@@ -1,5 +1,6 @@
 package game.unit.person;
 
+import game.Item;
 import game.Map;
 import game.OTId;
 import game.unit.TaskScan;
@@ -22,13 +23,24 @@ public class TaskCreateWeapon2 extends TaskTravel {
 
     @Override
     public boolean applies(Unit unit) {
-
-
-
-
-
-
+        Person person = (Person)unit;
+        if(getWorkshopPosition(person) != null) {
+            if(person.carrying.contains(workshop.tranformsItem)) {
+                if(Collections.frequency(person.carrying, workshop.providesItem) < 2) {
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+
+    private int[] getWorkshopPosition(Person person) {
+        if(workshop == OTId.carpentry) {
+            return person.carpentryPosition;
+        }
+        else {
+            return person.blacksmithPosition;
+        }
     }
 
     @Override
