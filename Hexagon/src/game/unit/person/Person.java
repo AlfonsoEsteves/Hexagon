@@ -84,23 +84,6 @@ public class Person extends Unit {
     }
 
     @Override
-    protected void setTravelTasks() {
-
-
-
-        // TENGO QUE VER SI ESTE METODO TIENE SENTIDO
-        // PORQUE CAPAS QUE SIEMPRE VOY A TENER TODAS LAS TASKS
-        // Y DEJO QUE SE FILTREN MAS ADELANTE EL EL APPLIES() DE CADA UNA
-
-        travelTasks.clear();
-        if(roomPosition == null || blacksmithPosition == null || carpentryPosition == null || storagePosition == null) {
-            if(carrying.contains(Item.stone)) {
-                travelTasks.add(TaskPlanBuilding.instance);
-            }
-        }
-    }
-
-    @Override
     protected void setScanTasks() {
         scanTasks.clear();
 

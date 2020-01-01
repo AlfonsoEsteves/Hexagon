@@ -112,9 +112,13 @@ public abstract class Unit implements Executable {
             }
 
             if(recheckTasks) {
-                setTravelTasks();
                 checkNormalTasks();
+
+                // It is important to reset the scanning tasks in each execution
+                // Cause they are going to be checked for each scanned tile
+                // So you don't want to have unnecessary ones
                 setScanTasks();
+
                 checkScanTasks();
             }
 
@@ -142,8 +146,6 @@ public abstract class Unit implements Executable {
     }
 
     protected abstract void setScanTasks();
-
-    protected abstract void setTravelTasks();
 
     protected void checkNormalTasks() {
         for(TaskTravel task : travelTasks){

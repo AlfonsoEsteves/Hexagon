@@ -21,7 +21,12 @@ public class TaskPlanBuilding extends TaskTravel {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        return person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2;
+        if(person.roomPosition == null || person.blacksmithPosition == null || person.carpentryPosition == null || person.storagePosition == null) {
+            if(person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

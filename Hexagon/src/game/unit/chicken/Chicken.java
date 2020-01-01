@@ -44,11 +44,6 @@ public class Chicken extends Unit {
     }
 
     @Override
-    protected void setTravelTasks() {
-
-    }
-
-    @Override
     public void initExecute(){
         food --;
         if(food <= 0){

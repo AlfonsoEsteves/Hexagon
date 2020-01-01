@@ -30,11 +30,6 @@ public class Demon extends Unit {
     }
 
     @Override
-    protected void setTravelTasks() {
-
-    }
-
-    @Override
     public void initExecute(){
         life --;
         if(life <= 0){
