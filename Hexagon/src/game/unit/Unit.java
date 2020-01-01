@@ -126,6 +126,8 @@ public abstract class Unit implements Executable {
                     addToTile();
                 } else {
                     currentTask.execute(this);
+                    currentTask = null;
+                    currentTaskPriority = 0;
                 }
             }
             else {

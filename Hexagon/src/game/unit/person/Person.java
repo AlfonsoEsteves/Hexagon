@@ -42,6 +42,15 @@ public class Person extends Unit {
     public int usualY;
     public boolean goingBack;
 
+
+
+    public int[] roomPosition;
+    public int[] storagePosition;
+    public int[] blacksmithPosition;
+    public int[] carpentryPosition;
+
+
+
     public Person(int x, int y) {
         super(x, y);
 
@@ -71,6 +80,21 @@ public class Person extends Unit {
         }
         else{
             return imagePerson;
+        }
+    }
+
+    @Override
+    protected void setTravelTasks() {
+
+
+
+        // TENGO QUE VER SI ESTE METODO TIENE SENTIDO
+        // PORQUE CAPAS QUE SIEMPRE VOY A TENER TODAS LAS TASKS
+        // Y DEJO QUE SE FILTREN MAS ADELANTE EL EL APPLIES() DE CADA UNA
+
+        travelTasks.clear();
+        if(roomPosition == null || blacksmithPosition == null || carpentryPosition == null || storagePosition == null) {
+            travelTasks.add(TaskPlanBuilding.instance);
         }
     }
 
@@ -171,19 +195,6 @@ public class Person extends Unit {
         if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
             //addTask(TaskStore.instance);
         }
-    }
-
-    @Override
-    protected void setTravelTasks() {
-
-
-
-        // TENGO QUE VER SI ESTE METODO TIENE SENTIDO
-        // PORQUE CAPAS QUE SIEMPRE VOY A TENER TODAS LAS TASKS
-        // Y DEJO QUE SE FILTREN MAS ADELANTE EL EL APPLIES() DE CADA UNA
-
-        travelTasks.clear();
-        travelTasks.add(TaskPlanBuilding.instance);
     }
 
     @Override

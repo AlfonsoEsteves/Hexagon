@@ -1,0 +1,2 @@
+capas cambiar las linked list por mi propia implementacion de un una cola con array circular
+  en las colas de eventos

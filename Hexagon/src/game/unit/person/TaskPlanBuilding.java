@@ -31,18 +31,31 @@ public class TaskPlanBuilding extends TaskTravel {
         OTId toBeBuilt = null;
         int size = 2;
         int r = Rnd.nextInt(4);
-        if (r == 0) {
-            toBeBuilt = OTId.missingDepot;
+        for(int i = 0; i < 4; i++) {
+            int x = (i + r) % 4;
+            if(x == 0 && person.roomPosition == null) {
+                toBeBuilt = OTId.missingBed;
+                person.roomPosition = new int[]{person.destinationX, person.destinationY};
+                break;
+            }
+            else if(x == 1 && person.blacksmithPosition == null) {
+                toBeBuilt = OTId.missingAnvil;
+                person.blacksmithPosition = new int[]{person.destinationX, person.destinationY};
+                break;
+            }
+            else if(x == 2 && person.carpentryPosition == null) {
+                toBeBuilt = OTId.missingCarpentry;
+                person.carpentryPosition = new int[]{person.destinationX, person.destinationY};
+                break;
+            }
+            else if(x == 3 && person.storagePosition == null) {
+                toBeBuilt = OTId.missingDepot;
+                person.storagePosition = new int[]{person.destinationX, person.destinationY};
+                break;
+            }
         }
-        else if (r == 1) {
-            toBeBuilt = OTId.missingBed;
-        }
-        else if (r == 2) {
-            toBeBuilt = OTId.missingAnvil;
-        }
-        else {
-            toBeBuilt = OTId.missingCarpentry;
-        }
+
+        Debug.check(toBeBuilt != null);
 
         Building building  = new Building(person.destinationX, person.destinationY, person);
 
