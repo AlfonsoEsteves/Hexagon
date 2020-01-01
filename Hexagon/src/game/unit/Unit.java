@@ -124,7 +124,7 @@ public abstract class Unit implements Executable {
 
             if(currentTask != null) {
                 if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
-                    int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
+                    int dirToDestination = Map.closestDirection(x - destinationX, y - destinationY);
                     removeFromTile();
                     x += Map.getX(dirToDestination);
                     y += Map.getY(dirToDestination);
