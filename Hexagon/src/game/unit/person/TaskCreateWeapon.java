@@ -1,13 +1,12 @@
 package game.unit.person;
 
-import game.*;
-import game.unit.Task;
-import game.unit.TaskScan;
+import game.OTId;
+import game.unit.TaskTravel;
 import game.unit.Unit;
 
 import java.util.Collections;
 
-public class TaskCreateWeapon extends TaskScan {
+public class TaskCreateWeapon extends TaskTravel {
 
     public static TaskCreateWeapon createAnvilWeapon = new TaskCreateWeapon(OTId.anvil);
     public static TaskCreateWeapon createCarpentryWeapon = new TaskCreateWeapon(OTId.carpentry);
@@ -20,11 +19,11 @@ public class TaskCreateWeapon extends TaskScan {
     }
 
     @Override
-    public boolean applies(Unit unit, int tileX, int tileY) {
+    public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(Collections.frequency(person.carrying, workshop.providesItem) < 2) {
-            if (person.carrying.contains(workshop.tranformsItem)) {
-                if (Map.has(tileX, tileY, workshop.overTileIs) != null) {
+        if(getWorkshopPosition(person) != null) {
+            if(person.carrying.contains(workshop.tranformsItem)) {
+                if(Collections.frequency(person.carrying, workshop.providesItem) < 2) {
                     return true;
                 }
             }
@@ -37,5 +36,20 @@ public class TaskCreateWeapon extends TaskScan {
         Person person = (Person)unit;
         person.carrying.remove(workshop.tranformsItem);
         person.carrying.add(workshop.providesItem);
+    }
+
+    @Override
+    public int[] getDestination(Unit unit) {
+        Person person = (Person)unit;
+        return getWorkshopPosition(person);
+    }
+
+    private int[] getWorkshopPosition(Person person) {
+        if(workshop == OTId.carpentry) {
+            return person.carpentryPosition;
+        }
+        else {
+            return person.blacksmithPosition;
+        }
     }
 }

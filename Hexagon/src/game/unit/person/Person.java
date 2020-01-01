@@ -49,6 +49,8 @@ public class Person extends Unit {
     public int[] blacksmithPosition;
     public int[] carpentryPosition;
 
+    public int[] buildingPosition;
+
 
 
     public Person(int x, int y) {
@@ -68,6 +70,10 @@ public class Person extends Unit {
         usualX = x;
         usualY = y;
         goingBack = false;
+
+        travelTasks.add(TaskPlanBuilding.instance);
+        travelTasks.add(TaskCreateWeapon.createAnvilWeapon);
+        travelTasks.add(TaskCreateWeapon.createCarpentryWeapon);
     }
 
     @Override
@@ -117,7 +123,7 @@ public class Person extends Unit {
         }
         if(amountWood > 0) {
             addTask(TaskBuild.taskBuildWoodThings, scanTasks);
-            addTask(TaskCreateWeapon.createCarpentryWeapon, scanTasks);
+            //addTask(TaskCreateWeaponOld.createCarpentryWeapon, scanTasks);
         }
         else{
             //addTask(TaskPickUp.taskPickUpWood);
@@ -129,7 +135,7 @@ public class Person extends Unit {
         }
         if(amountIron > 0) {
             addTask(TaskBuild.taskBuildIronThings, scanTasks);
-            addTask(TaskCreateWeapon.createAnvilWeapon, scanTasks);
+            //addTask(TaskCreateWeaponOld.createAnvilWeapon, scanTasks);
         }
         else{
             //addTask(TaskPickUp.taskPickUpIron);

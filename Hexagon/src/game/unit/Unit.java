@@ -65,13 +65,13 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        if(id == 48) {
+        /*if(id == 48) {
             MainPanel.viewX = x;
             MainPanel.viewY = y;
             if (Map.time >= 40) {
                 System.out.println();
             }
-        }
+        }*/
 
         Log.log("UNIT", toString());
 
@@ -152,13 +152,14 @@ public abstract class Unit implements Executable {
              if(task.maxPriorityPossible < currentTaskPriority) {
                  break;
              }
-             task.findDestination(this);
-             if(task.applies) {
-                 if(task.priority > currentTaskPriority) {
+             if(task.applies(this)) {
+                 int[] position = task.getDestination(this);
+                 double priority = task.calculatePriority(Map.distance(x - position[0], y - position[1]));
+                 if(priority > currentTaskPriority) {
                      currentTask = task;
-                     currentTaskPriority = currentTaskPriority;
-                     destinationX = task.destinationX;
-                     destinationY = task.destinationY;
+                     currentTaskPriority = priority;
+                     destinationX = position[0];
+                     destinationY = position[1];
                  }
              }
         }

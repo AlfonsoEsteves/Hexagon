@@ -23,7 +23,23 @@ public class TaskPlanBuilding extends TaskTravel {
         Person person = (Person)unit;
         if(person.roomPosition == null || person.blacksmithPosition == null || person.carpentryPosition == null || person.storagePosition == null) {
             if(person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2) {
-                return true;
+
+                if(person.buildingPosition == null) {
+                    int rndX = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
+                    int rndY = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
+                    person.buildingPosition = new int[]{person.x + rndX, person.y + rndY};
+
+                }
+                // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
+                // if the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
+                if(Map.distance(person.x - person.buildingPosition[0], person.y - person.buildingPosition[1]) > 1) {
+                    if (checkPickedPosition(person.buildingPosition[0], person.buildingPosition[1], 2)) {
+                        return true;
+                    }
+                    else{
+                        person.buildingPosition = null;
+                    }
+                }
             }
         }
         return false;
@@ -32,7 +48,6 @@ public class TaskPlanBuilding extends TaskTravel {
     @Override
     public void execute(Unit unit) {
         Person person = (Person)unit;
-
         OTId toBeBuilt = null;
         int size = 2;
         int r = Rnd.nextInt(4);
@@ -96,20 +111,9 @@ public class TaskPlanBuilding extends TaskTravel {
     }
 
     @Override
-    public void findDestination(Unit unit) {
-        applies = false;
-        int rndX = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
-        int rndY = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
-        // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
-        // if the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
-        if(Map.distance(rndX, rndY) > 1) {
-            destinationX = unit.x + rndX;
-            destinationY = unit.y + rndY;
-            if (checkPickedPosition(destinationX, destinationY, 2)) {
-                applies = true;
-                priority = maxPriorityPossible;
-            }
-        }
+    public int[] getDestination(Unit unit) {
+        Person person = (Person)unit;
+        return person.buildingPosition;
     }
 
     private boolean checkPickedPosition(int pickedX, int pickedY, int size) {
