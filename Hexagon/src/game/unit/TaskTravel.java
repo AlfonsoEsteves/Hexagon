@@ -8,8 +8,8 @@ public abstract class TaskTravel extends Task {
     public int destinationY;
     public double priority;
 
-    public TaskTravel(double maxPriorityPossible) {
-        super(maxPriorityPossible, Unit.pathfindingDistanceLimit);
+    public TaskTravel(double maxPriorityPossible, int range) {
+        super(maxPriorityPossible, range);
     }
 
     public abstract void findDestination(Unit unit);

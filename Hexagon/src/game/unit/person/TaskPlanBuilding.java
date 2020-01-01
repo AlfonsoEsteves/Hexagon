@@ -15,7 +15,7 @@ public class TaskPlanBuilding extends TaskTravel {
 
     private TaskPlanBuilding()
     {
-        super(12);
+        super(12, 2);
     }
 
     @Override
