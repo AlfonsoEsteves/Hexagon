@@ -8,6 +8,7 @@ import game.Rnd;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public abstract class Unit implements Executable {
 
@@ -34,7 +35,8 @@ public abstract class Unit implements Executable {
 
     public int life;
 
-    public java.util.List<Task> tasks;
+    public List<Task> normalTasks;
+    public List<TaskScan> scanTasks;
     public double currentTaskPriority;
     public Task currentTask;
     public int conserveTaskTime;
@@ -47,7 +49,7 @@ public abstract class Unit implements Executable {
         this.x = x;
         this.y = y;
         alive = true;
-        tasks = new ArrayList<>();
+        scanTasks = new ArrayList<>();
         id = maxId;
         maxId++;
     }
@@ -63,6 +65,7 @@ public abstract class Unit implements Executable {
     public static long timeOther = 0;
     public static long t1 = System.nanoTime();
     public static long t2 = t1;
+
 
     @Override
     public void execute() {
@@ -95,16 +98,16 @@ public abstract class Unit implements Executable {
 
         initExecute();
         if(alive) {
-            boolean scan = true;
+            boolean recheckTasks = true;
             if (currentTask != null) {
-                if (currentTask.applies(this, destinationX, destinationY)) {
+                if (currentTask.applies(this)) {
                     if (Map.time > conserveTaskTime) {
                         // Don't reset the current task
                         // Just decrease the maxPriorityPossible in case the goal has moved farther
                         // or in case an obstacle appeared
                         resetPriority(currentTaskPriority - 1);
                     } else {
-                        scan = false;
+                        recheckTasks = false;
                     }
                 } else {
                     currentTask = null;
@@ -112,7 +115,10 @@ public abstract class Unit implements Executable {
                 }
             }
 
-            if(scan) {
+            if(recheckTasks) {
+
+                checkNormalTasks();
+
                 t1 = System.nanoTime();
                 timeOther += t1 - t2;
 
@@ -186,7 +192,7 @@ public abstract class Unit implements Executable {
                 if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
-                if(tasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
+                if(scanTasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
                     break;
                 }
             }
@@ -210,7 +216,7 @@ public abstract class Unit implements Executable {
     }
 
     private void processTile(int tileX, int tileY, int distance) {
-        for(Task task : tasks) {
+        for(TaskScan task : scanTasks) {
             double priority = task.calculatePriority(distance);
             if (priority <= currentTaskPriority) {
                 // This means that all the subsequent tasks don't need to be
