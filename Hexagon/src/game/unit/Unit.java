@@ -1,10 +1,9 @@
 package game.unit;
 
 import game.Executable;
-import game.Log;
+import game.Debug;
 import game.Map;
 import game.Rnd;
-import gui.MainPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public abstract class Unit implements Executable {
             }
         }*/
 
-        Log.log("UNIT", toString());
+        Debug.log("UNIT", toString());
 
         /* PSEUDO CODE:
 
@@ -124,7 +123,7 @@ public abstract class Unit implements Executable {
 
             if(currentTask != null) {
                 if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
-                    int dirToDestination = Map.closestDirection(x - destinationX, y - destinationY);
+                    int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
                     removeFromTile();
                     x += Map.getX(dirToDestination);
                     y += Map.getY(dirToDestination);

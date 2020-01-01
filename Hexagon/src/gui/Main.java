@@ -1,9 +1,8 @@
 package gui;
 
 import game.Game;
-import game.Log;
+import game.Debug;
 import game.Map;
-import game.MapIter;
 
 import java.awt.*;
 
@@ -21,7 +20,7 @@ public class Main {
 			if(currentTime > nextStepTime) {
 				nextStepTime += frameDuration;
 				if (currentTime > nextStepTime) {
-					Log.log( "TIME", "Delay: " + (currentTime - nextStepTime) / 1000000);
+					Debug.log( "TIME", "Delay: " + (currentTime - nextStepTime) / 1000000);
 				}
 				try {
 					Map.execute();
@@ -29,7 +28,7 @@ public class Main {
 				}
 				catch(Exception e){
 					e.printStackTrace();
-					System.out.println("Event count: " + Log.eventCount);
+					System.out.println("Event count: " + Debug.eventCount);
 					return;
 				}
 

@@ -2,20 +2,29 @@ package game;
 
 public class Debug {
 
-    public static int count = 0;
-    public static int breakPointCount = 285;
+    public static String typeUnit = "UNIT";
+    public static String typeTime = "TIME";
+    public static String typeDebug = "DEBUG";
 
-    public static void breakPoint() {
-        count ++;
-        if(count == breakPointCount) {
-            System.out.println("BREAK POINT");
+    public static String currentType = typeTime;
+
+    public static long eventCount = 0;
+    public static long breakPointEventCount = 13817;
+
+    public static void log(String type, String message) {
+        eventCount ++;
+        if(eventCount == breakPointEventCount) {
+            System.out.println();
+        }
+        if(type == currentType) {
+            System.out.println(message);
         }
     }
 
     public static void check(boolean condition) {
-        breakPoint();
+        log(typeDebug, "Checking condition");
         if(!condition) {
-            throw new RuntimeException("ERROR AT BREAK POINT " + count);
+            throw new RuntimeException("ERROR AT BREAK POINT " + currentType);
         }
     }
 }
