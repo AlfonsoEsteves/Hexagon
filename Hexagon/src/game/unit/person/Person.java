@@ -42,10 +42,6 @@ public class Person extends Unit {
     public int usualY;
     public boolean goingBack;
 
-    public int planX;
-    public int planY;
-    public boolean planning;
-
     public Person(int x, int y) {
         super(x, y);
 
@@ -84,10 +80,6 @@ public class Person extends Unit {
 
         if(goingBack) {
             addTask(TaskGoBackToBase.instance, scanTasks);
-        }
-
-        if(carrying.contains(Item.stone) && Map.distance(x - getSuperLeader().usualX, y - getSuperLeader().usualY) < goingBackDistance / 2) {
-            tryPickUpPosition(2);
         }
 
         if(carrying.contains(Item.bow)) {
@@ -184,6 +176,14 @@ public class Person extends Unit {
     @Override
     protected void setTravelTasks() {
 
+
+
+        // TENGO QUE VER SI ESTE METODO TIENE SENTIDO
+        // PORQUE CAPAS QUE SIEMPRE VOY A TENER TODAS LAS TASKS
+        // Y DEJO QUE SE FILTREN MAS ADELANTE EL EL APPLIES() DE CADA UNA
+
+        travelTasks.clear();
+        travelTasks.add(TaskPlanBuilding.instance);
     }
 
     @Override
@@ -315,32 +315,6 @@ public class Person extends Unit {
             position++;
         }
         ((ArrayList)tasks).add(position, task);
-    }
-
-    private void tryPickUpPosition(int size) {
-        int var = 6;
-        int rndX = x + Rnd.nextInt(var * 2 + 1) - var;
-        int rndY = y + Rnd.nextInt(var * 2 + 1) - var;
-        // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
-        // if the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
-        if(Map.distance(x - rndX, y - rndY) > 1) {
-            if (checkPickedPosition(rndX, rndY, size)) {
-                planX = rndX;
-                planY = rndY;
-                planning = true;
-                addTask(TaskPlanBuilding.instance, scanTasks);
-            }
-        }
-    }
-
-    private boolean checkPickedPosition(int pickedX, int pickedY, int size) {
-        for(int[] p : MapIter.of(size + 1)) {
-            if(Map.underTile(pickedX + p[0], pickedY + p[1]) != Tile.grass ||
-                    Map.overTile(pickedX + p[0], pickedY + p[1]) != null) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public Person getSuperLeader() {

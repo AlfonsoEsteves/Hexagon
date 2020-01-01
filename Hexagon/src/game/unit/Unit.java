@@ -147,14 +147,13 @@ public abstract class Unit implements Executable {
              if(task.maxPriorityPossible < currentTaskPriority) {
                  break;
              }
-             int[] destination = task.findDestination();
-             if(destination != null) {
-                 double priority = task.calculatePriority(Map.distance(x - destination[0], y - destination[1]));
-                 if(priority > currentTaskPriority) {
+             task.findDestination(this);
+             if(task.applies) {
+                 if(task.priority > currentTaskPriority) {
                      currentTask = task;
                      currentTaskPriority = currentTaskPriority;
-                     destinationX = destination[0];
-                     destinationY = destination[1];
+                     destinationX = task.destinationX;
+                     destinationY = task.destinationY;
                  }
              }
         }

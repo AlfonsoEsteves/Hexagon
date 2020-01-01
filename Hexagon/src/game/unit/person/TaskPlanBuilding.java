@@ -3,22 +3,25 @@ package game.unit.person;
 import game.*;
 import game.unit.Task;
 import game.unit.TaskScan;
+import game.unit.TaskTravel;
 import game.unit.Unit;
 import gui.MainPanel;
 
-public class TaskPlanBuilding extends TaskScan {
+public class TaskPlanBuilding extends TaskTravel {
+
+    public static int positionVariation = 6;
 
     public static TaskPlanBuilding instance = new TaskPlanBuilding();
 
     private TaskPlanBuilding()
     {
-        super(12, 2);
+        super(12);
     }
 
     @Override
-    public boolean applies(Unit unit, int tileX, int tileY) {
+    public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        return person.planning && tileX == person.planX && tileY == person.planY;
+        return person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2;
     }
 
     @Override
@@ -41,13 +44,13 @@ public class TaskPlanBuilding extends TaskScan {
             toBeBuilt = OTId.missingCarpentry;
         }
 
-        Building building  = new Building(person.planX, person.planY, person);
+        Building building  = new Building(person.destinationX, person.destinationY, person);
 
         int doorCount = Rnd.nextInt(size * 6 - 1);
         for (int[] p : MapIter.of(size)) {
-            int x = person.planX + p[0];
-            int y = person.planY + p[1];
-            if (Map.distance(person.planX - x, person.planY - y) == size) {
+            int x = person.destinationX + p[0];
+            int y = person.destinationY + p[1];
+            if (Map.distance(person.destinationX - x, person.destinationY - y) == size) {
                 if(x == person.x && y == person.y) {
                     Map.overTile[x][y] = new OverTile(OTId.wall, x, y, building);
                 }
@@ -64,13 +67,38 @@ public class TaskPlanBuilding extends TaskScan {
 
         if (toBeBuilt == OTId.missingDepot) {
             for (int[] p : MapIter.of(1)) {
-                Map.overTile[person.planX + p[0]][person.planY + p[1]] = new OverTile(OTId.missingDepot, person.planX + p[0], person.planY + p[1], building);
+                Map.overTile[person.destinationX + p[0]][person.destinationY + p[1]] = new OverTile(OTId.missingDepot, person.destinationX + p[0], person.destinationY + p[1], building);
             }
         }
         else {
-            Map.overTile[person.planX][person.planY] = new OverTile(toBeBuilt, person.planX, person.planY, building);
+            Map.overTile[person.destinationX][person.destinationY] = new OverTile(toBeBuilt, person.destinationX, person.destinationY, building);
         }
+    }
 
-        person.planning = false;
+    @Override
+    public void findDestination(Unit unit) {
+        applies = false;
+        int rndX = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
+        int rndY = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
+        // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
+        // if the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
+        if(Map.distance(rndX, rndY) > 1) {
+            destinationX = unit.x + rndX;
+            destinationY = unit.y + rndY;
+            if (checkPickedPosition(destinationX, destinationY, 2)) {
+                applies = true;
+                priority = maxPriorityPossible;
+            }
+        }
+    }
+
+    private boolean checkPickedPosition(int pickedX, int pickedY, int size) {
+        for(int[] p : MapIter.of(size + 1)) {
+            if(Map.underTile(pickedX + p[0], pickedY + p[1]) != Tile.grass ||
+                    Map.overTile(pickedX + p[0], pickedY + p[1]) != null) {
+                return false;
+            }
+        }
+        return true;
     }
 }
