@@ -2,9 +2,10 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 
-public class TaskBuild extends Task {
+public class TaskBuild extends TaskScan {
 
     public static TaskBuild taskBuildStoneThings = new TaskBuild(Item.stone);
     public static TaskBuild taskBuildWoodThings = new TaskBuild(Item.wood);

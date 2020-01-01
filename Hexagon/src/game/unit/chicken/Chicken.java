@@ -36,16 +36,23 @@ public class Chicken extends Unit {
     }
 
     @Override
+    protected void setScanTasks() {
+        scanTasks.clear();
+        if(food < (grown ? 70 : 100)) {
+            scanTasks.add(TaskChicken.instance);
+        }
+    }
+
+    @Override
+    protected void setTravelTasks() {
+
+    }
+
+    @Override
     public void initExecute(){
         food --;
         if(food <= 0){
             removeFromTileAndDestroy();
-        }
-        else {
-            tasks.clear();
-            if(food < (grown ? 70 : 100)) {
-                tasks.add(TaskChicken.instance);
-            }
         }
 
         if(grown && food > 30 && Rnd.nextInt(50) == 0) {

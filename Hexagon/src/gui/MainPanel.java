@@ -88,7 +88,7 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 				graphics.drawOval(screenX - 5, screenY - 5, 30, 30);
 				graphics.drawOval(screenX - 4, screenY - 4, 28, 28);
 				if (person.leader != null && person.leader.alive) {
-					if (Map.distance(viewX, viewY, person.leader.x, person.leader.y) < viewSize) {
+					if (Map.distance(viewX - person.leader.x, viewY - person.leader.y) < viewSize) {
 						int screenX2 = MainFrame.width / 2 + (person.leader.x - viewX) * 10 + (person.leader.y - viewY) * 10;
 						int screenY2 = MainFrame.height / 2 + (person.leader.x - viewX) * 20 - (person.leader.y - viewY) * 20;
 						graphics.drawLine(screenX, screenY, screenX2, screenY2);

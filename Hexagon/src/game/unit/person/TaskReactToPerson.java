@@ -2,9 +2,10 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 
-public class TaskReactToPerson extends Task {
+public class TaskReactToPerson extends TaskScan {
 
     public static TaskReactToPerson instance = new TaskReactToPerson();
 

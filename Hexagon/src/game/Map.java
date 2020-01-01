@@ -51,7 +51,7 @@ public class Map {
 					int x = richPointX.get(k);
 					int y = richPointY.get(k);
 					int size = richPointSize.get(k);
-					if(Rnd.nextInt(size) >= distance(i, j, x, y) & Rnd.nextInt(4) == 0){
+					if(Rnd.nextInt(size) >= distance(i - x, j - y) & Rnd.nextInt(4) == 0){
 						overTile[i][j] = new OverTile(richPointOverTileIds.get(k), i, j);
 						/*if(overTile[i][j].id == OTId.richGrass) {
 							if(Rnd.nextInt(20) == 0) {
@@ -114,14 +114,6 @@ public class Map {
 			}
 		}
 		time++;
-
-		if(time % 1000 == 0) {
-			//Scan  75264
-			//Other 11438
-			System.out.println("Scan  " + Unit.timeScan / 1000000);
-			System.out.println("Other " + Unit.timeOther / 1000000);
-			System.out.println();
-		}
 
 	}
 
@@ -255,9 +247,7 @@ public class Map {
 		}
 	}
 
-	public static int distance(int x1, int y1, int x2, int y2) {
-		int diffX = x2 - x1;
-		int diffY = y2 - y1;
+	public static int distance(int diffX, int diffY) {
 		if (diffX * diffY > 0) {
 			return Math.max(Math.abs(diffX), Math.abs(diffY));
 		}

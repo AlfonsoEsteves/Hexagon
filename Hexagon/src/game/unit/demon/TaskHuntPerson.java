@@ -2,10 +2,11 @@ package game.unit.demon;
 
 import game.Map;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 import game.unit.person.Person;
 
-public class TaskHuntPerson extends Task {
+public class TaskHuntPerson extends TaskScan {
 
     public static TaskHuntPerson instance = new TaskHuntPerson();
 

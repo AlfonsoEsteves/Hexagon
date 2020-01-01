@@ -5,12 +5,13 @@ import game.Item;
 import game.Map;
 import game.Rnd;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 import game.unit.chicken.Chicken;
 
 import java.util.Collections;
 
-public class TaskTakeChicken extends Task {
+public class TaskTakeChicken extends TaskScan {
 
     public static TaskTakeChicken instance = new TaskTakeChicken();
 

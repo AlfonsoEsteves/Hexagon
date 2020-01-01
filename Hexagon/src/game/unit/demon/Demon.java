@@ -15,13 +15,23 @@ public class Demon extends Unit {
     public Demon(int x, int y) {
         super(x, y);
         life = 120;
-        tasks.add(TaskHuntPerson.instance);
-        tasks.add(TaskDestroy.instance);
+        scanTasks.add(TaskHuntPerson.instance);
+        scanTasks.add(TaskDestroy.instance);
     }
 
     @Override
     public Image image() {
         return imageDemon;
+    }
+
+    @Override
+    protected void setScanTasks() {
+
+    }
+
+    @Override
+    protected void setTravelTasks() {
+
     }
 
     @Override

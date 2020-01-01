@@ -2,11 +2,8 @@ package game.unit;
 
 public abstract class TaskScan extends Task {
 
-    public int range; // The range at which the task can be performed
-
     public TaskScan(double maxPriorityPossible, int range) {
-        super(maxPriorityPossible);
-        this.range = range;
+        super(maxPriorityPossible, range);
     }
 
     public boolean applies(Unit unit) {

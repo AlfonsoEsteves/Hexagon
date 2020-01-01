@@ -2,11 +2,12 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 
 import java.util.Collections;
 
-public class TaskCreateWeapon extends Task {
+public class TaskCreateWeapon extends TaskScan {
 
     public static TaskCreateWeapon createAnvilWeapon = new TaskCreateWeapon(OTId.anvil);
     public static TaskCreateWeapon createCarpentryWeapon = new TaskCreateWeapon(OTId.carpentry);

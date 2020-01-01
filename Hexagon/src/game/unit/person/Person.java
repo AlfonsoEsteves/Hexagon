@@ -79,6 +79,114 @@ public class Person extends Unit {
     }
 
     @Override
+    protected void setScanTasks() {
+        scanTasks.clear();
+
+        if(goingBack) {
+            addTask(TaskGoBackToBase.instance, scanTasks);
+        }
+
+        if(carrying.contains(Item.stone) && Map.distance(x - getSuperLeader().usualX, y - getSuperLeader().usualY) < goingBackDistance / 2) {
+            tryPickUpPosition(2);
+        }
+
+        if(carrying.contains(Item.bow)) {
+            addTask(TaskFight.taskFightLongDistance, scanTasks);
+        }
+        else{
+            addTask(TaskFight.taskFightMelee, scanTasks);
+        }
+        addTask(TaskSleep.instance, scanTasks);
+        addTask(TaskReactToPerson.instance, scanTasks);
+
+        int amountStone = Collections.frequency(carrying, Item.stone);
+        if(amountStone < 2) {
+            addTask(TaskCollect.taskCollectStone, scanTasks);
+        }
+        if(amountStone > 0) {
+            addTask(TaskBuild.taskBuildStoneThings, scanTasks);
+        }
+        else{
+            //addTask(TaskPickUp.taskPickUpStone);
+        }
+
+        int amountWood = Collections.frequency(carrying, Item.wood);
+        if(amountWood < 2) {
+            addTask(TaskCollect.taskCollectWood, scanTasks);
+        }
+        if(amountWood > 0) {
+            addTask(TaskBuild.taskBuildWoodThings, scanTasks);
+            addTask(TaskCreateWeapon.createCarpentryWeapon, scanTasks);
+        }
+        else{
+            //addTask(TaskPickUp.taskPickUpWood);
+        }
+
+        int amountIron = Collections.frequency(carrying, Item.iron);
+        if(amountIron < 2) {
+            addTask(TaskCollect.taskCollectIron, scanTasks);
+        }
+        if(amountIron > 0) {
+            addTask(TaskBuild.taskBuildIronThings, scanTasks);
+            addTask(TaskCreateWeapon.createAnvilWeapon, scanTasks);
+        }
+        else{
+            //addTask(TaskPickUp.taskPickUpIron);
+        }
+
+        int amountFruit = Collections.frequency(carrying, Item.fruit);
+        if(amountFruit < 2) {
+            addTask(TaskCollect.taskCollectFruit, scanTasks);
+        }
+        if(amountFruit == 0) {
+            //addTask(TaskPickUp.taskPickUpFruit);
+        }
+
+        int amountHoney = Collections.frequency(carrying, Item.honey);
+        if(amountHoney < 2) {
+            addTask(TaskCollect.taskCollectHoney, scanTasks);
+        }
+        if(amountHoney == 0) {
+            //addTask(TaskPickUp.taskPickUpHoney);
+        }
+
+        int amountMushroom = Collections.frequency(carrying, Item.mushroom);
+        if(amountMushroom < 2) {
+            addTask(TaskCollect.taskCollectMushroom, scanTasks);
+        }
+        if(amountMushroom == 0) {
+            //addTask(TaskPickUp.taskPickUpMushroom);
+        }
+
+        int amountCarrot = Collections.frequency(carrying, Item.carrot);
+        if(amountCarrot < 2) {
+            addTask(TaskCollect.taskCollectCarrot, scanTasks);
+        }
+        if(amountCarrot == 0) {
+            //addTask(TaskPickUp.taskPickUpCarrot);
+        }
+
+        int amountSword = Collections.frequency(carrying, Item.sword);
+        if(amountSword == 0) {
+            //addTask(TaskPickUp.taskPickUpSword);
+        }
+
+        int amountBow = Collections.frequency(carrying, Item.bow);
+        if(amountBow == 0) {
+            //addTask(TaskPickUp.taskPickUpBow);
+        }
+
+        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
+            //addTask(TaskStore.instance);
+        }
+    }
+
+    @Override
+    protected void setTravelTasks() {
+
+    }
+
+    @Override
     public void initExecute(){
         if(leader != null && !leader.alive) {
             leader = this;
@@ -99,7 +207,7 @@ public class Person extends Unit {
             }
         }
         Person superLider = getSuperLeader();
-        int distance = Map.distance(x, y, superLider.usualX, superLider.usualY);
+        int distance = Map.distance(x - superLider.usualX, y - superLider.usualY);
         if(goingBack) {
             if(distance < goingBackDistance / 2) {
                 goingBack = false;
@@ -113,7 +221,6 @@ public class Person extends Unit {
 
         checkFood();
         checkItemValues();
-        setTasks();
 
         if(food > maxFood * 0.9 && Rnd.nextInt(180) == 0) {
             int totalFood = Collections.frequency(carrying, Item.fruit) + Collections.frequency(carrying, Item.mushroom) + Collections.frequency(carrying, Item.honey);
@@ -199,112 +306,10 @@ public class Person extends Unit {
         }
     }
 
-    private void setTasks() {
-        tasks.clear();
-
-        if(goingBack) {
-            addTask(TaskGoBackToBase.instance);
-        }
-
-        if(carrying.contains(Item.stone) && Map.distance(x, y, getSuperLeader().usualX, getSuperLeader().usualY) < goingBackDistance / 2) {
-            tryPickUpPosition(2);
-        }
-
-        if(carrying.contains(Item.bow)) {
-            addTask(TaskFight.taskFightLongDistance);
-        }
-        else{
-            addTask(TaskFight.taskFightMelee);
-        }
-        addTask(TaskSleep.instance);
-        addTask(TaskReactToPerson.instance);
-
-        int amountStone = Collections.frequency(carrying, Item.stone);
-        if(amountStone < 2) {
-            addTask(TaskCollect.taskCollectStone);
-        }
-        if(amountStone > 0) {
-            addTask(TaskBuild.taskBuildStoneThings);
-        }
-        else{
-            //addTask(TaskPickUp.taskPickUpStone);
-        }
-
-        int amountWood = Collections.frequency(carrying, Item.wood);
-        if(amountWood < 2) {
-            addTask(TaskCollect.taskCollectWood);
-        }
-        if(amountWood > 0) {
-            addTask(TaskBuild.taskBuildWoodThings);
-            addTask(TaskCreateWeapon.createCarpentryWeapon);
-        }
-        else{
-            //addTask(TaskPickUp.taskPickUpWood);
-        }
-
-        int amountIron = Collections.frequency(carrying, Item.iron);
-        if(amountIron < 2) {
-            addTask(TaskCollect.taskCollectIron);
-        }
-        if(amountIron > 0) {
-            addTask(TaskBuild.taskBuildIronThings);
-            addTask(TaskCreateWeapon.createAnvilWeapon);
-        }
-        else{
-            //addTask(TaskPickUp.taskPickUpIron);
-        }
-
-        int amountFruit = Collections.frequency(carrying, Item.fruit);
-        if(amountFruit < 2) {
-            addTask(TaskCollect.taskCollectFruit);
-        }
-        if(amountFruit == 0) {
-            //addTask(TaskPickUp.taskPickUpFruit);
-        }
-
-        int amountHoney = Collections.frequency(carrying, Item.honey);
-        if(amountHoney < 2) {
-            addTask(TaskCollect.taskCollectHoney);
-        }
-        if(amountHoney == 0) {
-            //addTask(TaskPickUp.taskPickUpHoney);
-        }
-
-        int amountMushroom = Collections.frequency(carrying, Item.mushroom);
-        if(amountMushroom < 2) {
-            addTask(TaskCollect.taskCollectMushroom);
-        }
-        if(amountMushroom == 0) {
-            //addTask(TaskPickUp.taskPickUpMushroom);
-        }
-
-        int amountCarrot = Collections.frequency(carrying, Item.carrot);
-        if(amountCarrot < 2) {
-            addTask(TaskCollect.taskCollectCarrot);
-        }
-        if(amountCarrot == 0) {
-            //addTask(TaskPickUp.taskPickUpCarrot);
-        }
-
-        int amountSword = Collections.frequency(carrying, Item.sword);
-        if(amountSword == 0) {
-            //addTask(TaskPickUp.taskPickUpSword);
-        }
-
-        int amountBow = Collections.frequency(carrying, Item.bow);
-        if(amountBow == 0) {
-            //addTask(TaskPickUp.taskPickUpBow);
-        }
-
-        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
-            //addTask(TaskStore.instance);
-        }
-    }
-
-    private void addTask(Task task) {
+    private void addTask(Task task, List tasks) {
         int position = 0;
         while(position < tasks.size()) {
-            if(tasks.get(position).maxPriorityPossible <= task.maxPriorityPossible) {
+            if(((Task)tasks.get(position)).maxPriorityPossible <= task.maxPriorityPossible) {
                 break;
             }
             position++;
@@ -318,12 +323,12 @@ public class Person extends Unit {
         int rndY = y + Rnd.nextInt(var * 2 + 1) - var;
         // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
         // if the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
-        if(Map.distance(x, y, rndX, rndY) > 1) {
+        if(Map.distance(x - rndX, y - rndY) > 1) {
             if (checkPickedPosition(rndX, rndY, size)) {
                 planX = rndX;
                 planY = rndY;
                 planning = true;
-                addTask(TaskPlanBuilding.instance);
+                addTask(TaskPlanBuilding.instance, scanTasks);
             }
         }
     }

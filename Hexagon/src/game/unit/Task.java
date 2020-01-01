@@ -4,8 +4,11 @@ public abstract class Task {
 
     public double maxPriorityPossible;
 
-    public Task(double maxPriorityPossible) {
+    public int range; // The range at which the task can be performed
+
+    public Task(double maxPriorityPossible, int range) {
         this.maxPriorityPossible = maxPriorityPossible;
+        this.range = range;
     }
 
     public abstract boolean applies(Unit unit);

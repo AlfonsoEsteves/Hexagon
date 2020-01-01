@@ -2,10 +2,11 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 import gui.MainPanel;
 
-public class TaskPlanBuilding extends Task {
+public class TaskPlanBuilding extends TaskScan {
 
     public static TaskPlanBuilding instance = new TaskPlanBuilding();
 
@@ -46,7 +47,7 @@ public class TaskPlanBuilding extends Task {
         for (int[] p : MapIter.of(size)) {
             int x = person.planX + p[0];
             int y = person.planY + p[1];
-            if (Map.distance(person.planX, person.planY, x, y) == size) {
+            if (Map.distance(person.planX - x, person.planY - y) == size) {
                 if(x == person.x && y == person.y) {
                     Map.overTile[x][y] = new OverTile(OTId.wall, x, y, building);
                 }

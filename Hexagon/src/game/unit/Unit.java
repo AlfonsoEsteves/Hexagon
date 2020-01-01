@@ -35,7 +35,7 @@ public abstract class Unit implements Executable {
 
     public int life;
 
-    public List<Task> normalTasks;
+    public List<TaskTravel> travelTasks;
     public List<TaskScan> scanTasks;
     public double currentTaskPriority;
     public Task currentTask;
@@ -50,6 +50,7 @@ public abstract class Unit implements Executable {
         this.y = y;
         alive = true;
         scanTasks = new ArrayList<>();
+        travelTasks = new ArrayList<>();
         id = maxId;
         maxId++;
     }
@@ -60,12 +61,6 @@ public abstract class Unit implements Executable {
     public boolean alive(){
         return alive;
     }
-
-    public static long timeScan = 0;
-    public static long timeOther = 0;
-    public static long t1 = System.nanoTime();
-    public static long t2 = t1;
-
 
     @Override
     public void execute() {
@@ -87,12 +82,12 @@ public abstract class Unit implements Executable {
               Conserve task
             Else
               Reduce the current task maxPriorityPossible
-              Scan
+              Check tasks
           Else
             Set current current task to null and task maxPriorityPossible to 0
-            Scan
+            Check tasks
         Else
-          Scan
+          Check tasks
         Execute task
         */
 
@@ -104,7 +99,7 @@ public abstract class Unit implements Executable {
                     if (Map.time > conserveTaskTime) {
                         // Don't reset the current task
                         // Just decrease the maxPriorityPossible in case the goal has moved farther
-                        // or in case an obstacle appeared
+                        // or in case an obstacle appeared and it is blocking the way
                         resetPriority(currentTaskPriority - 1);
                     } else {
                         recheckTasks = false;
@@ -116,20 +111,14 @@ public abstract class Unit implements Executable {
             }
 
             if(recheckTasks) {
-
+                setTravelTasks();
                 checkNormalTasks();
-
-                t1 = System.nanoTime();
-                timeOther += t1 - t2;
-
-                scanForTasks();
-
-                t2 = System.nanoTime();
-                timeScan += t2 - t1;
+                setScanTasks();
+                checkScanTasks();
             }
 
             if(currentTask != null) {
-                if (Map.distance(x, y, destinationX, destinationY) > currentTask.range) {
+                if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
                     int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
                     removeFromTile();
                     x += Map.getX(dirToDestination);
@@ -146,6 +135,28 @@ public abstract class Unit implements Executable {
             if(alive) {
                 Map.queueExecutable(this, delay());
             }
+        }
+    }
+
+    protected abstract void setScanTasks();
+
+    protected abstract void setTravelTasks();
+
+    protected void checkNormalTasks() {
+        for(TaskTravel task : travelTasks){
+             if(task.maxPriorityPossible < currentTaskPriority) {
+                 break;
+             }
+             int[] destination = task.findDestination();
+             if(destination != null) {
+                 double priority = task.calculatePriority(Map.distance(x - destination[0], y - destination[1]));
+                 if(priority > currentTaskPriority) {
+                     currentTask = task;
+                     currentTaskPriority = currentTaskPriority;
+                     destinationX = destination[0];
+                     destinationY = destination[1];
+                 }
+             }
         }
     }
 
@@ -174,7 +185,7 @@ public abstract class Unit implements Executable {
     public void initExecute() {
     }
 
-    private void scanForTasks() {
+    private void checkScanTasks() {
         LinkedList<Integer> queueX = new LinkedList<>();
         LinkedList<Integer> queueY = new LinkedList<>();
         queueX.add(x);

@@ -3,9 +3,10 @@ package game.unit.person;
 import game.Map;
 import game.OTId;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 
-public class TaskSleep extends Task {
+public class TaskSleep extends TaskScan {
 
     public static TaskSleep instance = new TaskSleep();
 

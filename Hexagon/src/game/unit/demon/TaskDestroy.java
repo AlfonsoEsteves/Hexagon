@@ -2,9 +2,10 @@ package game.unit.demon;
 
 import game.*;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 
-public class TaskDestroy extends Task {
+public class TaskDestroy extends TaskScan {
 
     public static TaskDestroy instance = new TaskDestroy();
 

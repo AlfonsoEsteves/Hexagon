@@ -1,12 +1,13 @@
 package game.unit.person;
 
 import game.*;
+import game.unit.TaskScan;
 import game.unit.demon.Demon;
 import game.unit.Task;
 import game.unit.Unit;
 import gui.MainPanel;
 
-public class TaskFight extends Task {
+public class TaskFight extends TaskScan {
 
     public static TaskFight taskFightMelee = new TaskFight(1);
     public static TaskFight taskFightLongDistance = new TaskFight(3);

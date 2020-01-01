@@ -2,11 +2,12 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
+import game.unit.TaskScan;
 import game.unit.Unit;
 
 import java.util.Collections;
 
-public class TaskCollect extends Task {
+public class TaskCollect extends TaskScan {
 
     public static TaskCollect taskCollectStone = new TaskCollect(Item.stone);
     public static TaskCollect taskCollectIron = new TaskCollect(Item.iron);
