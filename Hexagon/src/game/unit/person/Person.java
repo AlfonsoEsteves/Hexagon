@@ -71,9 +71,10 @@ public class Person extends Unit {
         usualY = y;
         goingBack = false;
 
-        travelTasks.add(TaskPlanBuilding.instance);
-        travelTasks.add(TaskCreateWeapon.createAnvilWeapon);
-        travelTasks.add(TaskCreateWeapon.createCarpentryWeapon);
+        addTask(TaskPlanBuilding.instance, travelTasks);
+        addTask(TaskCreateWeapon.createAnvilWeapon, travelTasks);
+        addTask(TaskCreateWeapon.createCarpentryWeapon, travelTasks);
+        addTask(TaskSleep.instance, travelTasks);
     }
 
     @Override
@@ -103,7 +104,7 @@ public class Person extends Unit {
         else{
             addTask(TaskFight.taskFightMelee, scanTasks);
         }
-        addTask(TaskSleep.instance, scanTasks);
+
         addTask(TaskReactToPerson.instance, scanTasks);
 
         int amountStone = Collections.frequency(carrying, Item.stone);
