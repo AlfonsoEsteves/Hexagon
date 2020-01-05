@@ -8,7 +8,7 @@ Depots don't have a money variable
 PRICE REGULATION FOR PERSONS
 If the lack the item the price increase
 If they have to much of the same item the price goes down
-
+ 
 PRICE REGULATION FOR DEPOTS
 If somebody buys an item the price goes up
 If somebody sells an item the price goes down

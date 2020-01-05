@@ -4,7 +4,7 @@ import game.unit.demon.Demon;
 
 public class OTIdGate extends OTId {
 
-    public static int maxDelay = 150;
+    public static int maxDelay = 170;
 
     public OTIdGate(String name){
         super(name);

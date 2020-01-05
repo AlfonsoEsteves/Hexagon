@@ -4,6 +4,7 @@ import game.Executable;
 import game.Debug;
 import game.Map;
 import game.Rnd;
+import game.unit.person.Person;
 import gui.MainPanel;
 
 import java.awt.*;
@@ -46,6 +47,12 @@ public abstract class Unit implements Executable {
 
     private int randomDirection;
 
+    public boolean surrounding;
+    public int surroundingOrientation;
+    public int surroundingDirection;
+    public int surroundingTurns;
+    public int surroundingMaxTurns;
+
     public Unit(int x, int y) {
         this.x = x;
         this.y = y;
@@ -65,53 +72,20 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        /*if(id == 270) {
-            MainPanel.viewX = x;
-            MainPanel.viewY = y;
-            if (Map.time >= 519) {
+        if(id == 1137) {
+            if(this instanceof Person) {
+                MainPanel.selectedUnit = (Person)this;
+            }
+            if (Map.time >= 1640) {
                 System.out.println();
             }
-        }*/
+        }
 
         Debug.log("UNIT", toString());
-
-        /* PSEUDO CODE:
-
-        If I have a current task and a destiny
-          If they apply
-            If conserve task time is not over
-              Conserve task
-            Else
-              Reduce the current task maxPriorityPossible
-              Check tasks
-          Else
-            Set current current task to null and task maxPriorityPossible to 0
-            Check tasks
-        Else
-          Check tasks
-        Execute task
-        */
-
+        
         initExecute();
         if(alive) {
-            boolean recheckTasks = true;
-            if (currentTask != null) {
-                if (currentTask.applies(this)) {
-                    if (Map.time > conserveTaskTime) {
-                        // Don't reset the current task
-                        // Just decrease the maxPriorityPossible in case the goal has moved farther
-                        // or in case an obstacle appeared and it is blocking the way
-                        resetPriority(currentTaskPriority - 1);
-                    } else {
-                        recheckTasks = false;
-                    }
-                } else {
-                    currentTask = null;
-                    currentTaskPriority = 0;
-                }
-            }
-
-            if(recheckTasks) {
+            if(shouldRecheckTasks()) {
                 checkNormalTasks();
 
                 // It is important to reset the scanning tasks in each execution
@@ -123,25 +97,64 @@ public abstract class Unit implements Executable {
             }
 
             if(currentTask != null) {
-                if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
-                    int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
-                    if(!moveInDirection(dirToDestination)) {
-                        moveRandomly();
+                if(!surrounding) {
+                    if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
+                        int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
+                        if (!moveInDirection(dirToDestination)) {
+                            surrounding = true;
+                            surroundingOrientation = Rnd.nextInt(1) * 2 - 1;
+                            surroundingDirection = dirToDestination + surroundingOrientation;
+                            surroundingMaxTurns = surroundingMaxTurns * 3 / 2;
+                        }
+                    } else {
+                        currentTask.execute(this);
+                        currentTask = null;
+                        currentTaskPriority = 0;
+                        surroundingMaxTurns = 2;
                     }
-                } else {
-                    currentTask.execute(this);
-                    currentTask = null;
-                    currentTaskPriority = 0;
+                }
+                if(surrounding) {
+                    for (int i = -1; i < 3; i++) {
+                        if (moveInDirection((surroundingDirection + i * surroundingOrientation + 6) % 6)) {
+                            surroundingDirection = surroundingDirection + i * surroundingOrientation;
+                            break;
+                        }
+                    }
+                    surroundingTurns ++;
+                    if(surroundingTurns >= surroundingMaxTurns) {
+                        surrounding = false;
+                    }
                 }
             }
             else {
                 moveRandomly();
+                surroundingMaxTurns = 2;
             }
 
             if(alive) {
                 Map.queueExecutable(this, delay());
             }
         }
+    }
+
+    private boolean shouldRecheckTasks() {
+        boolean recheckTasks = true;
+        if (currentTask != null) {
+            if (currentTask.applies(this)) {
+                if (Map.time > conserveTaskTime) {
+                    // Don't reset the current task
+                    // Just decrease the maxPriorityPossible in case the goal has moved farther
+                    // or in case an obstacle appeared and it is blocking the way
+                    resetPriority(currentTaskPriority - 1);
+                } else {
+                    recheckTasks = false;
+                }
+            } else {
+                currentTask = null;
+                currentTaskPriority = 0;
+            }
+        }
+        return recheckTasks;
     }
 
     private boolean moveInDirection(int direction) {

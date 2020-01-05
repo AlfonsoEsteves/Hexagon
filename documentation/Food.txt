@@ -1,5 +1,5 @@
 Notar que la gracia es que la idea es poder hacer que las zonas produscan distintos recursos para que comercien
-  si todas las sonas pueden crear carne o guevos o X, entonces no estimula el comercio
+  si todas las sonas pueden crear carne o huevos o X, entonces no estimula el comercio
 
 
 chicken give white-meat and eggs

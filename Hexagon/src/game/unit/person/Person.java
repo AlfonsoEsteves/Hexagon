@@ -223,7 +223,7 @@ public class Person extends Unit {
         checkFood();
         checkItemValues();
 
-        if(food > maxFood * 0.9 && Rnd.nextInt(180) == 0) {
+        if(food > maxFood * 0.9 && Rnd.nextInt(200) == 0) {
             int totalFood = Collections.frequency(carrying, Item.fruit) + Collections.frequency(carrying, Item.mushroom) + Collections.frequency(carrying, Item.honey);
             if(totalFood > 2) {
                 Map.addUnit(new Person(x, y));
