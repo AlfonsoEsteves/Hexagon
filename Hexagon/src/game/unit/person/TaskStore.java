@@ -19,7 +19,8 @@ public class TaskStore extends TaskScan {
     public boolean applies(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         if(spareItem(person) != null){
-            if (Map.has(tileX, tileY, OTId.depot.overTileIs) != null && Map.dropped(tileX, tileY) == null) {
+            OverTile depot = Map.has(tileX, tileY, OTId.depot.overTileIs);
+            if (depot != null && ((Building)depot.state).placed == 19 && Map.dropped(tileX, tileY) == null) {
                 return true;
             }
         }

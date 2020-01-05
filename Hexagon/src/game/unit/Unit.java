@@ -125,10 +125,9 @@ public abstract class Unit implements Executable {
             if(currentTask != null) {
                 if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
                     int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
-                    removeFromTile();
-                    x += Map.getX(dirToDestination);
-                    y += Map.getY(dirToDestination);
-                    addToTile();
+                    if(!moveInDirection(dirToDestination)) {
+                        moveRandomly();
+                    }
                 } else {
                     currentTask.execute(this);
                     currentTask = null;
@@ -143,6 +142,17 @@ public abstract class Unit implements Executable {
                 Map.queueExecutable(this, delay());
             }
         }
+    }
+
+    private boolean moveInDirection(int direction) {
+        if(Map.steppable(this, x + Map.getX(direction), y + Map.getY(direction))){
+            removeFromTile();
+            x += Map.getX(direction);
+            y += Map.getY(direction);
+            addToTile();
+            return true;
+        }
+        return false;
     }
 
     protected abstract void setScanTasks();
@@ -176,13 +186,7 @@ public abstract class Unit implements Executable {
         if(Rnd.nextInt(10) == 0) {
             randomDirection = (randomDirection + 5) % 6;
         }
-        if(Map.steppable(x + Map.getX(randomDirection), y + Map.getY(randomDirection))){
-            removeFromTile();
-            x += Map.getX(randomDirection);
-            y += Map.getY(randomDirection);
-            addToTile();
-        }
-        else{
+        if(!moveInDirection(randomDirection)) {
             randomDirection = Rnd.nextInt(6);
         }
     }
@@ -212,7 +216,7 @@ public abstract class Unit implements Executable {
                     break;
                 }
             }
-            if (Map.steppable(currentX, currentY)) {
+            if (Map.steppable(this, currentX, currentY)) {
                 for (int i = 0; i < 6; i++) {
                     int newX = currentX + Map.getX(i);
                     int newY = currentY + Map.getY(i);

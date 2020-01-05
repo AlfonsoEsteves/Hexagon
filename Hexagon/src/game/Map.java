@@ -239,12 +239,24 @@ public class Map {
 		}
 	}
 	
-	public static boolean steppable(int x, int y) {
-		if (underTile(x, y).steppable && (overTile(x, y) == null || overTile(x, y).id.steppable)) {
-			return true;
-		} else {
-			return false;
+	public static boolean steppable(Unit unit, int x, int y) {
+	    OverTile overTile = overTile(x, y);
+		if (underTile(x, y).steppable && (overTile == null || overTile.id.steppable)) {
+            if (overTile == null) {
+                return true;
+            }
+            else if(overTile.id.steppable) {
+                if(overTile.id != OTId.door) {
+                    return true;
+                }
+                else {
+                    if(((Building)overTile.state).owner == unit) {
+                        return true;
+                    }
+                }
+            }
 		}
+		return false;
 	}
 
 	public static int distance(int diffX, int diffY) {
