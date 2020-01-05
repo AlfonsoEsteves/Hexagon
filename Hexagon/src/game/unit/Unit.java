@@ -72,12 +72,12 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        if(id == 1137) {
+        /*if(id == 1137) {
             MainPanel.selectedUnit = this;
             if (Map.time >= 1640) {
                 System.out.println();
             }
-        }
+        }*/
 
         Debug.log("UNIT", toString());
 
