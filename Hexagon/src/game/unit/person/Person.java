@@ -43,11 +43,10 @@ public class Person extends Unit {
     public boolean goingBack;
 
 
+    public OTId job;
 
     public int[] roomPosition;
-    public int[] storagePosition;
-    public int[] blacksmithPosition;
-    public int[] carpentryPosition;
+    public int[] jobPosition;
 
     public int[] buildingPosition;
 
@@ -71,9 +70,20 @@ public class Person extends Unit {
         usualY = y;
         goingBack = false;
 
+        int r = Rnd.nextInt(3);
+        if(r == 0) {
+            job = OTId.depot;
+        }
+        else if(r == 1) {
+            job = OTId.anvil;
+            addTask(TaskCreateWeapon.createAnvilWeapon, travelTasks);
+        }
+        else if(r == 2) {
+            job = OTId.carpentry;
+            addTask(TaskCreateWeapon.createCarpentryWeapon, travelTasks);
+        }
+
         addTask(TaskPlanBuilding.instance, travelTasks);
-        addTask(TaskCreateWeapon.createAnvilWeapon, travelTasks);
-        addTask(TaskCreateWeapon.createCarpentryWeapon, travelTasks);
         addTask(TaskSleep.instance, travelTasks);
     }
 

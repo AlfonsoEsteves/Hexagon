@@ -21,7 +21,7 @@ public class TaskPlanBuilding extends TaskTravel {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.roomPosition == null || person.blacksmithPosition == null || person.carpentryPosition == null || person.storagePosition == null) {
+        if(person.roomPosition == null || person.jobPosition == null) {
             if(person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2) {
 
                 if(person.buildingPosition == null) {
@@ -58,19 +58,9 @@ public class TaskPlanBuilding extends TaskTravel {
                 person.roomPosition = new int[]{person.destinationX, person.destinationY};
                 break;
             }
-            else if(x == 1 && person.blacksmithPosition == null) {
-                toBeBuilt = OTId.missingAnvil;
-                person.blacksmithPosition = new int[]{person.destinationX, person.destinationY};
-                break;
-            }
-            else if(x == 2 && person.carpentryPosition == null) {
-                toBeBuilt = OTId.missingCarpentry;
-                person.carpentryPosition = new int[]{person.destinationX, person.destinationY};
-                break;
-            }
-            else if(x == 3 && person.storagePosition == null) {
-                toBeBuilt = OTId.missingDepot;
-                person.storagePosition = new int[]{person.destinationX, person.destinationY};
+            else if(x == 1 && person.jobPosition == null) {
+                toBeBuilt = person.job;
+                person.jobPosition = new int[]{person.destinationX, person.destinationY};
                 break;
             }
         }

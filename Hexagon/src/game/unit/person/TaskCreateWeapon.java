@@ -21,7 +21,7 @@ public class TaskCreateWeapon extends TaskTravel {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(getWorkshopPosition(person) != null) {
+        if(person.jobPosition != null) {
             if(person.carrying.contains(workshop.tranformsItem)) {
                 if(Collections.frequency(person.carrying, workshop.providesItem) < 2) {
                     return true;
@@ -41,15 +41,6 @@ public class TaskCreateWeapon extends TaskTravel {
     @Override
     public int[] getDestination(Unit unit) {
         Person person = (Person)unit;
-        return getWorkshopPosition(person);
-    }
-
-    private int[] getWorkshopPosition(Person person) {
-        if(workshop == OTId.carpentry) {
-            return person.carpentryPosition;
-        }
-        else {
-            return person.blacksmithPosition;
-        }
+        return person.jobPosition;
     }
 }
