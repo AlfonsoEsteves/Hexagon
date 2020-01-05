@@ -115,7 +115,7 @@ public class Person extends Unit {
             addTask(TaskBuild.taskBuildStoneThings, scanTasks);
         }
         else{
-            //addTask(TaskPickUp.taskPickUpStone);
+            addTask(TaskPickUp.taskPickUpStone, scanTasks);
         }
 
         int amountWood = Collections.frequency(carrying, Item.wood);
@@ -124,10 +124,9 @@ public class Person extends Unit {
         }
         if(amountWood > 0) {
             addTask(TaskBuild.taskBuildWoodThings, scanTasks);
-            //addTask(TaskCreateWeaponOld.createCarpentryWeapon, scanTasks);
         }
         else{
-            //addTask(TaskPickUp.taskPickUpWood);
+            addTask(TaskPickUp.taskPickUpWood, scanTasks);
         }
 
         int amountIron = Collections.frequency(carrying, Item.iron);
@@ -136,10 +135,9 @@ public class Person extends Unit {
         }
         if(amountIron > 0) {
             addTask(TaskBuild.taskBuildIronThings, scanTasks);
-            //addTask(TaskCreateWeaponOld.createAnvilWeapon, scanTasks);
         }
         else{
-            //addTask(TaskPickUp.taskPickUpIron);
+            addTask(TaskPickUp.taskPickUpIron, scanTasks);
         }
 
         int amountFruit = Collections.frequency(carrying, Item.fruit);
@@ -147,7 +145,7 @@ public class Person extends Unit {
             addTask(TaskCollect.taskCollectFruit, scanTasks);
         }
         if(amountFruit == 0) {
-            //addTask(TaskPickUp.taskPickUpFruit);
+            addTask(TaskPickUp.taskPickUpFruit, scanTasks);
         }
 
         int amountHoney = Collections.frequency(carrying, Item.honey);
@@ -155,7 +153,7 @@ public class Person extends Unit {
             addTask(TaskCollect.taskCollectHoney, scanTasks);
         }
         if(amountHoney == 0) {
-            //addTask(TaskPickUp.taskPickUpHoney);
+            addTask(TaskPickUp.taskPickUpHoney, scanTasks);
         }
 
         int amountMushroom = Collections.frequency(carrying, Item.mushroom);
@@ -163,7 +161,7 @@ public class Person extends Unit {
             addTask(TaskCollect.taskCollectMushroom, scanTasks);
         }
         if(amountMushroom == 0) {
-            //addTask(TaskPickUp.taskPickUpMushroom);
+            addTask(TaskPickUp.taskPickUpMushroom, scanTasks);
         }
 
         int amountCarrot = Collections.frequency(carrying, Item.carrot);
@@ -171,21 +169,21 @@ public class Person extends Unit {
             addTask(TaskCollect.taskCollectCarrot, scanTasks);
         }
         if(amountCarrot == 0) {
-            //addTask(TaskPickUp.taskPickUpCarrot);
+            addTask(TaskPickUp.taskPickUpCarrot, scanTasks);
         }
 
         int amountSword = Collections.frequency(carrying, Item.sword);
         if(amountSword == 0) {
-            //addTask(TaskPickUp.taskPickUpSword);
+            addTask(TaskPickUp.taskPickUpSword, scanTasks);
         }
 
         int amountBow = Collections.frequency(carrying, Item.bow);
         if(amountBow == 0) {
-            //addTask(TaskPickUp.taskPickUpBow);
+            addTask(TaskPickUp.taskPickUpBow, scanTasks);
         }
 
         if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
-            //addTask(TaskStore.instance);
+            addTask(TaskStore.instance, scanTasks);
         }
     }
 
