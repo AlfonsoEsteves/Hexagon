@@ -15,7 +15,7 @@ import game.unit.person.Person;
 
 public class MainPanel extends JPanel implements MouseInputListener, KeyListener {
 
-	public static Person selectedUnit;
+	public static Unit selectedUnit;
 	public static int viewSize = 20;
 	public static int viewX = Map.size / 2;
 	public static int viewY = Map.size / 2;
@@ -95,26 +95,12 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 					}
 				}
 			}
+
 			graphics.setColor(Color.white);
 			graphics.drawString("" + Map.time, 10, 10);
-			if (selectedUnit != null) {
-				graphics.drawString("Unit:   N" + selectedUnit.id, 10, 30);
-				graphics.drawString("Leader: N" + selectedUnit.getSuperLeader().id, 10, 50);
-				graphics.drawString("Food: " + selectedUnit.food, 10, 70);
-				graphics.drawString("Gold: " + selectedUnit.gold, 10, 90);
 
-				if(selectedUnit.currentTask != null) {
-					graphics.drawString("Task: " + selectedUnit.currentTask.getClass().getSimpleName(), 10, 110);
-				}
-
-				int y = 150;
-				for (Item item : selectedUnit.carrying) {
-					graphics.drawString(item.name, 10, y);
-					y += 15;
-				}
-				for (int i = 0; i < Item.itemTypes; i++) {
-					graphics.drawString(selectedUnit.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 30 + y + i * 15);
-				}
+			if (selectedUnit != null && selectedUnit instanceof Person) {
+				drawPersonInformation(graphics, (Person)selectedUnit);
 			}
 
 			for (int i = 0; i < Map.executableQueueSize; i++) {
@@ -147,6 +133,26 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 		}*/
 	}
 
+	private void drawPersonInformation(Graphics graphics, Person selectedUnit) {
+		graphics.drawString("Unit:   N" + selectedUnit.id, 10, 30);
+		graphics.drawString("Leader: N" + selectedUnit.getSuperLeader().id, 10, 50);
+		graphics.drawString("Food: " + selectedUnit.food, 10, 70);
+		graphics.drawString("Gold: " + selectedUnit.gold, 10, 90);
+
+		if(selectedUnit.currentTask != null) {
+			graphics.drawString("Task: " + selectedUnit.currentTask.getClass().getSimpleName(), 10, 110);
+		}
+
+		int y = 150;
+		for (Item item : selectedUnit.carrying) {
+			graphics.drawString(item.name, 10, y);
+			y += 15;
+		}
+		for (int i = 0; i < Item.itemTypes; i++) {
+			graphics.drawString(selectedUnit.itemValue[i] + " " + Item.itemsList.get(i).name, 10, 30 + y + i * 15);
+		}
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {}
 
@@ -172,6 +178,12 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 	}
 
 	@Override
+	public void keyPressed(KeyEvent e) {
+		viewX = Map.size / 2;
+		viewY = Map.size / 2;
+	}
+
+	@Override
 	public void mouseReleased(MouseEvent e) {}
 
 	@Override
@@ -188,12 +200,6 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 
 	@Override
 	public void keyTyped(KeyEvent e) {}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		viewX = Map.size / 2;
-		viewY = Map.size / 2;
-	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {}
