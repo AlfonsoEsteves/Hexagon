@@ -69,12 +69,12 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        /*if(id == 1137) {
+        if(id == 341) {
             MainPanel.selectedUnit = this;
             if (Map.time >= 1640) {
                 System.out.println();
             }
-        }*/
+        }
 
         Debug.log("UNIT", toString());
 
@@ -101,9 +101,6 @@ public abstract class Unit implements Executable {
                         }
                     } else {
                         currentTask.execute(this);
-                        currentTask = null;
-                        currentTaskPriority = 0;
-                        surroundBehaviour.maxTurns = surroundBehaviour.startingMaxTurns;
                     }
                 }
                 if(surroundBehaviour.surrounding) {

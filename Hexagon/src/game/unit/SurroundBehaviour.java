@@ -29,8 +29,12 @@ public class SurroundBehaviour {
             }
         }
        turns ++;
-        if(turns >= maxTurns || distanceToDestination < closestDistance) {
+        if(turns >= maxTurns) {
             surrounding = false;
+        }
+        if(distanceToDestination < closestDistance) {
+            surrounding = false;
+            maxTurns = startingMaxTurns;
         }
     }
 }
