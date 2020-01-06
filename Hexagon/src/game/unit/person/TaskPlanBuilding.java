@@ -23,7 +23,6 @@ public class TaskPlanBuilding extends TaskTravel {
         Person person = (Person)unit;
         if(person.roomPosition == null || person.jobPosition == null) {
             if(person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2) {
-
                 if(person.buildingPosition == null) {
                     int rndX = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
                     int rndY = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
@@ -59,7 +58,7 @@ public class TaskPlanBuilding extends TaskTravel {
                 break;
             }
             else if(x == 1 && person.jobPosition == null) {
-                toBeBuilt = person.job;
+                toBeBuilt = person.job.missingVersion;
                 person.jobPosition = new int[]{person.destinationX, person.destinationY};
                 break;
             }

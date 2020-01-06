@@ -47,11 +47,7 @@ public abstract class Unit implements Executable {
 
     private int randomDirection;
 
-    public boolean surrounding;
-    public int surroundingOrientation;
-    public int surroundingDirection;
-    public int surroundingTurns;
-    public int surroundingMaxTurns;
+    public SurroundBehaviour surroundBehaviour;
 
     public Unit(int x, int y) {
         this.x = x;
@@ -61,6 +57,7 @@ public abstract class Unit implements Executable {
         travelTasks = new ArrayList<>();
         id = maxId;
         maxId++;
+        surroundBehaviour = new SurroundBehaviour();
     }
 
     public abstract Image image();
@@ -95,38 +92,27 @@ public abstract class Unit implements Executable {
             }
 
             if(currentTask != null) {
-                if(!surrounding) {
+                int distanceToDestination = Map.distance(x - destinationX, y - destinationY);
+                if(!surroundBehaviour.surrounding) {
                     if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
                         int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
                         if (!moveInDirection(dirToDestination)) {
-                            surrounding = true;
-                            surroundingOrientation = Rnd.nextInt(1) * 2 - 1;
-                            surroundingDirection = dirToDestination + surroundingOrientation;
-                            surroundingMaxTurns = surroundingMaxTurns * 3 / 2;
+                            surroundBehaviour.startSurrounding(dirToDestination, distanceToDestination);
                         }
                     } else {
                         currentTask.execute(this);
                         currentTask = null;
                         currentTaskPriority = 0;
-                        surroundingMaxTurns = 2;
+                        surroundBehaviour.maxTurns = surroundBehaviour.startingMaxTurns;
                     }
                 }
-                if(surrounding) {
-                    for (int i = -1; i < 3; i++) {
-                        if (moveInDirection((surroundingDirection + i * surroundingOrientation + 6) % 6)) {
-                            surroundingDirection = surroundingDirection + i * surroundingOrientation;
-                            break;
-                        }
-                    }
-                    surroundingTurns ++;
-                    if(surroundingTurns >= surroundingMaxTurns) {
-                        surrounding = false;
-                    }
+                if(surroundBehaviour.surrounding) {
+                    surroundBehaviour.surround(this, distanceToDestination);
                 }
             }
             else {
                 moveRandomly();
-                surroundingMaxTurns = 2;
+                surroundBehaviour.maxTurns = surroundBehaviour.startingMaxTurns;
             }
 
             if(alive) {
@@ -155,7 +141,7 @@ public abstract class Unit implements Executable {
         return recheckTasks;
     }
 
-    private boolean moveInDirection(int direction) {
+    public boolean moveInDirection(int direction) {
         if(Map.steppable(this, x + Map.getX(direction), y + Map.getY(direction))){
             removeFromTile();
             x += Map.getX(direction);

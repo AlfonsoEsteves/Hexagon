@@ -1,0 +1,6 @@
+I have not decided yet what is going to be the PF algorithm for short distance.
+
+But I guess the only algorithm for long distance is some variation of the "always to the right/left" algorithm.
+
+For instance performing the algorithm always to the right until it gets closer than ever, or until a certaim expiration time is reached.
+If the unit bumps with a deadend again, it will try again, this time to the left, and with a longer expiration time.
