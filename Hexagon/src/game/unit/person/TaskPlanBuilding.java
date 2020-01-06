@@ -15,7 +15,7 @@ public class TaskPlanBuilding extends TaskTravel {
 
     private TaskPlanBuilding()
     {
-        super(12, 2);
+        super(12, 3);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class TaskPlanBuilding extends TaskTravel {
 
                 }
                 // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
-                // if the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
+                // If the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
                 if(Map.distance(person.x - person.buildingPosition[0], person.y - person.buildingPosition[1]) > 1) {
                     if (checkPickedPosition(person.buildingPosition[0], person.buildingPosition[1], 2)) {
                         return true;
@@ -74,7 +74,7 @@ public class TaskPlanBuilding extends TaskTravel {
             int x = person.destinationX + p[0];
             int y = person.destinationY + p[1];
             if (Map.distance(person.destinationX - x, person.destinationY - y) == size) {
-                if(x == person.x && y == person.y) {
+                if(Map.distance(person.x - x, person.y - y) == 1) {
                     Map.overTile[x][y] = new OverTile(OTId.wall, x, y, building);
                     person.carrying.remove(Item.stone);
                 }
