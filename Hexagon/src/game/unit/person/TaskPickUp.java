@@ -2,10 +2,9 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
-import game.unit.TaskScan;
 import game.unit.Unit;
 
-public class TaskPickUp extends TaskScan {
+public class TaskPickUp extends Task {
 
     public static TaskPickUp taskPickUpStone = new TaskPickUp(Item.stone);
     public static TaskPickUp taskPickUpIron = new TaskPickUp(Item.iron);
@@ -20,19 +19,19 @@ public class TaskPickUp extends TaskScan {
     public Item item;
 
     private TaskPickUp(Item item) {
-        super(1.5, 0);
+        super(1.5, Person.visionRange, 0);
         this.item = item;
     }
 
     @Override
-    public boolean applies(Unit unit, int tileX, int tileY) {
+    public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(!person.carrying.contains(item)){
-            if (Map.has(tileX, tileY, item.droppedIsItem) != null) {
-                return true;
-            }
-        }
-        return false;
+        return !person.carrying.contains(item);
+    }
+
+    @Override
+    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
+        return Map.has(tileX, tileY, item.droppedIsItem) != null;
     }
 
     @Override

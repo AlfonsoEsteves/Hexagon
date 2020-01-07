@@ -1,23 +1,20 @@
 package game.unit.person;
 
 import game.*;
-import game.unit.TaskScan;
+import game.unit.Task;
 import game.unit.Unit;
 
-public class TaskReactToPerson extends TaskScan {
+public class TaskReactToPerson extends Task {
 
     public static TaskReactToPerson instance = new TaskReactToPerson();
 
     private TaskReactToPerson() {
-        super(5.5, 3);
+        super(5.5, Person.visionRange, 3);
     }
 
     @Override
-    public boolean applies(Unit unit, int tileX, int tileY) {
-        if (Map.has(tileX, tileY, Person.is.and(x -> ((Person)x).leader == null)) != null) {
-            return true;
-        }
-        return false;
+    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
+        return Map.has(tileX, tileY, Person.is.and(x -> ((Person)x).leader == null)) != null;
     }
 
     @Override

@@ -2,12 +2,10 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
-import game.unit.TaskScan;
-import game.unit.TaskTravel;
 import game.unit.Unit;
 import gui.MainPanel;
 
-public class TaskPlanBuilding extends TaskTravel {
+public class TaskPlanBuilding extends Task {
 
     public static int positionVariation = 6;
 
@@ -15,7 +13,7 @@ public class TaskPlanBuilding extends TaskTravel {
 
     private TaskPlanBuilding()
     {
-        super(12, 3);
+        super(12,3, 3);
     }
 
     @Override
