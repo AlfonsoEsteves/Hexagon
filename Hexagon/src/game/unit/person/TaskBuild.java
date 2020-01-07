@@ -2,10 +2,9 @@ package game.unit.person;
 
 import game.*;
 import game.unit.Task;
-import game.unit.TaskScan;
 import game.unit.Unit;
 
-public class TaskBuild extends TaskScan {
+public class TaskBuild extends Task {
 
     public static TaskBuild taskBuildStoneThings = new TaskBuild(Item.stone);
     public static TaskBuild taskBuildWoodThings = new TaskBuild(Item.wood);
@@ -15,19 +14,26 @@ public class TaskBuild extends TaskScan {
 
     private TaskBuild(Item material)
     {
-        super(5, 1);
+        super(5, Person.visionRange, 1);
         this.material = material;
     }
 
     @Override
-    public boolean applies(Unit unit, int tileX, int tileY) {
+    public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.carrying.contains(material)){
-            if (Map.has(tileX, tileY, OverTile.makeWith(material).and(x -> ((Building)((OverTile)x).state).owner == person)) != null) {
-                return true;
-            }
-        }
-        return false;
+        return person.carrying.contains(material);
+    }
+
+    @Override
+    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
+        Person person = (Person)unit;
+        return Map.has(tileX, tileY, OverTile.makeWith(material).and(x -> ((Building)((OverTile)x).state).owner == person)) != null;
+    }
+
+    @Override
+    public int[] getDestination(Unit unit) {
+        Person person = (Person)unit;
+        return person.buildingPosition;
     }
 
     @Override
@@ -35,7 +41,7 @@ public class TaskBuild extends TaskScan {
         Person person = (Person)unit;
         OverTile missing = null;
         int[] position = null;
-        for(int[] p : MapIter.of(range)) {
+        for(int[] p : MapIter.of(executionRange)) {
             position = p;
             missing = Map.has(unit.x + p[0], unit.y + p[1], OverTile.makeWith(material));
             if (missing != null) {

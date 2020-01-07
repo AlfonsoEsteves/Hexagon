@@ -1,7 +1,6 @@
 package game.unit.person;
 
 import game.*;
-import game.unit.Task;
 import game.unit.TaskScan;
 import game.unit.Unit;
 
@@ -25,7 +24,7 @@ public class TaskReactToPerson extends TaskScan {
     public void execute(Unit unit) {
         Person person = (Person)unit;
         Person leader = person.getSuperLeader();
-        for(int[] p : MapIter.of(range)) {
+        for(int[] p : MapIter.of(executionRange)) {
             Person other = (Person)Map.has(unit.x + p[0], unit.y + p[1], Person.is.and(x -> ((Person)x).leader == null));
             if (other != null) {
                 other.leader = person;

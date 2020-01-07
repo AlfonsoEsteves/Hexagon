@@ -16,6 +16,7 @@ public class Person extends Unit {
     public static final int maxLife = 100;
     public static final int maxFood = 80;
     public static final int goingBackDistance = 40;
+    public static final int visionRange = 15;
 
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
@@ -100,7 +101,7 @@ public class Person extends Unit {
         }
     }
 
-    @Override
+    /*@Override
     protected void setScanTasks() {
         scanTasks.clear();
 
@@ -195,7 +196,7 @@ public class Person extends Unit {
         if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
             addTask(TaskStore.instance, scanTasks);
         }
-    }
+    }*/
 
     @Override
     public void initExecute(){

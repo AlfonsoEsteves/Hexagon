@@ -4,7 +4,6 @@ import game.Executable;
 import game.Debug;
 import game.Map;
 import game.Rnd;
-import game.unit.person.Person;
 import gui.MainPanel;
 
 import java.awt.*;
@@ -37,8 +36,8 @@ public abstract class Unit implements Executable {
 
     public int life;
 
-    public List<TaskTravel> travelTasks;
-    public List<TaskScan> scanTasks;
+    public List<Task> tasks;
+    public List<Task> currentScanTasks;
     public double currentTaskPriority;
     public Task currentTask;
     public int conserveTaskTime;
@@ -53,11 +52,11 @@ public abstract class Unit implements Executable {
         this.x = x;
         this.y = y;
         alive = true;
-        scanTasks = new ArrayList<>();
-        travelTasks = new ArrayList<>();
+        tasks = new ArrayList<>();
         id = maxId;
         maxId++;
         surroundBehaviour = new SurroundBehaviour();
+        currentScanTasks = new ArrayList<>();
     }
 
     public abstract Image image();
@@ -66,6 +65,8 @@ public abstract class Unit implements Executable {
     public boolean alive(){
         return alive;
     }
+
+    public void initExecute() {}
 
     @Override
     public void execute() {
@@ -94,7 +95,7 @@ public abstract class Unit implements Executable {
             if(currentTask != null) {
                 int distanceToDestination = Map.distance(x - destinationX, y - destinationY);
                 if(!surroundBehaviour.surrounding) {
-                    if (Map.distance(x - destinationX, y - destinationY) > currentTask.range) {
+                    if (distanceToDestination > currentTask.executionRange) {
                         int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
                         if (!moveInDirection(dirToDestination)) {
                             surroundBehaviour.startSurrounding(dirToDestination, distanceToDestination);
@@ -108,8 +109,8 @@ public abstract class Unit implements Executable {
                 }
             }
             else {
+                surroundBehaviour.maxTurns = SurroundBehaviour.startingMaxTurns;
                 moveRandomly();
-                surroundBehaviour.maxTurns = surroundBehaviour.startingMaxTurns;
             }
 
             if(alive) {
@@ -138,54 +139,50 @@ public abstract class Unit implements Executable {
         return recheckTasks;
     }
 
-    public boolean moveInDirection(int direction) {
-        if(Map.steppable(this, x + Map.getX(direction), y + Map.getY(direction))){
-            removeFromTile();
-            x += Map.getX(direction);
-            y += Map.getY(direction);
-            addToTile();
-            return true;
-        }
-        return false;
-    }
-
-    protected abstract void setScanTasks();
-
     protected void checkNormalTasks() {
-        for(TaskTravel task : travelTasks){
-             if(task.maxPriorityPossible < currentTaskPriority) {
+        for(Task task : tasks){
+             if(task.maxPriorityPossible <= currentTaskPriority) {
                  break;
              }
              if(task.applies(this)) {
                  int[] position = task.getDestination(this);
-                 double priority = task.calculatePriority(Map.distance(x - position[0], y - position[1]));
-                 if(priority > currentTaskPriority) {
-                     currentTask = task;
-                     currentTaskPriority = priority;
-                     destinationX = position[0];
-                     destinationY = position[1];
+                 if(position != null) {
+                     int distance = Map.distance(x - position[0], y - position[1]);
+                     double priority = task.calculatePriority(distance);
+                     if(priority > currentTaskPriority) {
+                         if(distance > task.scanRange) {
+                             currentTask = task;
+                             currentTaskPriority = priority;
+                             destinationX = position[0];
+                             destinationY = position[1];
+                         }
+                     }
                  }
              }
         }
     }
 
-    public int delay() {
-        return 1;
-    }
-
-    private void moveRandomly(){
-        if(Rnd.nextInt(10) == 0) {
-            randomDirection = (randomDirection + 1) % 6;
+    protected void setScanTasks() {
+        currentScanTasks.clear();
+        for(Task task : tasks){
+            if(task.maxPriorityPossible <= currentTaskPriority) {
+                break;
+            }
+            if(task.applies(this)) {
+                int[] position = task.getDestination(this);
+                if(position == null) {
+                    currentScanTasks.add(task);
+                }
+                else{
+                    int distance = Map.distance(x - position[0], y - position[1]);
+                    // Note that this distance isn't the real distance cause there may be obstacles in the way
+                    // That means I can not set this task as the curret task yet
+                    if(distance <= task.scanRange) {
+                        currentScanTasks.add(task);
+                    }
+                }
+            }
         }
-        if(Rnd.nextInt(10) == 0) {
-            randomDirection = (randomDirection + 5) % 6;
-        }
-        if(!moveInDirection(randomDirection)) {
-            randomDirection = Rnd.nextInt(6);
-        }
-    }
-
-    public void initExecute() {
     }
 
     private void checkScanTasks() {
@@ -206,7 +203,7 @@ public abstract class Unit implements Executable {
                 if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
-                if(scanTasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
+                if(currentScanTasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
                     break;
                 }
             }
@@ -230,7 +227,7 @@ public abstract class Unit implements Executable {
     }
 
     private void processTile(int tileX, int tileY, int distance) {
-        for(TaskScan task : scanTasks) {
+        for(Task task : currentScanTasks) {
             double priority = task.calculatePriority(distance);
             if (priority <= currentTaskPriority) {
                 // This means that all the subsequent tasks don't need to be
@@ -255,6 +252,33 @@ public abstract class Unit implements Executable {
     public void addToTile() {
         next = Map.unit[x][y];
         Map.unit[x][y] = this;
+    }
+
+    public boolean moveInDirection(int direction) {
+        if(Map.steppable(this, x + Map.getX(direction), y + Map.getY(direction))){
+            removeFromTile();
+            x += Map.getX(direction);
+            y += Map.getY(direction);
+            addToTile();
+            return true;
+        }
+        return false;
+    }
+
+    private void moveRandomly(){
+        if(Rnd.nextInt(10) == 0) {
+            randomDirection = (randomDirection + 1) % 6;
+        }
+        if(Rnd.nextInt(10) == 0) {
+            randomDirection = (randomDirection + 5) % 6;
+        }
+        if(!moveInDirection(randomDirection)) {
+            randomDirection = Rnd.nextInt(6);
+        }
+    }
+
+    public int delay() {
+        return 1;
     }
 
     public void removeFromTile() {

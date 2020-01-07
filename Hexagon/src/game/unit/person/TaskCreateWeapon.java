@@ -1,12 +1,13 @@
 package game.unit.person;
 
+import game.Map;
 import game.OTId;
-import game.unit.TaskTravel;
+import game.unit.Task;
 import game.unit.Unit;
 
 import java.util.Collections;
 
-public class TaskCreateWeapon extends TaskTravel {
+public class TaskCreateWeapon extends Task {
 
     public static TaskCreateWeapon createAnvilWeapon = new TaskCreateWeapon(OTId.anvil);
     public static TaskCreateWeapon createCarpentryWeapon = new TaskCreateWeapon(OTId.carpentry);
@@ -14,7 +15,7 @@ public class TaskCreateWeapon extends TaskTravel {
     private OTId workshop;
 
     private TaskCreateWeapon(OTId workshop) {
-        super(4, 0);
+        super(4, 0, 0);
         this.workshop = workshop;
     }
 

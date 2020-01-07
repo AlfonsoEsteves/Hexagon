@@ -10,12 +10,12 @@ import game.unit.Unit;
 
 import java.util.Collections;
 
-public class TaskGoBackToBase extends TaskScan {
+public class TaskGoBackToBase extends Task {
 
     public static TaskGoBackToBase instance = new TaskGoBackToBase();
 
     private TaskGoBackToBase() {
-        super(11, 0);
+        super(11, 0,0);
     }
 
     @Override

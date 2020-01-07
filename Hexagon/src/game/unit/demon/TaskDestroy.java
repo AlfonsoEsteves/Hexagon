@@ -1,7 +1,6 @@
 package game.unit.demon;
 
 import game.*;
-import game.unit.Task;
 import game.unit.TaskScan;
 import game.unit.Unit;
 
@@ -23,7 +22,7 @@ public class TaskDestroy extends TaskScan {
 
     @Override
     public void execute(Unit unit) {
-        for(int[] p : MapIter.of(range)) {
+        for(int[] p : MapIter.of(executionRange)) {
             OverTile overTile = Map.has(unit.x + p[0], unit.y + p[1], OverTile.isDestroyable);
             if (overTile != null) {
                 if(Rnd.nextInt(5) == 0) {
