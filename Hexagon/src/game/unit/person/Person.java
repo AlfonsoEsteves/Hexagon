@@ -51,8 +51,6 @@ public class Person extends Unit {
 
     public int[] buildingPosition;
 
-
-
     public Person(int x, int y) {
         super(x, y);
 
@@ -77,15 +75,23 @@ public class Person extends Unit {
         }
         else if(r == 1) {
             job = OTId.anvil;
-            addTask(TaskCreateWeapon.createAnvilWeapon, travelTasks);
+            addTask(TaskCreateWeapon.createAnvilWeapon);
+            addTask(TaskBuild.taskBuildIronThings);
         }
         else if(r == 2) {
             job = OTId.carpentry;
-            addTask(TaskCreateWeapon.createCarpentryWeapon, travelTasks);
+            addTask(TaskCreateWeapon.createCarpentryWeapon);
         }
 
-        addTask(TaskPlanBuilding.instance, travelTasks);
-        addTask(TaskSleep.instance, travelTasks);
+        addTask(TaskBuild.taskBuildStoneThings);
+        addTask(TaskBuild.taskBuildWoodThings);
+
+        tengo que completar con el resto de las tareas
+
+        hacer que el buildng position desaparesca luego de que se coloca la primer pieza
+                y que las personas recuerden cuantos materiales les falta por buildear en cada building
+                capas juntas los 3 job en uno solo (iron wood y stone)
+
     }
 
     @Override
@@ -318,7 +324,7 @@ public class Person extends Unit {
         }
     }
 
-    private void addTask(Task task, List tasks) {
+    private void addTask(Task task) {
         int position = 0;
         while(position < tasks.size()) {
             if(((Task)tasks.get(position)).maxPriorityPossible <= task.maxPriorityPossible) {
