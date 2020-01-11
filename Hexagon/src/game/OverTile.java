@@ -1,5 +1,6 @@
 package game;
 
+import game.unit.person.Person;
 import gui.ImageLoader;
 
 import java.awt.*;
@@ -25,9 +26,8 @@ public class OverTile implements Executable {
 		this.state = state;
 	}
 
-	public static Predicate makeWith(Item item){
-		return x -> x instanceof OverTile && ((OverTile)x).id.makeWith == item;
-	}
+	//public static Predicate makeWith(Item item){ return x -> x instanceof OverTile && ((OverTile)x).id.makeWith == item; }
+	public static Predicate personCarriesMaterial(Person person) { return x -> x instanceof OverTile && person.carrying.contains(((OverTile)x).id.makeWith); }
 	public static Predicate isDestroyable = x -> x instanceof OverTile && ((OverTile)x).id.missingVersion != null;
 
 	@Override

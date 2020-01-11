@@ -5,14 +5,13 @@ import game.Item;
 import game.Map;
 import game.Rnd;
 import game.unit.Task;
-import game.unit.TaskScan;
 import game.unit.Unit;
 import game.unit.chicken.Chicken;
 
 import java.util.Collections;
 
-public class TaskTakeChicken extends TaskScan {
-
+public class TaskTakeChicken {
+/*
     public static TaskTakeChicken instance = new TaskTakeChicken();
 
     private TaskTakeChicken() {
@@ -38,5 +37,5 @@ public class TaskTakeChicken extends TaskScan {
             person.carrying.add(Item.meat);
             chicken.removeFromTileAndDestroy();
         }
-    }
+    }*/
 }

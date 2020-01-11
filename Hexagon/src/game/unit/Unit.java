@@ -70,9 +70,9 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        if(id == 341) {
+        if(id == 703) {
             MainPanel.selectedUnit = this;
-            if (Map.time >= 1640) {
+            if (Map.time >= 19) {
                 System.out.println();
             }
         }
@@ -124,7 +124,7 @@ public abstract class Unit implements Executable {
         if (currentTask != null) {
             if (currentTask.applies(this)) {
                 if (Map.time > conserveTaskTime) {
-                    // Don't reset the current task
+                    // To keep things more performant, I don't reset the current task
                     // Just decrease the maxPriorityPossible in case the goal has moved farther
                     // or in case an obstacle appeared and it is blocking the way
                     resetPriority(currentTaskPriority - 1);
@@ -234,7 +234,7 @@ public abstract class Unit implements Executable {
                 // checked because they have lower maxPriorityPossible
                 break;
             }
-            if(task.applies(this, tileX, tileY)) {
+            if(task.appliesInTile(this, tileX, tileY)) {
                 currentTask = task;
                 resetPriority(priority);
                 destinationX = tileX;

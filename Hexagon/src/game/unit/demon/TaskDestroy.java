@@ -1,23 +1,21 @@
 package game.unit.demon;
 
 import game.*;
-import game.unit.TaskScan;
+import game.unit.Task;
 import game.unit.Unit;
+import game.unit.person.Person;
 
-public class TaskDestroy extends TaskScan {
+public class TaskDestroy extends Task {
 
     public static TaskDestroy instance = new TaskDestroy();
 
     private TaskDestroy() {
-        super(1, 1);
+        super(1, Person.visionRange, 1);
     }
 
     @Override
-    public boolean applies(Unit unit, int tileX, int tileY) {
-        if (Map.has(tileX, tileY, OverTile.isDestroyable) != null) {
-            return true;
-        }
-        return false;
+    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
+        return Map.has(tileX, tileY, OverTile.isDestroyable) != null;
     }
 
     @Override

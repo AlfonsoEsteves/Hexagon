@@ -9,7 +9,7 @@ public class Debug {
     public static String currentType = typeTime;
 
     public static long eventCount = 0;
-    public static long breakPointEventCount = 13817;
+    public static long breakPointEventCount = 1228;
 
     public static void log(String type, String message) {
         eventCount ++;
@@ -24,7 +24,7 @@ public class Debug {
     public static void check(boolean condition) {
         log(typeDebug, "Checking condition");
         if(!condition) {
-            throw new RuntimeException("ERROR AT BREAK POINT " + currentType);
+            throw new RuntimeException("ERROR AT EVENT COUNT " + eventCount);
         }
     }
 }

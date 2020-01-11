@@ -4,13 +4,13 @@ public abstract class Task {
 
     public double maxPriorityPossible;
 
-    public int executionRange; // The range at which the task can be performed
     public int scanRange; // The range at which the task can be scanned for
+    public int executionRange; // The range at which the task can be performed
 
-    public Task(double maxPriorityPossible, int executionRange, int scanRange) {
+    public Task(double maxPriorityPossible, int scanRange, int executionRange) {
         this.maxPriorityPossible = maxPriorityPossible;
-        this.executionRange = executionRange;
         this.scanRange = scanRange;
+        this.executionRange = executionRange;
     }
 
     public boolean applies(Unit unit) {

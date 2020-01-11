@@ -22,10 +22,12 @@ public class TaskCreateWeapon extends Task {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.jobPosition != null) {
-            if(person.carrying.contains(workshop.tranformsItem)) {
-                if(Collections.frequency(person.carrying, workshop.providesItem) < 2) {
-                    return true;
+        if(person.jobMemory != null) {
+            if (person.jobMemory.missingWood == 0 && person.jobMemory.missingIron == 0) {
+                if (person.carrying.contains(workshop.tranformsItem)) {
+                    if (Collections.frequency(person.carrying, workshop.providesItem) < 2) {
+                        return true;
+                    }
                 }
             }
         }
@@ -42,6 +44,6 @@ public class TaskCreateWeapon extends Task {
     @Override
     public int[] getDestination(Unit unit) {
         Person person = (Person)unit;
-        return person.jobPosition;
+        return new int[]{person.jobMemory.x, person.jobMemory.y};
     }
 }

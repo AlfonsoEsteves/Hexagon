@@ -46,8 +46,8 @@ public class Person extends Unit {
 
     public OTId job;
 
-    public int[] roomPosition;
-    public int[] jobPosition;
+    public MemoryBuilding roomMemory;
+    public MemoryBuilding jobMemory;
 
     public int[] buildingPosition;
 
@@ -76,22 +76,43 @@ public class Person extends Unit {
         else if(r == 1) {
             job = OTId.anvil;
             addTask(TaskCreateWeapon.createAnvilWeapon);
-            addTask(TaskBuild.taskBuildIronThings);
         }
         else if(r == 2) {
             job = OTId.carpentry;
             addTask(TaskCreateWeapon.createCarpentryWeapon);
         }
 
-        addTask(TaskBuild.taskBuildStoneThings);
-        addTask(TaskBuild.taskBuildWoodThings);
+        addTask(TaskSleep.instance);
 
-        tengo que completar con el resto de las tareas
+        addTask(TaskPlanBuilding.instance);
 
-        hacer que el buildng position desaparesca luego de que se coloca la primer pieza
-                y que las personas recuerden cuantos materiales les falta por buildear en cada building
-                capas juntas los 3 job en uno solo (iron wood y stone)
+        addTask(TaskBuild.taskBuildRoom);
+        addTask(TaskBuild.taskBuildJob);
 
+        addTask(TaskFight.taskFightLongDistance);
+        addTask(TaskFight.taskFightMelee);
+
+        addTask(TaskReactToPerson.instance);
+
+        addTask(TaskCollect.taskCollectStone);
+        addTask(TaskCollect.taskCollectWood);
+        addTask(TaskCollect.taskCollectIron);
+        addTask(TaskCollect.taskCollectCarrot);
+        addTask(TaskCollect.taskCollectFruit);
+        addTask(TaskCollect.taskCollectHoney);
+        addTask(TaskCollect.taskCollectMushroom);
+
+        addTask(TaskPickUp.taskPickUpBow);
+        addTask(TaskPickUp.taskPickUpSword);
+        addTask(TaskPickUp.taskPickUpCarrot);
+        addTask(TaskPickUp.taskPickUpFruit);
+        addTask(TaskPickUp.taskPickUpHoney);
+        addTask(TaskPickUp.taskPickUpMushroom);
+        addTask(TaskPickUp.taskPickUpIron);
+        addTask(TaskPickUp.taskPickUpWood);
+        addTask(TaskPickUp.taskPickUpStone);
+
+        addTask(TaskStore.instance);
     }
 
     @Override
@@ -106,103 +127,6 @@ public class Person extends Unit {
             return imagePerson;
         }
     }
-
-    /*@Override
-    protected void setScanTasks() {
-        scanTasks.clear();
-
-        if(goingBack) {
-            addTask(TaskGoBackToBase.instance, scanTasks);
-        }
-
-        if(carrying.contains(Item.bow)) {
-            addTask(TaskFight.taskFightLongDistance, scanTasks);
-        }
-        else{
-            addTask(TaskFight.taskFightMelee, scanTasks);
-        }
-
-        addTask(TaskReactToPerson.instance, scanTasks);
-
-        int amountStone = Collections.frequency(carrying, Item.stone);
-        if(amountStone < 2) {
-            addTask(TaskCollect.taskCollectStone, scanTasks);
-        }
-        if(amountStone > 0) {
-            addTask(TaskBuild.taskBuildStoneThings, scanTasks);
-        }
-        else{
-            addTask(TaskPickUp.taskPickUpStone, scanTasks);
-        }
-
-        int amountWood = Collections.frequency(carrying, Item.wood);
-        if(amountWood < 2) {
-            addTask(TaskCollect.taskCollectWood, scanTasks);
-        }
-        if(amountWood > 0) {
-            addTask(TaskBuild.taskBuildWoodThings, scanTasks);
-        }
-        else{
-            addTask(TaskPickUp.taskPickUpWood, scanTasks);
-        }
-
-        int amountIron = Collections.frequency(carrying, Item.iron);
-        if(amountIron < 2) {
-            addTask(TaskCollect.taskCollectIron, scanTasks);
-        }
-        if(amountIron > 0) {
-            addTask(TaskBuild.taskBuildIronThings, scanTasks);
-        }
-        else{
-            addTask(TaskPickUp.taskPickUpIron, scanTasks);
-        }
-
-        int amountFruit = Collections.frequency(carrying, Item.fruit);
-        if(amountFruit < 2) {
-            addTask(TaskCollect.taskCollectFruit, scanTasks);
-        }
-        if(amountFruit == 0) {
-            addTask(TaskPickUp.taskPickUpFruit, scanTasks);
-        }
-
-        int amountHoney = Collections.frequency(carrying, Item.honey);
-        if(amountHoney < 2) {
-            addTask(TaskCollect.taskCollectHoney, scanTasks);
-        }
-        if(amountHoney == 0) {
-            addTask(TaskPickUp.taskPickUpHoney, scanTasks);
-        }
-
-        int amountMushroom = Collections.frequency(carrying, Item.mushroom);
-        if(amountMushroom < 2) {
-            addTask(TaskCollect.taskCollectMushroom, scanTasks);
-        }
-        if(amountMushroom == 0) {
-            addTask(TaskPickUp.taskPickUpMushroom, scanTasks);
-        }
-
-        int amountCarrot = Collections.frequency(carrying, Item.carrot);
-        if(amountCarrot < 2) {
-            addTask(TaskCollect.taskCollectCarrot, scanTasks);
-        }
-        if(amountCarrot == 0) {
-            addTask(TaskPickUp.taskPickUpCarrot, scanTasks);
-        }
-
-        int amountSword = Collections.frequency(carrying, Item.sword);
-        if(amountSword == 0) {
-            addTask(TaskPickUp.taskPickUpSword, scanTasks);
-        }
-
-        int amountBow = Collections.frequency(carrying, Item.bow);
-        if(amountBow == 0) {
-            addTask(TaskPickUp.taskPickUpBow, scanTasks);
-        }
-
-        if(amountFruit > 1 || amountHoney > 1 || amountMushroom > 1  || amountCarrot > 1 || amountIron > 1 || amountStone > 1 || amountWood > 1 || amountSword > 1 || amountBow > 1) {
-            addTask(TaskStore.instance, scanTasks);
-        }
-    }*/
 
     @Override
     public void initExecute(){
@@ -357,7 +281,7 @@ public class Person extends Unit {
                 unit.receiveDamage(6);
             }
         }
-        else if(range == 3){
+        else if(range < 3){
             if(carrying.contains(Item.bow)){
                 unit.receiveDamage(25);
                 carrying.remove(Item.bow);

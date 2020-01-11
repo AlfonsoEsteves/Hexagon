@@ -7,11 +7,16 @@ import game.unit.Unit;
 
 public class TaskFight extends Task {
 
-    public static TaskFight taskFightMelee = new TaskFight(1);
-    public static TaskFight taskFightLongDistance = new TaskFight(3);
+    public static TaskFight taskFightMelee = new TaskFight(9.9, 1);
+    public static TaskFight taskFightLongDistance = new TaskFight(10, 3);
 
-    private TaskFight(int range) {
-        super(10, Person.visionRange, range);
+    private TaskFight(double maxPriorityPossible, int range) {
+        super(maxPriorityPossible, Person.visionRange, range);
+    }
+
+    @Override
+    public boolean applies(Unit unit) {
+        return scanRange == 1 || ((Person)unit).carrying.contains(Item.bow);
     }
 
     @Override

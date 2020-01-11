@@ -1,20 +1,20 @@
 package game.unit.person;
 
-import game.unit.TaskTravel;
+import game.unit.Task;
 import game.unit.Unit;
 
-public class TaskSleep extends TaskTravel {
+public class TaskSleep extends Task {
 
     public static TaskSleep instance = new TaskSleep();
 
     private TaskSleep() {
-        super(6, 0);
+        super(6, 0,0);
     }
 
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        return person.life < Person.maxLife && person.food > 0 && person.roomPosition != null;
+        return person.life < Person.maxLife && person.food > 0 && person.roomMemory != null;
     }
 
     @Override
@@ -30,6 +30,7 @@ public class TaskSleep extends TaskTravel {
 
     @Override
     public int[] getDestination(Unit unit) {
-        return ((Person)unit).roomPosition;
+        Person person = (Person)unit;
+        return new int[]{person.roomMemory.x, person.roomMemory.y};
     }
 }

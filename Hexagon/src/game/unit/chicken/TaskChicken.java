@@ -5,15 +5,14 @@ import game.OTId;
 import game.OverTile;
 import game.Rnd;
 import game.unit.Task;
-import game.unit.TaskScan;
 import game.unit.Unit;
 import game.unit.person.Person;
 import gui.Main;
 import gui.MainPanel;
 
-public class TaskChicken extends TaskScan {
+public class TaskChicken  {
 
-    public static TaskChicken instance = new TaskChicken();
+    /*public static TaskChicken instance = new TaskChicken();
 
     private TaskChicken() {
         super(10, 0);
@@ -39,5 +38,5 @@ public class TaskChicken extends TaskScan {
                 chicken.grown = true;
             }
         }
-    }
+    }*/
 }

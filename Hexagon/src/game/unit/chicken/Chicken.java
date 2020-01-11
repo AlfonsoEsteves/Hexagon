@@ -9,9 +9,9 @@ import gui.ImageLoader;
 import java.awt.*;
 import java.util.function.Predicate;
 
-public class Chicken extends Unit {
+public class Chicken {
 
-    public static Image imageChicken = ImageLoader.load("Chicken");
+    /*public static Image imageChicken = ImageLoader.load("Chicken");
     public static Image imageLittleChicken = ImageLoader.load("Little chicken");
 
     public static Predicate is = x -> (x instanceof Chicken);
@@ -58,5 +58,5 @@ public class Chicken extends Unit {
     @Override
     public int delay(){
         return 3;
-    }
+    }*/
 }

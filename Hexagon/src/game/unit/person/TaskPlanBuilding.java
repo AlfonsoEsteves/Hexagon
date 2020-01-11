@@ -19,7 +19,7 @@ public class TaskPlanBuilding extends Task {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.roomPosition == null || person.jobPosition == null) {
+        if(person.roomMemory == null || person.jobMemory == null) {
             if(person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2) {
                 if(person.buildingPosition == null) {
                     int rndX = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
@@ -50,22 +50,26 @@ public class TaskPlanBuilding extends Task {
         int r = Rnd.nextInt(4);
         for(int i = 0; i < 4; i++) {
             int x = (i + r) % 4;
-            if(x == 0 && person.roomPosition == null) {
+            if(x == 0 && person.roomMemory == null) {
                 toBeBuilt = OTId.missingBed;
-                person.roomPosition = new int[]{person.destinationX, person.destinationY};
+                person.roomMemory = new MemoryBuilding(person.destinationX, person.destinationY, 0, 1, 6);
                 break;
             }
-            else if(x == 1 && person.jobPosition == null) {
+            else if(x == 1 && person.jobMemory == null) {
                 toBeBuilt = person.job.missingVersion;
-                person.jobPosition = new int[]{person.destinationX, person.destinationY};
+                int neededIron = person.job == OTId.anvil ? 1 : 0;
+                int neededWood = person.job == OTId.carpentry ? 1 : 0;
+                int missingStone = person.job == OTId.depot ? 18 : 11;
+                person.roomMemory = new MemoryBuilding(person.destinationX, person.destinationY, neededIron, neededWood, missingStone);
                 break;
             }
         }
+        person.buildingPosition = null;
 
         Debug.check(person.carrying.contains(Item.stone));
         Debug.check(toBeBuilt != null);
 
-        Building building  = new Building(person.destinationX, person.destinationY, person);
+        Building building = new Building(person.destinationX, person.destinationY, person);
 
         int doorCount = Rnd.nextInt(size * 6 - 1);
         for (int[] p : MapIter.of(size)) {
