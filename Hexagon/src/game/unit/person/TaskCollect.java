@@ -30,8 +30,11 @@ public class TaskCollect extends Task {
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
-        return Map.has(tileX, tileY, resource.producer.overTileIs) != null;
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
+        if(Map.has(tileX, tileY, resource.producer.overTileIs) != null) {
+            return new MemoryStaticPoint(tileX, tileY);
+        }
+        return null;
     }
 
     @Override
@@ -42,5 +45,6 @@ public class TaskCollect extends Task {
             Map.overTile[person.x][person.y].id = resource.producer.depletedVersion;
             Map.queueExecutable(Map.overTile[person.x][person.y], 100 + Rnd.nextInt(200));
         }
+        unit.cancelTask();
     }
 }

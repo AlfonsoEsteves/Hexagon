@@ -4,6 +4,7 @@ import game.Executable;
 import game.Debug;
 import game.Map;
 import game.Rnd;
+import game.unit.person.Memory;
 import gui.MainPanel;
 
 import java.awt.*;
@@ -41,8 +42,7 @@ public abstract class Unit implements Executable {
     public double currentTaskPriority;
     public Task currentTask;
     public int conserveTaskTime;
-    public int destinationX;
-    public int destinationY;
+    public Memory goalMemory;
 
     private int randomDirection;
 
@@ -70,9 +70,9 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        if(id == 703) {
+        if(id == 465) {
             MainPanel.selectedUnit = this;
-            if (Map.time >= 19) {
+            if (Map.time >= 120) {
                 System.out.println();
             }
         }
@@ -93,10 +93,10 @@ public abstract class Unit implements Executable {
             }
 
             if(currentTask != null) {
-                int distanceToDestination = Map.distance(x - destinationX, y - destinationY);
+                int distanceToDestination = Map.distance(x - goalMemory.getX(), y - goalMemory.getY());
                 if(!surroundBehaviour.surrounding) {
                     if (distanceToDestination > currentTask.executionRange) {
-                        int dirToDestination = Map.closestDirection(destinationX - x, destinationY - y);
+                        int dirToDestination = Map.closestDirection(goalMemory.getX() - x, goalMemory.getY() - y);
                         if (!moveInDirection(dirToDestination)) {
                             surroundBehaviour.startSurrounding(dirToDestination, distanceToDestination);
                         }
@@ -122,7 +122,7 @@ public abstract class Unit implements Executable {
     private boolean shouldRecheckTasks() {
         boolean recheckTasks = true;
         if (currentTask != null) {
-            if (currentTask.applies(this)) {
+            if (currentTask.applies(this) && !goalMemory.shouldBeForgoten(this)){
                 if (Map.time > conserveTaskTime) {
                     // To keep things more performant, I don't reset the current task
                     // Just decrease the maxPriorityPossible in case the goal has moved farther
@@ -132,8 +132,7 @@ public abstract class Unit implements Executable {
                     recheckTasks = false;
                 }
             } else {
-                currentTask = null;
-                currentTaskPriority = 0;
+                cancelTask();
             }
         }
         return recheckTasks;
@@ -145,16 +144,15 @@ public abstract class Unit implements Executable {
                  break;
              }
              if(task.applies(this)) {
-                 int[] position = task.getDestination(this);
-                 if(position != null) {
-                     int distance = Map.distance(x - position[0], y - position[1]);
-                     double priority = task.calculatePriority(distance);
-                     if(priority > currentTaskPriority) {
-                         if(distance > task.scanRange) {
+                 Memory candidateGoal = task.getDestination(this);
+                 if(candidateGoal != null) {
+                     int distance = Map.distance(x - candidateGoal.getX(), y - candidateGoal.getY());
+                     if(distance > task.scanRange) {
+                         double priority = task.calculatePriority(distance);
+                         if(priority > currentTaskPriority) {
                              currentTask = task;
                              currentTaskPriority = priority;
-                             destinationX = position[0];
-                             destinationY = position[1];
+                             goalMemory = candidateGoal;
                          }
                      }
                  }
@@ -169,12 +167,12 @@ public abstract class Unit implements Executable {
                 break;
             }
             if(task.applies(this)) {
-                int[] position = task.getDestination(this);
+                Memory position = task.getDestination(this);
                 if(position == null) {
                     currentScanTasks.add(task);
                 }
                 else{
-                    int distance = Map.distance(x - position[0], y - position[1]);
+                    int distance = Map.distance(x - position.getY(), y - position.getY());
                     // Note that this distance isn't the real distance cause there may be obstacles in the way
                     // That means I can not set this task as the curret task yet
                     if(distance <= task.scanRange) {
@@ -186,6 +184,9 @@ public abstract class Unit implements Executable {
     }
 
     private void checkScanTasks() {
+        if(currentScanTasks.isEmpty()) {
+            return;
+        }
         LinkedList<Integer> queueX = new LinkedList<>();
         LinkedList<Integer> queueY = new LinkedList<>();
         queueX.add(x);
@@ -234,19 +235,31 @@ public abstract class Unit implements Executable {
                 // checked because they have lower maxPriorityPossible
                 break;
             }
-            if(task.appliesInTile(this, tileX, tileY)) {
+            Memory candidateGoal = task.appliesInTile(this, tileX, tileY);
+            if(candidateGoal != null) {
                 currentTask = task;
                 resetPriority(priority);
-                destinationX = tileX;
-                destinationY = tileY;
+                goalMemory = candidateGoal;
+
+
+                // I could remove the task from the list of scanned task since it is not gonna find a
+                // closer tile that applies
+
+
                 break;
             }
         }
     }
 
-    private void resetPriority(double pri){
-        currentTaskPriority = pri;
-        conserveTaskTime = Map.time + 1 + (int)(pri * turnsPerPriorityFactor);
+    public void cancelTask(){
+        currentTask = null;
+        currentTaskPriority = 0;
+        goalMemory = null;
+    }
+
+    private void resetPriority(double priority){
+        currentTaskPriority = priority;
+        conserveTaskTime = Map.time + 1 + (int)(priority * turnsPerPriorityFactor);
     }
 
     public void addToTile() {

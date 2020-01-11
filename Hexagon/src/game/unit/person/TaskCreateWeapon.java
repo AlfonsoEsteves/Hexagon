@@ -15,7 +15,7 @@ public class TaskCreateWeapon extends Task {
     private OTId workshop;
 
     private TaskCreateWeapon(OTId workshop) {
-        super(4, 0, 0);
+        super(4, -1, 0);
         this.workshop = workshop;
     }
 
@@ -39,11 +39,12 @@ public class TaskCreateWeapon extends Task {
         Person person = (Person)unit;
         person.carrying.remove(workshop.tranformsItem);
         person.carrying.add(workshop.providesItem);
+        unit.cancelTask();
     }
 
     @Override
-    public int[] getDestination(Unit unit) {
+    public Memory getDestination(Unit unit) {
         Person person = (Person)unit;
-        return new int[]{person.jobMemory.x, person.jobMemory.y};
+        return person.jobMemory;
     }
 }

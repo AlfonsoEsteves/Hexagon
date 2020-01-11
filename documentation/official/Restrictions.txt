@@ -3,9 +3,11 @@ Implementing the simulation with multithreading adds some restrictions.
 So the idea is to divide the map in 3 or 4 groups of sectors.
 Two or more sectors of the same group can be executed concurrently.
 To avoind concurrency issues I created RESTRICTION NUMBER 1:
-  If two units are in different sectors of the same group, they should be farther away than MAX_INFLUENCE_DISTANCE * 2
-  A unit can not affect other unit or tile that is farther away than MAX_INFLUENCE_DISTANCE 
-  A unit can not act based on the status of another unit or tile that is farther away than MAX_INFLUENCE_DISTANCE
+  If two units are in different sectors of the same group, they should be farther away than MAX_DO_INFLUENCE_DIST + MAX_BE_INFLUENCED_DIST 
+  A unit can not affect other unit or tile that is farther away than MAX_DO_INFLUENCE_DIST 
+  A unit can not act based on the status of another unit or tile that is farther away than MAX_BE_INFLUENCED_DIST
+
+  MAX_BE_INFLUENCED_DIST should be equal to the units vison range.
 
 This restriction should be enougn... but:
 
@@ -14,10 +16,27 @@ But if the goal gets 2 far away then I could break restriction number 1, cause t
 
 RESTRICTION NUMBER 2:
 Units can not move more than 1 tile per turn.
-Units forget their goals, if their were set by a scan and the goal gets to far away. (Before the goal gets beyond MAX_INFLUENCE_DISTANCE)
-The forget check takes into account how much time passed since the last forget check. (Remember that units can be slow and not get executed every turn)
+Units forget their goals, if their were set by a scan, and the goal gets out of vision.
+MAX_INFLUENCE_DISTANCE has to be greater than VISION_RANGE + MOVEMENT_DELAY for all the units that persue scanned goals.
 
-if(time_since_last_check + recorded_goal_distance < MAX_INFLUENCE_DISTANCE) {
-  time_since_last_check = time
-  recorded_goal_distance = goal_distance
-}
+
+
+
+Example:
+MAX_DO_INFLUENCE_DIST = 3
+VISION_RANGE = 15
+SLOWEST_UNIT_DELAY = 5
+
+Then the minimum distance between 2 units in different sectors of the same group should be 3 + 15 + 5
+
+This is a example of a concurrency issue if I don'r respect that distance:
+
+C sets B as goal
+xxxyyyyyyyyyyyyyyyyyyyyyyxxx
+  A       B              C
+
+5 turns later A kills B, while C stills remembers B
+xxxyyyyyyyyyyyyyyyyyyyyyyxxx
+  A  B                   C
+
+Since both A and C are in the group X, the order of who gets executed first is not deterministic

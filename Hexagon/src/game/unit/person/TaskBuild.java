@@ -46,15 +46,18 @@ public abstract class TaskBuild extends Task {
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        return Map.has(tileX, tileY, OverTile.personCarriesMaterial(person).and(x -> ((Building)((OverTile)x).state).owner == person)) != null;
+        if(Map.has(tileX, tileY, OverTile.personCarriesMaterial(person).and(x -> ((Building)((OverTile)x).state).owner == person)) != null) {
+            return new MemoryStaticPoint(tileX, tileY);
+        }
+        return null;
     }
 
     @Override
-    public int[] getDestination(Unit unit) {
+    public Memory getDestination(Unit unit) {
         MemoryBuilding memoryBuilding = getBuilding((Person)unit);
-        return new int[]{memoryBuilding.x, memoryBuilding.y};
+        return memoryBuilding;
     }
 
     @Override
@@ -72,5 +75,6 @@ public abstract class TaskBuild extends Task {
                 break;
             }
         }
+        unit.cancelTask();
     }
 }

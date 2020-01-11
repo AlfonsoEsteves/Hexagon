@@ -13,8 +13,12 @@ public class TaskReactToPerson extends Task {
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
-        return Map.has(tileX, tileY, Person.is.and(x -> ((Person)x).leader == null)) != null;
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
+        Person foundPerson = Map.has(tileX, tileY, Person.is.and(x -> ((Person)x).leader == null));
+        if(foundPerson != null) {
+            return new MemoryUnit(foundPerson);
+        }
+        return null;
     }
 
     @Override
@@ -30,5 +34,6 @@ public class TaskReactToPerson extends Task {
                 }
             }
         }
+        unit.cancelTask();
     }
 }

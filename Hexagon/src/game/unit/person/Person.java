@@ -15,7 +15,6 @@ public class Person extends Unit {
 
     public static final int maxLife = 100;
     public static final int maxFood = 80;
-    public static final int goingBackDistance = 40;
     public static final int visionRange = 15;
 
     public static Image imagePerson = ImageLoader.load("Person");
@@ -39,9 +38,9 @@ public class Person extends Unit {
     public int lastFoodIndex = 0;
     public Item[] lastFood = new Item[foods];
 
-    public int usualX;
+    /*public int usualX;
     public int usualY;
-    public boolean goingBack;
+    public boolean goingBack;*/
 
 
     public OTId job;
@@ -49,7 +48,7 @@ public class Person extends Unit {
     public MemoryBuilding roomMemory;
     public MemoryBuilding jobMemory;
 
-    public int[] buildingPosition;
+    public MemoryStaticPoint buildingPosition;
 
     public Person(int x, int y) {
         super(x, y);
@@ -64,10 +63,6 @@ public class Person extends Unit {
         }
 
         food = maxFood / 2;
-
-        usualX = x;
-        usualY = y;
-        goingBack = false;
 
         int r = Rnd.nextInt(3);
         if(r == 0) {
@@ -132,33 +127,6 @@ public class Person extends Unit {
     public void initExecute(){
         if(leader != null && !leader.alive) {
             leader = this;
-        }
-
-        if(Rnd.nextInt(20) == 0) {
-            if(usualX < x) {
-                usualX ++;
-            }
-            if(usualX > x) {
-                usualX --;
-            }
-            if(usualY < y) {
-                usualY ++;
-            }
-            if(usualY > y) {
-                usualY --;
-            }
-        }
-        Person superLider = getSuperLeader();
-        int distance = Map.distance(x - superLider.usualX, y - superLider.usualY);
-        if(goingBack) {
-            if(distance < goingBackDistance / 2) {
-                goingBack = false;
-            }
-        }
-        else{
-            if(distance > goingBackDistance) {
-                goingBack = true;
-            }
         }
 
         checkFood();

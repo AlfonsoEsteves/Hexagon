@@ -30,8 +30,11 @@ public class TaskPickUp extends Task {
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
-        return Map.has(tileX, tileY, item.droppedIsItem) != null;
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
+        if(Map.has(tileX, tileY, item.droppedIsItem) != null){
+            return new MemoryStaticPoint(tileX, tileY);
+        }
+        return null;
     }
 
     @Override
@@ -52,5 +55,6 @@ public class TaskPickUp extends Task {
             }
             current.next = found.next;
         }
+        unit.cancelTask();
     }
 }

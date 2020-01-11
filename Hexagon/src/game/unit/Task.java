@@ -1,5 +1,7 @@
 package game.unit;
 
+import game.unit.person.Memory;
+
 public abstract class Task {
 
     public double maxPriorityPossible;
@@ -17,11 +19,11 @@ public abstract class Task {
         return true;
     }
 
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
         throw new RuntimeException();
     }
 
-    public int[] getDestination(Unit unit) {
+    public Memory getDestination(Unit unit) {
         return null;
     }
 

@@ -8,7 +8,7 @@ public class TaskSleep extends Task {
     public static TaskSleep instance = new TaskSleep();
 
     private TaskSleep() {
-        super(6, 0,0);
+        super(6, -1,0);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class TaskSleep extends Task {
     }
 
     @Override
-    public int[] getDestination(Unit unit) {
+    public Memory getDestination(Unit unit) {
         Person person = (Person)unit;
-        return new int[]{person.roomMemory.x, person.roomMemory.y};
+        return person.roomMemory;
     }
 }

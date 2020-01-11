@@ -28,7 +28,7 @@ public class TaskStore extends Task {
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
         Debug.check(spareItem != null);
         OverTile depot = Map.has(tileX, tileY, OTId.depot.overTileIs);
@@ -36,14 +36,14 @@ public class TaskStore extends Task {
             int placedStones = ((Building)depot.state).placed;
             if(placedStones == 19){
                 if(Map.dropped(tileX, tileY) == null) {
-                    return true;
+                    return new MemoryStaticPoint(tileX, tileY);
                 }
             }
             else {
                 person.jobMemory.missingStone = 19 - placedStones;
             }
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -55,6 +55,7 @@ public class TaskStore extends Task {
         Debug.check(Map.dropped(unit.x, unit.y) == null);
         person.carrying.remove(spareItem);
         Map.dropped[unit.x][unit.y] = new Dropped(spareItem);
+        unit.cancelTask();
     }
 
     private Item spareItem(Person person) {
@@ -90,8 +91,8 @@ public class TaskStore extends Task {
     }
 
     @Override
-    public int[] getDestination(Unit unit) {
+    public Memory getDestination(Unit unit) {
         Person person = (Person)unit;
-        return new int[]{person.jobMemory.x, person.jobMemory.y};
+        return person.jobMemory;
     }
 }

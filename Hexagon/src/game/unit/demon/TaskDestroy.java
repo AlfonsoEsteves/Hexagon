@@ -3,6 +3,8 @@ package game.unit.demon;
 import game.*;
 import game.unit.Task;
 import game.unit.Unit;
+import game.unit.person.Memory;
+import game.unit.person.MemoryStaticPoint;
 import game.unit.person.Person;
 
 public class TaskDestroy extends Task {
@@ -14,8 +16,11 @@ public class TaskDestroy extends Task {
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
-        return Map.has(tileX, tileY, OverTile.isDestroyable) != null;
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
+        if(Map.has(tileX, tileY, OverTile.isDestroyable) != null) {
+            return new MemoryStaticPoint(tileX, tileY);
+        }
+        return null;
     }
 
     @Override

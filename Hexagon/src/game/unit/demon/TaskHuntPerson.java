@@ -4,6 +4,8 @@ import game.Debug;
 import game.Map;
 import game.unit.Task;
 import game.unit.Unit;
+import game.unit.person.Memory;
+import game.unit.person.MemoryUnit;
 import game.unit.person.Person;
 
 public class TaskHuntPerson extends Task {
@@ -15,8 +17,12 @@ public class TaskHuntPerson extends Task {
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
-        return Map.has(tileX, tileY, Person.is) != null;
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
+        Person person = Map.has(tileX, tileY, Person.is);
+        if(person != null) {
+            return new MemoryUnit(person);
+        }
+        return null;
     }
 
     @Override

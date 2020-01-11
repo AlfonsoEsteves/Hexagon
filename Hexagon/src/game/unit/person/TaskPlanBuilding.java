@@ -13,24 +13,23 @@ public class TaskPlanBuilding extends Task {
 
     private TaskPlanBuilding()
     {
-        super(12,3, 3);
+        super(12,-1, 3);
     }
 
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
         if(person.roomMemory == null || person.jobMemory == null) {
-            if(person.carrying.contains(Item.stone) && Map.distance(person.x - person.getSuperLeader().usualX, person.y - person.getSuperLeader().usualY) < person.goingBackDistance / 2) {
+            if(person.carrying.contains(Item.stone)) {
                 if(person.buildingPosition == null) {
                     int rndX = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
                     int rndY = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
-                    person.buildingPosition = new int[]{person.x + rndX, person.y + rndY};
-
+                    person.buildingPosition = new MemoryStaticPoint(person.x + rndX, person.y + rndY);
                 }
                 // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
                 // If the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
-                if(Map.distance(person.x - person.buildingPosition[0], person.y - person.buildingPosition[1]) > 1) {
-                    if (checkPickedPosition(person.buildingPosition[0], person.buildingPosition[1], 2)) {
+                if(Map.distance(person.x - person.buildingPosition.getX(), person.y - person.buildingPosition.getX()) > 1) {
+                    if (checkPickedPosition(person.buildingPosition.getX(), person.buildingPosition.getY(), 2)) {
                         return true;
                     }
                     else{
@@ -52,7 +51,7 @@ public class TaskPlanBuilding extends Task {
             int x = (i + r) % 4;
             if(x == 0 && person.roomMemory == null) {
                 toBeBuilt = OTId.missingBed;
-                person.roomMemory = new MemoryBuilding(person.destinationX, person.destinationY, 0, 1, 6);
+                person.roomMemory = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), 0, 1, 6);
                 break;
             }
             else if(x == 1 && person.jobMemory == null) {
@@ -60,7 +59,7 @@ public class TaskPlanBuilding extends Task {
                 int neededIron = person.job == OTId.anvil ? 1 : 0;
                 int neededWood = person.job == OTId.carpentry ? 1 : 0;
                 int missingStone = person.job == OTId.depot ? 18 : 11;
-                person.roomMemory = new MemoryBuilding(person.destinationX, person.destinationY, neededIron, neededWood, missingStone);
+                person.jobMemory = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), neededIron, neededWood, missingStone);
                 break;
             }
         }
@@ -69,13 +68,13 @@ public class TaskPlanBuilding extends Task {
         Debug.check(person.carrying.contains(Item.stone));
         Debug.check(toBeBuilt != null);
 
-        Building building = new Building(person.destinationX, person.destinationY, person);
+        Building building = new Building(person.goalMemory.getX(), person.goalMemory.getY(), person);
 
         int doorCount = Rnd.nextInt(size * 6 - 1);
         for (int[] p : MapIter.of(size)) {
-            int x = person.destinationX + p[0];
-            int y = person.destinationY + p[1];
-            if (Map.distance(person.destinationX - x, person.destinationY - y) == size) {
+            int x = person.goalMemory.getX() + p[0];
+            int y = person.goalMemory.getY() + p[1];
+            if (Map.distance(person.goalMemory.getX() - x, person.goalMemory.getY() - y) == size) {
                 if(Map.distance(person.x - x, person.y - y) == 1) {
                     Map.overTile[x][y] = new OverTile(OTId.wall, x, y, building);
                     person.carrying.remove(Item.stone);
@@ -93,16 +92,18 @@ public class TaskPlanBuilding extends Task {
 
         if (toBeBuilt == OTId.missingDepot) {
             for (int[] p : MapIter.of(1)) {
-                Map.overTile[person.destinationX + p[0]][person.destinationY + p[1]] = new OverTile(OTId.missingDepot, person.destinationX + p[0], person.destinationY + p[1], building);
+                Map.overTile[person.goalMemory.getX() + p[0]][person.goalMemory.getY() + p[1]] = new OverTile(OTId.missingDepot, person.goalMemory.getX() + p[0], person.goalMemory.getY() + p[1], building);
             }
         }
         else {
-            Map.overTile[person.destinationX][person.destinationY] = new OverTile(toBeBuilt, person.destinationX, person.destinationY, building);
+            Map.overTile[person.goalMemory.getX()][person.goalMemory.getY()] = new OverTile(toBeBuilt, person.goalMemory.getX(), person.goalMemory.getY(), building);
         }
+
+        unit.cancelTask();
     }
 
     @Override
-    public int[] getDestination(Unit unit) {
+    public Memory getDestination(Unit unit) {
         Person person = (Person)unit;
         return person.buildingPosition;
     }

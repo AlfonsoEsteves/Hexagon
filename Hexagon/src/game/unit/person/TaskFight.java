@@ -16,12 +16,16 @@ public class TaskFight extends Task {
 
     @Override
     public boolean applies(Unit unit) {
-        return scanRange == 1 || ((Person)unit).carrying.contains(Item.bow);
+        return executionRange == 1 || ((Person)unit).carrying.contains(Item.bow);
     }
 
     @Override
-    public boolean appliesInTile(Unit unit, int tileX, int tileY) {
-        return Map.has(tileX, tileY, Demon.is) != null;
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
+        Demon demon = Map.has(tileX, tileY, Demon.is);
+        if(demon != null) {
+            return new MemoryUnit(demon);
+        }
+        return null;
     }
 
     @Override
