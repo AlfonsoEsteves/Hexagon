@@ -1,5 +1,8 @@
 package game.unit.person;
 
+import game.Building;
+import game.Map;
+import game.OverTile;
 import game.unit.Unit;
 
 public class MemoryBuilding extends Memory {
@@ -20,6 +23,16 @@ public class MemoryBuilding extends Memory {
 
     @Override
     public boolean shouldBeForgoten(Unit owner) {
+        if(Map.distance(owner.x - x, owner.y - y) <= Person.visionRange) {
+            OverTile overTile = Map.overTile(x, y);
+            if(overTile != null &&
+                    overTile.state != null &&
+                    overTile.state instanceof Building &&
+                    ((Building)overTile.state).owner == owner) {
+                return false;
+            }
+            return true;
+        }
         return false;
     }
 

@@ -70,7 +70,7 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        if(id == 465) {
+        if(id == 516) {
             MainPanel.selectedUnit = this;
             if (Map.time >= 120) {
                 System.out.println();

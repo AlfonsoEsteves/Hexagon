@@ -143,7 +143,15 @@ public class MainPanel extends JPanel implements MouseInputListener, KeyListener
 			graphics.drawString("Task: " + selectedUnit.currentTask.getClass().getSimpleName(), 10, 110);
 		}
 
-		int y = 150;
+		if(selectedUnit.memoryBuildings[Person.roomBuilding] != null) {
+			graphics.drawString("RoomBuilding: " + Map.distance(selectedUnit.x - selectedUnit.memoryBuildings[Person.roomBuilding].getX(), selectedUnit.y - selectedUnit.memoryBuildings[Person.roomBuilding].getY()), 10, 130);
+		}
+
+		if(selectedUnit.memoryBuildings[Person.jobBuilding] != null) {
+			graphics.drawString("JobBuilding: " + Map.distance(selectedUnit.x - selectedUnit.memoryBuildings[Person.jobBuilding].getX(), selectedUnit.y - selectedUnit.memoryBuildings[Person.jobBuilding].getY()), 10, 150);
+		}
+
+		int y = 190;
 		for (Item item : selectedUnit.carrying) {
 			graphics.drawString(item.name, 10, y);
 			y += 15;
