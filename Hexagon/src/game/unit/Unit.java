@@ -122,14 +122,19 @@ public abstract class Unit implements Executable {
     private boolean shouldRecheckTasks() {
         boolean recheckTasks = true;
         if (currentTask != null) {
-            if (currentTask.applies(this) && !goalMemory.shouldBeForgoten(this)){
-                if (Map.time > conserveTaskTime) {
-                    // To keep things more performant, I don't reset the current task
-                    // Just decrease the maxPriorityPossible in case the goal has moved farther
-                    // or in case an obstacle appeared and it is blocking the way
-                    resetPriority(currentTaskPriority - 1);
+            if (currentTask.applies(this)){
+                if(goalMemory.shouldBeForgoten(this)) {
+                    currentTask.forget(this);
+                    cancelTask();
                 } else {
-                    recheckTasks = false;
+                    if (Map.time > conserveTaskTime) {
+                        // To keep things more performant, I don't reset the current task
+                        // Just decrease the maxPriorityPossible in case the goal has moved farther
+                        // or in case an obstacle appeared and it is blocking the way
+                        resetPriority(currentTaskPriority - 1);
+                    } else {
+                        recheckTasks = false;
+                    }
                 }
             } else {
                 cancelTask();

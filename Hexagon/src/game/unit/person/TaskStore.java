@@ -20,7 +20,7 @@ public class TaskStore extends Task {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.job == OTId.depot && person.jobMemory != null && person.jobMemory.missingStone == 0){
+        if(person.job == OTId.depot && person.memoryBuildings[Person.jobBuilding] != null && person.memoryBuildings[Person.jobBuilding].missingStone == 0){
             spareItem = spareItem(person);
             return spareItem != null;
         }
@@ -40,7 +40,7 @@ public class TaskStore extends Task {
                 }
             }
             else {
-                person.jobMemory.missingStone = 19 - placedStones;
+                person.memoryBuildings[Person.jobBuilding].missingStone = 19 - placedStones;
             }
         }
         return null;
@@ -93,6 +93,6 @@ public class TaskStore extends Task {
     @Override
     public Memory getDestination(Unit unit) {
         Person person = (Person)unit;
-        return person.jobMemory;
+        return person.memoryBuildings[Person.jobBuilding];
     }
 }

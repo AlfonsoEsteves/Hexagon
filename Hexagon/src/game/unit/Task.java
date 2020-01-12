@@ -43,4 +43,6 @@ public abstract class Task {
             return maxPriorityPossible / distance;
         }
     }
+
+    public void forget(Unit unit) {}
 }

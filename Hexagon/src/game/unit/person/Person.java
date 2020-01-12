@@ -17,6 +17,9 @@ public class Person extends Unit {
     public static final int maxFood = 80;
     public static final int visionRange = 15;
 
+    public static final int roomBuilding = 0;
+    public static final int jobBuilding = 1;
+
     public static Image imagePerson = ImageLoader.load("Person");
     public static Image imagePersonWithSword = ImageLoader.load("Person with sword");
     public static Image imagePersonWithBow = ImageLoader.load("Person with bow");
@@ -45,8 +48,7 @@ public class Person extends Unit {
 
     public OTId job;
 
-    public MemoryBuilding roomMemory;
-    public MemoryBuilding jobMemory;
+    public MemoryBuilding[] memoryBuildings;
 
     public MemoryStaticPoint buildingPosition;
 
@@ -63,6 +65,8 @@ public class Person extends Unit {
         }
 
         food = maxFood / 2;
+
+        memoryBuildings = new MemoryBuilding[2];
 
         int r = Rnd.nextInt(3);
         if(r == 0) {

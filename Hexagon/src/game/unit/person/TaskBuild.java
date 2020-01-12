@@ -4,33 +4,22 @@ import game.*;
 import game.unit.Task;
 import game.unit.Unit;
 
-public abstract class TaskBuild extends Task {
+public class TaskBuild extends Task {
 
-    public static TaskBuild taskBuildRoom = new TaskBuild() {
-        @Override
-        protected MemoryBuilding getBuilding(Person person) {
-            return person.roomMemory;
-        }
-    };
+    public static TaskBuild taskBuildRoom = new TaskBuild(Person.roomBuilding);
+    public static TaskBuild taskBuildJob = new TaskBuild(Person.jobBuilding);
 
-    public static TaskBuild taskBuildJob = new TaskBuild() {
-        @Override
-        protected MemoryBuilding getBuilding(Person person) {
-            return person.jobMemory;
-        }
-    };
+    public int buildingIndex = 0;
 
-    private TaskBuild()
-    {
+    private TaskBuild(int buildingIndex) {
         super(5, Person.visionRange, 1);
+        this.buildingIndex = buildingIndex;
     }
-
-    protected abstract MemoryBuilding getBuilding(Person person);
 
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        MemoryBuilding memoryBuilding = getBuilding(person);
+        MemoryBuilding memoryBuilding = person.memoryBuildings[buildingIndex];
         if(memoryBuilding != null) {
             if (memoryBuilding.missingStone > 0 && person.carrying.contains(Item.stone)) {
                 return true;
@@ -56,8 +45,7 @@ public abstract class TaskBuild extends Task {
 
     @Override
     public Memory getDestination(Unit unit) {
-        MemoryBuilding memoryBuilding = getBuilding((Person)unit);
-        return memoryBuilding;
+        return ((Person)unit).memoryBuildings[buildingIndex];
     }
 
     @Override
@@ -76,5 +64,10 @@ public abstract class TaskBuild extends Task {
             }
         }
         unit.cancelTask();
+    }
+
+    @Override
+    public void forget(Unit unit) {
+        ((Person)unit).memoryBuildings[buildingIndex] = null;
     }
 }

@@ -22,8 +22,8 @@ public class TaskCreateWeapon extends Task {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.jobMemory != null) {
-            if (person.jobMemory.missingWood == 0 && person.jobMemory.missingIron == 0) {
+        if(person.memoryBuildings[Person.jobBuilding] != null) {
+            if (person.memoryBuildings[Person.jobBuilding].missingWood == 0 && person.memoryBuildings[Person.jobBuilding].missingIron == 0) {
                 if (person.carrying.contains(workshop.tranformsItem)) {
                     if (Collections.frequency(person.carrying, workshop.providesItem) < 2) {
                         return true;
@@ -45,6 +45,6 @@ public class TaskCreateWeapon extends Task {
     @Override
     public Memory getDestination(Unit unit) {
         Person person = (Person)unit;
-        return person.jobMemory;
+        return person.memoryBuildings[Person.jobBuilding];
     }
 }

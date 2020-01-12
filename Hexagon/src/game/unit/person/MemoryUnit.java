@@ -12,7 +12,7 @@ public class MemoryUnit extends Memory {
     }
 
     @Override
-    public boolean  (Unit owner) {
+    public boolean shouldBeForgoten(Unit owner) {
         return !unit.alive || Map.distance(owner.x - unit.x, owner.y - unit.y) > Person.visionRange;
     }
 

@@ -14,7 +14,7 @@ public class TaskSleep extends Task {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        return person.life < Person.maxLife && person.food > 0 && person.roomMemory != null;
+        return person.life < Person.maxLife && person.food > 0 && person.memoryBuildings[Person.roomBuilding] != null;
     }
 
     @Override
@@ -31,6 +31,6 @@ public class TaskSleep extends Task {
     @Override
     public Memory getDestination(Unit unit) {
         Person person = (Person)unit;
-        return person.roomMemory;
+        return person.memoryBuildings[Person.roomBuilding];
     }
 }

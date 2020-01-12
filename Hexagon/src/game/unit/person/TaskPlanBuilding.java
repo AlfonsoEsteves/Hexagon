@@ -19,7 +19,7 @@ public class TaskPlanBuilding extends Task {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.roomMemory == null || person.jobMemory == null) {
+        if(person.memoryBuildings[Person.roomBuilding] == null || person.memoryBuildings[Person.jobBuilding] == null) {
             if(person.carrying.contains(Item.stone)) {
                 if(person.buildingPosition == null) {
                     int rndX = Rnd.nextInt(positionVariation * 2 + 1) - positionVariation;
@@ -49,17 +49,17 @@ public class TaskPlanBuilding extends Task {
         int r = Rnd.nextInt(4);
         for(int i = 0; i < 4; i++) {
             int x = (i + r) % 4;
-            if(x == 0 && person.roomMemory == null) {
+            if(x == 0 && person.memoryBuildings[Person.roomBuilding] == null) {
                 toBeBuilt = OTId.missingBed;
-                person.roomMemory = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), 0, 1, 6);
+                person.memoryBuildings[Person.roomBuilding] = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), 0, 1, 6);
                 break;
             }
-            else if(x == 1 && person.jobMemory == null) {
+            else if(x == 1 && person.memoryBuildings[Person.jobBuilding] == null) {
                 toBeBuilt = person.job.missingVersion;
                 int neededIron = person.job == OTId.anvil ? 1 : 0;
                 int neededWood = person.job == OTId.carpentry ? 1 : 0;
                 int missingStone = person.job == OTId.depot ? 18 : 11;
-                person.jobMemory = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), neededIron, neededWood, missingStone);
+                person.memoryBuildings[Person.jobBuilding] = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), neededIron, neededWood, missingStone);
                 break;
             }
         }
