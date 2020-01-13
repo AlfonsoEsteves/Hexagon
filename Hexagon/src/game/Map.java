@@ -63,11 +63,11 @@ public class Map {
 				}
 
 				if (underTile[i][j] == Tile.grass && overTile[i][j] == null){
-					if(Rnd.nextInt(4000) == 0) {
+					if(Rnd.nextInt(4500) == 0) {
 						overTile[i][j] = new OverTile(OTId.gate, i, j);
 						queueExecutable(overTile[i][j], 1 + Rnd.nextInt(OTIdGate.maxDelay / 2));
 					}
-					else if (Rnd.nextInt(750) == 0) {
+					else if (Rnd.nextInt(1100) == 0) {
 						addUnit(new Person(i, j));
 					}
 				}

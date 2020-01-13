@@ -37,7 +37,7 @@ public class TaskBuild extends Task {
     @Override
     public Memory appliesInTile(Unit unit, int tileX, int tileY) {
         Person person = (Person)unit;
-        if(Map.has(tileX, tileY, OverTile.personCarriesMaterial(person).and(x -> ((Building)((OverTile)x).state).owner == person)) != null) {
+        if(Map.has(tileX, tileY, OverTile.personCarriesMaterial(person).and(x -> ((Building)((OverTile)x).state).x == person.memoryBuildings[buildingIndex].x && ((Building)((OverTile)x).state).y == person.memoryBuildings[buildingIndex].y)) != null) {
             return new MemoryStaticPoint(tileX, tileY);
         }
         return null;
@@ -55,8 +55,9 @@ public class TaskBuild extends Task {
         int[] position = null;
         for(int[] p : MapIter.of(executionRange)) {
             position = p;
-            missing = Map.has(unit.x + p[0], unit.y + p[1], OverTile.personCarriesMaterial(person).and(x -> ((Building)((OverTile)x).state).owner == person));
+            missing = Map.has(unit.x + p[0], unit.y + p[1], OverTile.personCarriesMaterial(person).and(x -> ((Building)((OverTile)x).state).x == person.memoryBuildings[buildingIndex].x && ((Building)((OverTile)x).state).y == person.memoryBuildings[buildingIndex].y));
             if (missing != null) {
+                person.memoryBuildings[buildingIndex].addMaterial(missing.id.makeWith);
                 person.carrying.remove(missing.id.makeWith);
                 missing.id = missing.id.completedVersion;
                 ((Building)missing.state).placed++;
@@ -64,10 +65,5 @@ public class TaskBuild extends Task {
             }
         }
         unit.cancelTask();
-    }
-
-    @Override
-    public void forget(Unit unit) {
-        ((Person)unit).memoryBuildings[buildingIndex] = null;
     }
 }

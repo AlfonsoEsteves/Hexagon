@@ -51,7 +51,7 @@ public class TaskPlanBuilding extends Task {
             int x = (i + r) % 4;
             if(x == 0 && person.memoryBuildings[Person.roomBuilding] == null) {
                 toBeBuilt = OTId.missingBed;
-                person.memoryBuildings[Person.roomBuilding] = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), 0, 1, 6);
+                person.memoryBuildings[Person.roomBuilding] = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), Person.roomBuilding, 0, 1, 6);
                 break;
             }
             else if(x == 1 && person.memoryBuildings[Person.jobBuilding] == null) {
@@ -59,7 +59,7 @@ public class TaskPlanBuilding extends Task {
                 int neededIron = person.job == OTId.anvil ? 1 : 0;
                 int neededWood = person.job == OTId.carpentry ? 1 : 0;
                 int missingStone = person.job == OTId.depot ? 18 : 11;
-                person.memoryBuildings[Person.jobBuilding] = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), neededIron, neededWood, missingStone);
+                person.memoryBuildings[Person.jobBuilding] = new MemoryBuilding(person.goalMemory.getX(), person.goalMemory.getY(), Person.jobBuilding, neededIron, neededWood, missingStone);
                 break;
             }
         }

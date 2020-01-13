@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 public class Person extends Unit {
 
     public static final int maxLife = 100;
-    public static final int maxFood = 80;
+    public static final int maxFood = 85;
     public static final int visionRange = 15;
 
     public static final int roomBuilding = 0;
@@ -112,6 +112,31 @@ public class Person extends Unit {
         addTask(TaskPickUp.taskPickUpStone);
 
         addTask(TaskStore.instance);
+
+
+
+
+
+
+
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.wood);
+        carrying.add(Item.wood);
+        carrying.add(Item.wood);
+        carrying.add(Item.fruit);
+        carrying.add(Item.honey);
+        carrying.add(Item.mushroom);
+        carrying.add(Item.carrot);
     }
 
     @Override
@@ -136,7 +161,7 @@ public class Person extends Unit {
         checkFood();
         checkItemValues();
 
-        if(food > maxFood * 0.9 && Rnd.nextInt(200) == 0) {
+        if(food > maxFood * 0.9 && Rnd.nextInt(250) == 0) {
             int totalFood = Collections.frequency(carrying, Item.fruit) + Collections.frequency(carrying, Item.mushroom) + Collections.frequency(carrying, Item.honey);
             if(totalFood > 2) {
                 Map.addUnit(new Person(x, y));

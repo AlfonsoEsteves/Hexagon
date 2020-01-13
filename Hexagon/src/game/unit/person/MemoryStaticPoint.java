@@ -13,7 +13,7 @@ public class MemoryStaticPoint extends Memory {
     }
 
     @Override
-    public boolean shouldBeForgoten(Unit owner) {
+    public boolean forgetIfNeeded(Unit owner) {
         return false;
     }
 

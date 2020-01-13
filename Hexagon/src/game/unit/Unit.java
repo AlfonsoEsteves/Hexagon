@@ -70,9 +70,9 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        if(id == 516) {
+        if(id == 190) {
             MainPanel.selectedUnit = this;
-            if (Map.time >= 120) {
+            if (Map.time >= 10) {
                 System.out.println();
             }
         }
@@ -123,8 +123,7 @@ public abstract class Unit implements Executable {
         boolean recheckTasks = true;
         if (currentTask != null) {
             if (currentTask.applies(this)){
-                if(goalMemory.shouldBeForgoten(this)) {
-                    currentTask.forget(this);
+                if(goalMemory.forgetIfNeeded(this)) {
                     cancelTask();
                 } else {
                     if (Map.time > conserveTaskTime) {
@@ -177,7 +176,7 @@ public abstract class Unit implements Executable {
                     currentScanTasks.add(task);
                 }
                 else{
-                    int distance = Map.distance(x - position.getY(), y - position.getY());
+                    int distance = Map.distance(x - position.getX(), y - position.getY());
                     // Note that this distance isn't the real distance cause there may be obstacles in the way
                     // That means I can not set this task as the curret task yet
                     if(distance <= task.scanRange) {
