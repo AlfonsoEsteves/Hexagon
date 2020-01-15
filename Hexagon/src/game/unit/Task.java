@@ -32,10 +32,14 @@ public abstract class Task {
     // I need to be able to order the scannable tasks based on priority
     // This allows me to realize when I should stop scanning
     //   I should stop scanning when I am sure that no task will be more prioritary then the current task
-    // Priority calculation does not take into consideration the range
+    // Priority calculation does not take into consideration the execution range
     // Because otherwise, it wouldn't be possible to order the tasks from most priority to least priority
     // Cause this order would depend on the distance to the goal
-    protected double calculatePriority(int distance){
+    protected double calculatePriority(int distance, boolean travel){
+        if(travel && distance <= scanRange) {
+            // This allows the task to set a scan goal instead of a travel goal
+            distance = scanRange + 1;
+        }
         if(distance == 0) {
             return maxPriorityPossible;
         }

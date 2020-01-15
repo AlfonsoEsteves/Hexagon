@@ -61,6 +61,18 @@ public class TaskBuild extends Task {
                 person.carrying.remove(missing.id.makeWith);
                 missing.id = missing.id.completedVersion;
                 ((Building)missing.state).placed++;
+
+
+
+
+
+                if(unit.id == 190) {
+                    System.out.println(((Building)missing.state).placed);
+                }
+
+
+
+
                 break;
             }
         }

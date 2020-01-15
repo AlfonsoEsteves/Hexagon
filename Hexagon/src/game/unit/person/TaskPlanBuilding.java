@@ -71,13 +71,15 @@ public class TaskPlanBuilding extends Task {
         Building building = new Building(person.goalMemory.getX(), person.goalMemory.getY(), person);
 
         int doorCount = Rnd.nextInt(size * 6 - 1);
+        boolean firstWallInserted = false;
         for (int[] p : MapIter.of(size)) {
             int x = person.goalMemory.getX() + p[0];
             int y = person.goalMemory.getY() + p[1];
             if (Map.distance(person.goalMemory.getX() - x, person.goalMemory.getY() - y) == size) {
-                if(Map.distance(person.x - x, person.y - y) == 1) {
+                if(!firstWallInserted && Map.distance(person.x - x, person.y - y) == 1) {
                     Map.overTile[x][y] = new OverTile(OTId.wall, x, y, building);
                     person.carrying.remove(Item.stone);
+                    firstWallInserted = true;
                 }
                 else {
                     if (doorCount == 0) {

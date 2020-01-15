@@ -72,7 +72,7 @@ public abstract class Unit implements Executable {
     public void execute() {
         if(id == 190) {
             MainPanel.selectedUnit = this;
-            if (Map.time >= 10) {
+            if (Map.time >= 310) {
                 System.out.println();
             }
         }
@@ -152,7 +152,7 @@ public abstract class Unit implements Executable {
                  if(candidateGoal != null) {
                      int distance = Map.distance(x - candidateGoal.getX(), y - candidateGoal.getY());
                      if(distance > task.scanRange) {
-                         double priority = task.calculatePriority(distance);
+                         double priority = task.calculatePriority(distance, true);
                          if(priority > currentTaskPriority) {
                              currentTask = task;
                              currentTaskPriority = priority;
@@ -208,7 +208,7 @@ public abstract class Unit implements Executable {
                 if(distance >= pathfindingDistanceLimit) {
                     break;
                 }
-                if(currentScanTasks.get(0).calculatePriority(distance) <= currentTaskPriority) {
+                if(currentScanTasks.get(0).calculatePriority(distance, false) <= currentTaskPriority) {
                     break;
                 }
             }
@@ -233,7 +233,7 @@ public abstract class Unit implements Executable {
 
     private void processTile(int tileX, int tileY, int distance) {
         for(Task task : currentScanTasks) {
-            double priority = task.calculatePriority(distance);
+            double priority = task.calculatePriority(distance, false);
             if (priority <= currentTaskPriority) {
                 // This means that all the subsequent tasks don't need to be
                 // checked because they have lower maxPriorityPossible

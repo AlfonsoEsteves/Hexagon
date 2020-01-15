@@ -6,7 +6,7 @@ public class Debug {
     public static String typeTime = "TIME";
     public static String typeDebug = "DEBUG";
 
-    public static String currentType = typeTime;
+    public static String currentType = null;
 
     public static long eventCount = 0;
     public static long breakPointEventCount = 1228;
