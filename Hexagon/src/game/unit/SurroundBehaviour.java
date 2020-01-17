@@ -15,7 +15,7 @@ public class SurroundBehaviour {
 
     public void startSurrounding(int dirToDestination, int distanceToDestination) {
         surrounding = true;
-        orientation = Rnd.nextInt(1) * 2 - 1;
+        orientation = Rnd.nextInt(2) * 2 - 1;
         direction = dirToDestination + orientation;
         maxTurns = maxTurns * 3 / 2;
         closestDistance = distanceToDestination;

@@ -29,7 +29,7 @@ public class TaskPlanBuilding extends Task {
                 // Bear in mind that the unit will get closer until it reaches the wall, and then it will build it
                 // If the unit is already beyond (inside) the wall, then he would build a wall in an incorrect place
                 if(Map.distance(person.x - person.buildingPosition.getX(), person.y - person.buildingPosition.getX()) > 1) {
-                    if (checkPickedPosition(person.buildingPosition.getX(), person.buildingPosition.getY(), 2)) {
+                    if (checkPickedPosition(person.buildingPosition.getX(), person.buildingPosition.getY())) {
                         return true;
                     }
                     else{
@@ -39,6 +39,15 @@ public class TaskPlanBuilding extends Task {
             }
         }
         return false;
+    }
+
+    @Override
+    public Memory appliesInTile(Unit unit, int tileX, int tileY) {
+        Person person = (Person)unit;
+        if(checkPickedPosition(person.buildingPosition.getX(), person.buildingPosition.getY())) {
+            return person.buildingPosition;
+        }
+        return null;
     }
 
     @Override
@@ -110,8 +119,8 @@ public class TaskPlanBuilding extends Task {
         return person.buildingPosition;
     }
 
-    private boolean checkPickedPosition(int pickedX, int pickedY, int size) {
-        for(int[] p : MapIter.of(size + 1)) {
+    private boolean checkPickedPosition(int pickedX, int pickedY) {
+        for(int[] p : MapIter.of(3)) {
             if(Map.underTile(pickedX + p[0], pickedY + p[1]) != Tile.grass ||
                     Map.overTile(pickedX + p[0], pickedY + p[1]) != null) {
                 return false;

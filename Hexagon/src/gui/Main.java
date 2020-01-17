@@ -3,12 +3,13 @@ package gui;
 import game.Game;
 import game.Debug;
 import game.Map;
+import game.unit.Unit;
 
 import java.awt.*;
 
 public class Main {
 	
-	public static final long frameDuration = 350000000;
+	public static final long frameDuration = 70000000;
 
 	public static void main(String[] args) {
 		Game.instantiate();
@@ -22,15 +23,17 @@ public class Main {
 				if (currentTime > nextStepTime) {
 					Debug.log( "TIME", "Delay: " + (currentTime - nextStepTime) / 1000000);
 				}
+
 				try {
 					Map.execute();
-					MainFrame.instance.repaint();
 				}
-				catch(Exception e){
+				catch(RuntimeException e){
+					System.out.println("Error at time " + Map.time + " for unit " + Unit.lastExecutedUnit.id + " with task " + Unit.lastExecutedUnit.currentTask);
 					e.printStackTrace();
-					System.out.println("Event count: " + Debug.eventCount);
 					return;
 				}
+
+				MainFrame.instance.repaint();
 
 				Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
 				if(mouseLocation.getX() > MainFrame.width - 50){

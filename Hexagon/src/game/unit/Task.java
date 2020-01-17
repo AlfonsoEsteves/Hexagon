@@ -1,6 +1,7 @@
 package game.unit;
 
 import game.unit.person.Memory;
+import game.unit.person.Person;
 
 public abstract class Task {
 
@@ -20,7 +21,8 @@ public abstract class Task {
     }
 
     public Memory appliesInTile(Unit unit, int tileX, int tileY) {
-        throw new RuntimeException();
+        Person person = (Person)unit;
+        return person.memoryBuildings[Person.jobBuilding];
     }
 
     public Memory getDestination(Unit unit) {
@@ -46,5 +48,10 @@ public abstract class Task {
         else {
             return maxPriorityPossible / distance;
         }
+    }
+
+    @Override
+    public String toString(){
+        return getClass().getSimpleName();
     }
 }

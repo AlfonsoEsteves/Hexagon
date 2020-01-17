@@ -23,6 +23,8 @@ public abstract class Unit implements Executable {
 
     public static int maxId = 0;
 
+    public static Unit lastExecutedUnit;
+
     public int id;
 
     public int x;
@@ -70,9 +72,11 @@ public abstract class Unit implements Executable {
 
     @Override
     public void execute() {
-        if(id == 190) {
+        lastExecutedUnit = this;
+
+        if(id == 307) {
             MainPanel.selectedUnit = this;
-            if (Map.time >= 310) {
+            if (Map.time >= 550) {
                 System.out.println();
             }
         }
@@ -101,7 +105,9 @@ public abstract class Unit implements Executable {
                             surroundBehaviour.startSurrounding(dirToDestination, distanceToDestination);
                         }
                     } else {
-                        currentTask.execute(this);
+                        if(currentTask.appliesInTile(this, goalMemory.getX(), goalMemory.getY()) != null) {
+                            currentTask.execute(this);
+                        }
                     }
                 }
                 if(surroundBehaviour.surrounding) {
