@@ -74,7 +74,7 @@ public abstract class Unit implements Executable {
     public void execute() {
         lastExecutedUnit = this;
 
-        if(id == -1) {
+        if(id == 1139) {
             MainPanel.selectedUnit = this;
             if (Map.time >= 191) {
                 System.out.println();
