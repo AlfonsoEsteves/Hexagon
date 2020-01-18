@@ -74,7 +74,7 @@ public abstract class Unit implements Executable {
     public void execute() {
         lastExecutedUnit = this;
 
-        if(id == 1139) {
+        if(id == 189) {
             MainPanel.selectedUnit = this;
             if (Map.time >= 191) {
                 System.out.println();
@@ -327,5 +327,10 @@ public abstract class Unit implements Executable {
         if(life <= 0){
             removeFromTileAndDestroy();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Person_" + id;
     }
 }

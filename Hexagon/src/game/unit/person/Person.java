@@ -100,15 +100,27 @@ public class Person extends Unit {
         addTask(TaskCollect.taskCollectHoney);
         addTask(TaskCollect.taskCollectMushroom);
 
-        addTask(TaskPickUpOrBuy.taskPickUpBow);
-        addTask(TaskPickUpOrBuy.taskPickUpSword);
-        addTask(TaskPickUpOrBuy.taskPickUpCarrot);
-        addTask(TaskPickUpOrBuy.taskPickUpFruit);
-        addTask(TaskPickUpOrBuy.taskPickUpHoney);
-        addTask(TaskPickUpOrBuy.taskPickUpMushroom);
-        addTask(TaskPickUpOrBuy.taskPickUpIron);
-        addTask(TaskPickUpOrBuy.taskPickUpWood);
-        addTask(TaskPickUpOrBuy.taskPickUpStone);
+        addTask(TaskPickUp.taskPickUpBow);
+        addTask(TaskPickUp.taskPickUpSword);
+        addTask(TaskPickUp.taskPickUpCarrot);
+        addTask(TaskPickUp.taskPickUpFruit);
+        addTask(TaskPickUp.taskPickUpHoney);
+        addTask(TaskPickUp.taskPickUpMushroom);
+        addTask(TaskPickUp.taskPickUpIron);
+        addTask(TaskPickUp.taskPickUpWood);
+        addTask(TaskPickUp.taskPickUpStone);
+
+        addTask(TaskBuy.taskPickUpBow);
+        addTask(TaskBuy.taskPickUpSword);
+        addTask(TaskBuy.taskPickUpCarrot);
+        addTask(TaskBuy.taskPickUpFruit);
+        addTask(TaskBuy.taskPickUpHoney);
+        addTask(TaskBuy.taskPickUpMushroom);
+        addTask(TaskBuy.taskPickUpIron);
+        addTask(TaskBuy.taskPickUpWood);
+        addTask(TaskBuy.taskPickUpStone);
+
+        addTask(TaskGoAndSell.instance);
 
 
         carrying.add(Item.stone);
