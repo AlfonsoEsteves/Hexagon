@@ -46,13 +46,7 @@ public class TaskCollectOrBuy extends Task {
         if(Map.has(unit.x, unit.y, resource.producer.overTileIs) != null) {
             person.carrying.add(resource);
             Map.overTile[person.x][person.y].id = resource.producer.depletedVersion;
-
-
-            sirve pa algo esto, ta bien?
             Map.queueExecutable(Map.overTile[person.x][person.y], 100 + Rnd.nextInt(200));
-
-
-
         }
         else {
             Person seller = Map.has(person.goalMemory.getX(), person.goalMemory.getY(), Person.is.and(x -> ((Person)x).selling && ((Person)x).carrying.contains(resource)));

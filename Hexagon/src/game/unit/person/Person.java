@@ -122,6 +122,8 @@ public class Person extends Unit {
         carrying.add(Item.stone);
         carrying.add(Item.stone);
         carrying.add(Item.stone);
+        carrying.add(Item.stone);
+        carrying.add(Item.stone);
         carrying.add(Item.wood);
         carrying.add(Item.wood);
         carrying.add(Item.wood);

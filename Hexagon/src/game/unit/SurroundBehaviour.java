@@ -13,6 +13,10 @@ public class SurroundBehaviour {
     public int maxTurns;
     public int closestDistance;
 
+    public SurroundBehaviour() {
+        maxTurns = startingMaxTurns;
+    }
+
     public void startSurrounding(int dirToDestination, int distanceToDestination) {
         surrounding = true;
         orientation = Rnd.nextInt(2) * 2 - 1;

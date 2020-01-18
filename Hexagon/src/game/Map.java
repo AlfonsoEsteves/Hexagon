@@ -67,7 +67,7 @@ public class Map {
 						overTile[i][j] = new OverTile(OTId.gate, i, j);
 						queueExecutable(overTile[i][j], 1 + Rnd.nextInt(OTIdGate.maxDelay / 2));
 					}
-					else if (Rnd.nextInt(1100) == 0) {
+					else if (Rnd.nextInt(1400) == 0) {
 						addUnit(new Person(i, j));
 					}
 				}
@@ -118,6 +118,7 @@ public class Map {
 	}
 
 	public static void queueExecutable(Executable executable, int delay) {
+		Debug.check(delay < executableQueueSize);
         executableQueue[(time + delay) % executableQueueSize].addLast(executable);
     }
 	
