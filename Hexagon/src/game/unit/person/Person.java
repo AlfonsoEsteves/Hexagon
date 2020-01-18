@@ -41,16 +41,13 @@ public class Person extends Unit {
     public int lastFoodIndex = 0;
     public Item[] lastFood = new Item[foods];
 
-    /*public int usualX;
-    public int usualY;
-    public boolean goingBack;*/
-
-
     public OTId job;
 
     public MemoryBuilding[] memoryBuildings;
 
     public MemoryStaticPoint buildingPosition;
+
+    public boolean selling;
 
     public Person(int x, int y) {
         super(x, y);
@@ -71,6 +68,8 @@ public class Person extends Unit {
         int r = Rnd.nextInt(3);
         if(r == 0) {
             job = OTId.depot;
+            addTask(TaskStore.instance);
+            addTask(TaskSell.instance);
         }
         else if(r == 1) {
             job = OTId.anvil;
@@ -93,13 +92,13 @@ public class Person extends Unit {
 
         addTask(TaskReactToPerson.instance);
 
-        addTask(TaskCollect.taskCollectStone);
-        addTask(TaskCollect.taskCollectWood);
-        addTask(TaskCollect.taskCollectIron);
-        addTask(TaskCollect.taskCollectCarrot);
-        addTask(TaskCollect.taskCollectFruit);
-        addTask(TaskCollect.taskCollectHoney);
-        addTask(TaskCollect.taskCollectMushroom);
+        addTask(TaskCollectOrBuy.taskCollectStone);
+        addTask(TaskCollectOrBuy.taskCollectWood);
+        addTask(TaskCollectOrBuy.taskCollectIron);
+        addTask(TaskCollectOrBuy.taskCollectCarrot);
+        addTask(TaskCollectOrBuy.taskCollectFruit);
+        addTask(TaskCollectOrBuy.taskCollectHoney);
+        addTask(TaskCollectOrBuy.taskCollectMushroom);
 
         addTask(TaskPickUp.taskPickUpBow);
         addTask(TaskPickUp.taskPickUpSword);
@@ -110,13 +109,6 @@ public class Person extends Unit {
         addTask(TaskPickUp.taskPickUpIron);
         addTask(TaskPickUp.taskPickUpWood);
         addTask(TaskPickUp.taskPickUpStone);
-
-        addTask(TaskStore.instance);
-
-
-
-
-
 
 
         carrying.add(Item.stone);
@@ -168,6 +160,7 @@ public class Person extends Unit {
             }
         }
 
+        selling = false;
     }
 
     private void checkItemValues() {

@@ -20,7 +20,10 @@ public class TaskStore extends Task {
     @Override
     public boolean applies(Unit unit) {
         Person person = (Person)unit;
-        if(person.job == OTId.depot && person.memoryBuildings[Person.jobBuilding] != null && person.memoryBuildings[Person.jobBuilding].missingStone == 0){
+        if(person.job == OTId.depot &&
+                person.memoryBuildings[Person.jobBuilding] != null &&
+                person.memoryBuildings[Person.jobBuilding].missingStone == 0 &&
+                person.memoryBuildings[Person.jobBuilding].stored < 7){
             spareItem = spareItem(person);
             return spareItem != null;
         }
@@ -53,8 +56,10 @@ public class TaskStore extends Task {
         Debug.check(spareItem != null);
         Debug.check(depot != null);
         Debug.check(Map.dropped(unit.x, unit.y) == null);
+        Debug.check(person.memoryBuildings[Person.jobBuilding].stored < 7);
         person.carrying.remove(spareItem);
         Map.dropped[unit.x][unit.y] = new Dropped(spareItem);
+        person.memoryBuildings[Person.jobBuilding].stored++;
         unit.cancelTask();
     }
 

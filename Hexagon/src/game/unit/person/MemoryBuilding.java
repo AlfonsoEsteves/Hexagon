@@ -11,6 +11,7 @@ public class MemoryBuilding extends Memory {
     public int missingIron;
     public int missingWood;
     public int missingStone;
+    public int stored;
 
     public MemoryBuilding(int x, int y, int buildingIndex, int missingIron, int missingWood, int missingStone) {
         this.x = x;
@@ -19,6 +20,7 @@ public class MemoryBuilding extends Memory {
         this.missingIron = missingIron;
         this.missingWood = missingWood;
         this.missingStone = missingStone;
+        stored = 0;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package game;
 
 import game.unit.Unit;
+import gui.MainPanel;
 
 public class Debug {
 
@@ -20,5 +21,9 @@ public class Debug {
         if(!condition) {
             throw new RuntimeException("Condition not met");
         }
+    }
+
+    public static void focus(Unit unit) {
+        MainPanel.selectedUnit = unit;
     }
 }
